@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+
 namespace Jail
 {
-
-
     public enum EnemyState
     {
         attack,
@@ -14,16 +14,14 @@ namespace Jail
         move
     }
 
-
     public enum AttackEffects
     {
         stun,
         noEff
     }
+
     public class AI : MonoBehaviour
     {
-
-        private Vector3 pos;
         private GameObject player;
         public EnemyState state = EnemyState.steady;
         private float distance;
@@ -37,15 +35,9 @@ namespace Jail
         // Start is called before the first frame update
         void Start()
         {
-
-            pos = GetComponent<transform>();
             player = GameObject.FindWithTag("Player");
             agent = GetComponent<NavMeshAgent>();
-
         }
-
-
-
 
         // Update is called once per frame
         void Update()
@@ -67,11 +59,9 @@ namespace Jail
                     stunnedCounter -= 1;
                 }
                 return;
-
             }
 
-
-            distance = Vector3.Distance(player.position, pos.position);
+            distance = Vector3.Distance(player.transform.position, transform.position);
             if (EncounterDis >= distance )
             {
                 state = EnemyState.steady;
@@ -80,11 +70,9 @@ namespace Jail
             {
                 state = EnemyState.move;
                 agent.SetDestination(player.transform.position);
-
             } else {
                 state = EnemyState.attack;
             }
-
         }
     }
 }
