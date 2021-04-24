@@ -116,8 +116,10 @@ namespace Jail
 
         private void Start()
         {
+
             random = new System.Random();
             roomDensity = InitializeRoomDensity();
+
         }
 
         private void Update()
