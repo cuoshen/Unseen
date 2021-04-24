@@ -92,10 +92,10 @@ namespace Jail
         private bool CanBePlaced(GameObject newRoom)
         {
             bool canBePlaced = true;
-            Collider newRoomCollider = newRoom.GetComponent<Collider>();
+            BoxCollider newRoomCollider = newRoom.GetComponent<BoxCollider>();
             foreach (GameObject room in map.rooms)
             {
-                Collider roomCollider = room.GetComponent<Collider>();
+                Collider roomCollider = room.GetComponent<BoxCollider>();
                 if (newRoomCollider.bounds.Intersects(roomCollider.bounds))
                 {
                     canBePlaced = false;

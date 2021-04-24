@@ -9,6 +9,8 @@ namespace Jail
         public CharacterController characterController;
         [SerializeField]
         private float speed = 6.0f;
+        [SerializeField]
+        private float gravity = 9.81f;
 
         // Start is called before the first frame update
         void Start()
