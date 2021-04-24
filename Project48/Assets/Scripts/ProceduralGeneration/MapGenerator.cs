@@ -8,16 +8,17 @@ namespace Jail
     class MapGenerator : MonoBehaviour
     {
         public GameObject[] RoomPrefabs;
+        public GameObject DoorPrefab;
         public struct MapDescription
         {
             public GameObject center;
             public List<GameObject> rooms;
             public GameObject startingPoint;
         }
+
         private MapDescription map;
         System.Random random;
         private const int maxRecursionDepth = 20;
-
         /// <summary>
         /// We maintain a look-up table for the possiblity of room spawn with respect to center.
         /// In general, the further away we are from the center, the less possible we are to spawn a new room
@@ -44,7 +45,6 @@ namespace Jail
             {
                 return;
             }
-            // Parse out entrance
             Room roomData = room.GetComponent<Room>();
             if (roomData == null)
             {
@@ -72,6 +72,11 @@ namespace Jail
                     {
                         Destroy(newRoom);
                     }
+                }
+                else
+                {
+                    // We seal off the empty entrance with a door prefab
+                    //GameObject.Instantiate(DoorPrefab, door.transform.position, door.transform.rotation);
                 }
             }
         }
