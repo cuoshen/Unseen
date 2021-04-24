@@ -7,7 +7,7 @@ namespace Jail
 {
     class MapGenerator : MonoBehaviour
     {
-        public GameObject[] Rooms;
+        public GameObject[] RoomPrefabs;
         public struct MapDescription
         {
             public GameObject center;
@@ -16,7 +16,13 @@ namespace Jail
         }
         private MapDescription map;
         System.Random random;
-        private const int maxRecursionDepth = 10;
+        private const int maxRecursionDepth = 20;
+
+        /// <summary>
+        /// We maintain a look-up table for the possiblity of room spawn with respect to center.
+        /// In general, the further away we are from the center, the less possible we are to spawn a new room
+        /// </summary>
+        private int[] roomDensity;
 
         /// <summary>
         /// We generate map in a DFS-like fashion, start with a random room and append rooms recursively to generate our map
@@ -26,7 +32,7 @@ namespace Jail
         {
             map = new MapDescription();
             map.rooms = new List<GameObject>();
-            GameObject centerCandidate = Rooms[random.Next(Rooms.Length)];
+            GameObject centerCandidate = RoomPrefabs[random.Next(RoomPrefabs.Length)];
             map.center = GameObject.Instantiate(centerCandidate);
             AppendRooms(map.center, 0);
             return map;
@@ -47,9 +53,9 @@ namespace Jail
             }
             foreach (GameObject door in roomData.Doors)
             {
-                GameObject candidate = Rooms[random.Next(Rooms.Length)];
+                GameObject candidate = RoomPrefabs[random.Next(RoomPrefabs.Length)];
                 // Check if we want to add a room to this door
-                if (PercentageCheck(50))
+                if (PercentageCheck(roomDensity[depth]))
                 {
                     // Try to add room at this door
                     GameObject newRoom = 
@@ -90,9 +96,20 @@ namespace Jail
             return canBePlaced;
         }
 
+        private int[] InitializeRoomDensity()
+        {
+            int[] density = new int[maxRecursionDepth];
+            for (int i = 0; i < maxRecursionDepth; i++)
+            {
+                density[i] = 100 - 5 * i;
+            }
+            return density;
+        }
+
         private void Start()
         {
             random = new System.Random();
+            roomDensity = InitializeRoomDensity();
         }
 
         private void Update()
