@@ -20,7 +20,9 @@ public class move : MonoBehaviour
     
     public float m_rotateSpeed = 1;
     private bool dived = false;
+
     //private characterController cc;
+
 
     // Start is called before the first frame update
     void Start()
