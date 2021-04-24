@@ -6,8 +6,9 @@ namespace Jail
 {
     class Room : MonoBehaviour
     {
-        public List<GameObject> Doors;
+        public List<GameObject> Doors { get; private set;}
         public float Length = 10f;
+        public Collider RoomCollider { get; private set; }
 
         private void Awake()
         {
@@ -16,6 +17,7 @@ namespace Jail
             {
                 Doors.Add(t.gameObject);
             }
+            RoomCollider = gameObject.GetComponent<Collider>();
         }
     }
 }

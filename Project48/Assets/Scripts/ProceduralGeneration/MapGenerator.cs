@@ -56,9 +56,16 @@ namespace Jail
                         GameObject.Instantiate(candidate, 
                         door.transform.position + door.transform.forward * candidate.GetComponent<Room>().Length, 
                         door.transform.rotation);
-                    map.rooms.Add(newRoom);
                     // Bounding box check
-                    AppendRooms(newRoom, depth + 1);
+                    if (CanBePlaced(newRoom))
+                    {
+                        map.rooms.Add(newRoom);
+                        AppendRooms(newRoom, depth + 1);
+                    }
+                    else
+                    {
+                        Destroy(newRoom);
+                    }
                 }
             }
         }
@@ -66,6 +73,21 @@ namespace Jail
         private bool PercentageCheck(int percentage)
         {
             return random.Next(100) < percentage;
+        }
+
+        private bool CanBePlaced(GameObject newRoom)
+        {
+            bool canBePlaced = true;
+            Collider newRoomCollider = newRoom.GetComponent<Collider>();
+            foreach (GameObject room in map.rooms)
+            {
+                Collider roomCollider = room.GetComponent<Collider>();
+                if (newRoomCollider.bounds.Intersects(roomCollider.bounds))
+                {
+                    canBePlaced = false;
+                }
+            }
+            return canBePlaced;
         }
 
         private void Start()
