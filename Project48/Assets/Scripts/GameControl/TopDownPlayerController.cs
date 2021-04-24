@@ -6,7 +6,7 @@ namespace Jail
 {
     class TopDownPlayerController : MonoBehaviour
     {
-        private CharacterController characterController;
+        public CharacterController Character;
         public GameObject WinCon;
         [SerializeField]
         private float speed = 6.0f;
@@ -18,7 +18,7 @@ namespace Jail
         // Start is called before the first frame update
         void Start()
         {
-            characterController = gameObject.GetComponent<CharacterController>();
+            Character = gameObject.GetComponent<CharacterController>();
         }
 
         // Update is called once per frame
@@ -30,7 +30,7 @@ namespace Jail
 
             if (direction.magnitude >= 0.1f)
             {
-                characterController.Move(direction * speed * Time.deltaTime);
+                Character.Move(direction * speed * Time.deltaTime);
             }
 
             if (Input.GetKeyDown(KeyCode.F))    // Grab wincon and end the game if possible

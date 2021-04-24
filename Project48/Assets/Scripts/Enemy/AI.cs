@@ -14,12 +14,12 @@ namespace Jail
         move
     }
 
-
     public enum AttackEffects
     {
         stun,
         noEff
     }
+
     public class AI : MonoBehaviour
     {
         private GameObject player;

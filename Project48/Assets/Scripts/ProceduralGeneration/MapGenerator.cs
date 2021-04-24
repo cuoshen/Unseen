@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using System;
 
 namespace Jail
@@ -39,8 +40,16 @@ namespace Jail
             Player.WinCon = GameObject.Instantiate(WinCon, new Vector3(0, 2, 0), Quaternion.identity);
             AppendRooms(map.center, 0);
             // In the end we place player character in starting room
+            Player.Character.enabled = false;
             Player.gameObject.transform.position = map.startingPoint.transform.position + new Vector3(0.0f, 1.0f, 0.0f);
+            Player.Character.enabled = true;
+            RebakeNavmesh();
             return map;
+        }
+
+        private void RebakeNavmesh()
+        {
+
         }
 
         private void AppendRooms(GameObject room, int depth)
@@ -70,8 +79,8 @@ namespace Jail
                     if (CanBePlaced(newRoom))
                     {
                         map.rooms.Add(newRoom);
-                        AppendRooms(newRoom, depth + 1);
                         map.startingPoint = newRoom;
+                        AppendRooms(newRoom, depth + 1);
                     }
                     else
                     {
