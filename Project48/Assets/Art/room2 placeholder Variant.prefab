@@ -60,6 +60,20 @@ Transform:
   m_Father: {fileID: 7106454989924049266}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!64 &-175742650188338046
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7625970233643760584}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4579454407841743219, guid: d2e0b838ac77f9a47a0dbd17a0c9d1dc, type: 3}
 --- !u!65 &9050996930158936799
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -72,7 +86,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.9, y: 0.1, z: 1.9}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: -1, z: 0}
 --- !u!114 &-6683414508148482683
 MonoBehaviour:
   m_ObjectHideFlags: 0
