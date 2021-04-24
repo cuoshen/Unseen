@@ -9,6 +9,7 @@ namespace Jail
     {
         public GameObject[] RoomPrefabs;
         public GameObject DoorPrefab;
+        public TopDownPlayerController Player;
         public struct MapDescription
         {
             public GameObject center;
@@ -28,7 +29,6 @@ namespace Jail
         /// <summary>
         /// We generate map in a DFS-like fashion, start with a random room and append rooms recursively to generate our map
         /// </summary>
-        /// <param name="seed"></param>
         public MapDescription GenerateMap()
         {
             map = new MapDescription();
@@ -36,6 +36,8 @@ namespace Jail
             GameObject centerCandidate = RoomPrefabs[random.Next(RoomPrefabs.Length)];
             map.center = GameObject.Instantiate(centerCandidate);
             AppendRooms(map.center, 0);
+            // In the end we place player character in starting room
+            Player.gameObject.transform.position = map.startingPoint.transform.position + new Vector3(0.0f, 1.0f, 0.0f);
             return map;
         }
 
@@ -67,6 +69,7 @@ namespace Jail
                     {
                         map.rooms.Add(newRoom);
                         AppendRooms(newRoom, depth + 1);
+                        map.startingPoint = newRoom;
                     }
                     else
                     {
