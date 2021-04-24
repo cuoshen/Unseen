@@ -7,7 +7,7 @@ namespace Jail
     class Room : MonoBehaviour
     {
         public List<GameObject> Doors;
-        public float Length;
+        public float Length = 10f;
 
         private void Awake()
         {

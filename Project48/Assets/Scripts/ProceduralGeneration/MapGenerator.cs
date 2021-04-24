@@ -52,7 +52,10 @@ namespace Jail
                 if (PercentageCheck(50))
                 {
                     // Try to add room at this door
-                    GameObject newRoom = GameObject.Instantiate(candidate, door.transform.position, door.transform.rotation);
+                    GameObject newRoom = 
+                        GameObject.Instantiate(candidate, 
+                        door.transform.position + door.transform.forward * candidate.GetComponent<Room>().Length, 
+                        door.transform.rotation);
                     map.rooms.Add(newRoom);
                     // Bounding box check
                     AppendRooms(newRoom, depth + 1);

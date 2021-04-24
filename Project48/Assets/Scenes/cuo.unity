@@ -260,8 +260,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Rooms:
-  - {fileID: 4827730874529269421, guid: 03ef1280905fc124ba463f272bfdfa1c, type: 3}
-  - {fileID: 347818267825024879, guid: 33359186eb4d08449a2780d3a0e91e50, type: 3}
+  - {fileID: 1271140073714239875, guid: 56afcc1af17f1204a85ce5f9aaf293e4, type: 3}
+  - {fileID: 7625970233643760584, guid: bb539f979d595c44397259611c8c05bc, type: 3}
 --- !u!1 &152062461
 GameObject:
   m_ObjectHideFlags: 0
