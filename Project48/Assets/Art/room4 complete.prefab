@@ -60,20 +60,19 @@ Transform:
   m_Father: {fileID: 1169862302154600592}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8543750318465872621
-MonoBehaviour:
+--- !u!65 &1264296332206440371
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4474704474969462852}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07b14ae1851c68f4f8c61dd5230d4260, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DoorsDirectory: {fileID: 5450858094630150042}
-  Length: 10
+  serializedVersion: 2
+  m_Size: {x: 1.9, y: 0.1, z: 1.9}
+  m_Center: {x: 0, y: -1, z: 0}
 --- !u!64 &6072025668465447866
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -88,19 +87,20 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4579454407841743219, guid: 631b3d04a4086d947acef593fe9feb36, type: 3}
---- !u!65 &1264296332206440371
-BoxCollider:
+--- !u!114 &8543750318465872621
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4474704474969462852}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.9, y: 0.1, z: 1.9}
-  m_Center: {x: 0, y: -1, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b14ae1851c68f4f8c61dd5230d4260, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DoorsDirectory: {fileID: 5450858094630150042}
+  Length: 10
 --- !u!1 &5450858094630150042
 GameObject:
   m_ObjectHideFlags: 0
@@ -184,6 +184,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 631b3d04a4086d947acef593fe9feb36, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e83bd20bee615814a8a5b02fa89cd4ef, type: 2}
     - target: {fileID: 919132149155446097, guid: 631b3d04a4086d947acef593fe9feb36, type: 3}
       propertyPath: m_Name
       value: room4 complete
