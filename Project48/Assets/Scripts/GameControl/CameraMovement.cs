@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Jail
 {
+    [RequireComponent(typeof(Camera))]
     class CameraMovement : MonoBehaviour
     {
         public TopDownPlayerController Player;

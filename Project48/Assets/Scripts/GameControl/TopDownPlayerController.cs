@@ -4,17 +4,17 @@ using UnityEngine;
 
 namespace Jail
 {
-    public enum PlayerState {idle, attack, walk };
+    public enum PlayerState {IDLE, ATTACK, WALK };
     class TopDownPlayerController : MonoBehaviour
     {
         public CharacterController Character;
         public GameObject WinCon;
         [SerializeField]
-        private float speed = 6.0f;
+        private float speed = 5.0f;
         [SerializeField]
         private float gravity = 9.81f;
         [SerializeField]
-        private float dashDistance = 5.0f;
+        private float angularSpeed = 15.0f;
         private PlayerState state;
         private Animator animator;
 
@@ -23,38 +23,34 @@ namespace Jail
         {
             Character = gameObject.GetComponent<CharacterController>();
             animator = gameObject.GetComponent<Animator>();
-            state = PlayerState.idle;
+            state = PlayerState.IDLE;
         }
 
         // Update is called once per frame
         void Update()
         {
+            TryToRestoreIdle();
+
             float horizontal = Input.GetAxisRaw("Horizontal");
             float vertical = Input.GetAxisRaw("Vertical");
             Vector3 direction = new Vector3(horizontal, 0.0f, vertical);
 
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && state != PlayerState.WALK)
             {
-                state = PlayerState.attack;
+                state = PlayerState.ATTACK;
                 animator.Play("Attack");
             }
-
-            else if (direction.magnitude >= 0.1f)
+            else if (direction.magnitude >= 0.1f && state != PlayerState.ATTACK)
             {
-                state = PlayerState.walk;
+                state = PlayerState.WALK;
                 Character.Move(direction * speed * Time.deltaTime);
-                animator.Play("Walk");
-                
-            } 
-            else
-            {
-                state = PlayerState.idle;
-                animator.Play("Idle");
+                Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, angularSpeed);
             }
 
-            Character.Move(new Vector3(0, -1, 0) * gravity * Time.deltaTime);
+            ResolveVelocity();
 
-            animator.SetFloat("Speed", Character.velocity.magnitude);
+            Character.Move(new Vector3(0, -1, 0) * gravity * Time.deltaTime);
 
             if (Input.GetKeyDown(KeyCode.F))    // Grab wincon and end the game if possible
             {
@@ -63,6 +59,22 @@ namespace Jail
                     Debug.Log("You win the game");
                 }
             }
+        }
+
+        private void TryToRestoreIdle()
+        {
+            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+            {
+                state = PlayerState.IDLE;
+            }
+        }
+
+        private void ResolveVelocity()
+        {
+            Vector2 horizontalVelocity = new Vector2(Character.velocity.x, Character.velocity.z);
+            float verticalVelocity = -Character.velocity.y;
+            animator.SetFloat("Move Speed", horizontalVelocity.magnitude);
+            animator.SetFloat("Vertical Speed", verticalVelocity);
         }
     }
 }
