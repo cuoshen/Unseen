@@ -11,8 +11,6 @@ namespace Jail
         public GameObject[] RoomPrefabs;
         public GameObject[] PropPrefabs;
         public GameObject DoorPrefab;
-        public GameObject WinCon;
-        public TopDownPlayerController Player;
         public struct MapDescription
         {
             public GameObject center;
@@ -38,19 +36,8 @@ namespace Jail
             map.rooms = new List<GameObject>();
             GameObject centerCandidate = RoomPrefabs[random.Next(RoomPrefabs.Length)];
             map.center = GameObject.Instantiate(centerCandidate);
-            Player.WinCon = GameObject.Instantiate(WinCon, new Vector3(0, 2, 0), Quaternion.identity);
             AppendRooms(map.center, 0);
-            // In the end we place player character in starting room
-            Player.Character.enabled = false;
-            Player.gameObject.transform.position = map.startingPoint.transform.position + new Vector3(0.0f, 1.0f, 0.0f);
-            Player.Character.enabled = true;
-            RebakeNavmesh();
             return map;
-        }
-
-        private void RebakeNavmesh()
-        {
-
         }
 
         private void AppendRooms(GameObject room, int depth)
