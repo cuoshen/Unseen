@@ -15,10 +15,13 @@ namespace Jail
         [SerializeField]
         private float dashDistance = 5.0f;
 
+        private Animator animator;
+
         // Start is called before the first frame update
         void Start()
         {
             Character = gameObject.GetComponent<CharacterController>();
+            animator = gameObject.GetComponent<Animator>();
         }
 
         // Update is called once per frame
@@ -32,6 +35,10 @@ namespace Jail
             {
                 Character.Move(direction * speed * Time.deltaTime);
             }
+
+            Character.Move(new Vector3(0, -1, 0) * gravity * Time.deltaTime);
+
+            animator.SetFloat("Speed", Character.velocity.magnitude);
 
             if (Input.GetKeyDown(KeyCode.F))    // Grab wincon and end the game if possible
             {
