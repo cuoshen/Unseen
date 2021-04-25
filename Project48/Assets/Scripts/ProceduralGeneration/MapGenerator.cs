@@ -9,6 +9,7 @@ namespace Jail
     class MapGenerator : MonoBehaviour
     {
         public GameObject[] RoomPrefabs;
+        public GameObject[] PropPrefabs;
         public GameObject DoorPrefab;
         public GameObject WinCon;
         public TopDownPlayerController Player;
@@ -78,6 +79,7 @@ namespace Jail
                     // Bounding box check
                     if (CanBePlaced(newRoom))
                     {
+                        SpawnProps(newRoom);
                         map.rooms.Add(newRoom);
                         map.startingPoint = newRoom;
                         AppendRooms(newRoom, depth + 1);
@@ -113,6 +115,19 @@ namespace Jail
                 }
             }
             return canBePlaced;
+        }
+
+        private void SpawnProps(GameObject newRoom)
+        {
+            Room room = newRoom.GetComponent<Room>();
+            foreach (GameObject spawnPoint in room.PropSpawns)
+            {
+                if (PercentageCheck(50))
+                {
+                    GameObject prop = PropPrefabs[random.Next(PropPrefabs.Length)];
+                    GameObject.Instantiate(prop, spawnPoint.transform);
+                }
+            }
         }
 
         private int[] InitializeRoomDensity()
