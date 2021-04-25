@@ -260,9 +260,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RoomPrefabs:
-  - {fileID: 1271140073714239875, guid: 56afcc1af17f1204a85ce5f9aaf293e4, type: 3}
+  - {fileID: 6822947394119172129, guid: 4813dcac1689b764a81ffdac8b726762, type: 3}
   - {fileID: 4474704474969462852, guid: 8006f4e8e3444874b8ed8e7d47cb8bf9, type: 3}
   - {fileID: 1271140073714239875, guid: f151a2bcc463f774d8d16959ee35ea27, type: 3}
+  - {fileID: 4474704474969462852, guid: 7426a7b166340a8428a58c91fc11f9df, type: 3}
   DoorPrefab: {fileID: 1500216487215308944, guid: 3c5c6742af40db44ca7bdffea41c0405, type: 3}
   WinCon: {fileID: 347818267825024879, guid: 33359186eb4d08449a2780d3a0e91e50, type: 3}
   Player: {fileID: 977882184427918911}
