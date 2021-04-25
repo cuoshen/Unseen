@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 347818267825024872}
   - component: {fileID: 347818267825024873}
   - component: {fileID: 347818267825024878}
+  - component: {fileID: -3059061877028647887}
   m_Layer: 0
   m_Name: WinCon
   m_TagString: Untagged
@@ -92,7 +93,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 0e73ab2acaad7b847ae309b214c39582, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -127,6 +128,20 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-3059061877028647887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 347818267825024879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 578332cb3a726cb4e8eaf12f64913cab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  noiseStrength: 0.25
+  objectHeight: 2
 --- !u!1 &347818267987338549
 GameObject:
   m_ObjectHideFlags: 0
