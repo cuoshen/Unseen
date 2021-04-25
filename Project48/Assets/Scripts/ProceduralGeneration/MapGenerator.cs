@@ -36,6 +36,7 @@ namespace Jail
             map.rooms = new List<GameObject>();
             GameObject centerCandidate = RoomPrefabs[random.Next(RoomPrefabs.Length)];
             map.center = GameObject.Instantiate(centerCandidate);
+            map.rooms.Add(map.center);
             AppendRooms(map.center, 0);
             return map;
         }

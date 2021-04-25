@@ -37,6 +37,7 @@ namespace Jail
             map = MapGenerator.GenerateMap();
             Player.WinCon = GameObject.Instantiate(WinCon, new Vector3(0, 2, 0), Quaternion.identity);
             // In the end we place player character in starting room
+            Player.gameObject.SetActive(true);
             Player.Character.enabled = false;
             Player.gameObject.transform.position = map.startingPoint.transform.position + new Vector3(0.0f, 1.0f, 0.0f);
             Player.Character.enabled = true;
@@ -51,7 +52,11 @@ namespace Jail
 
         private void CleanUp()
         {
-
+            GameObject.Destroy(Player.WinCon);
+            for (int i = 0; i < map.rooms.Count; i++)
+            {
+                GameObject.Destroy(map.rooms[i]);
+            }
         }
 
         private void RebakeNavmesh()

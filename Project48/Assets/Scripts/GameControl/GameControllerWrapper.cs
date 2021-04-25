@@ -12,9 +12,11 @@ namespace Jail
         public MapGenerator MapGenerator;
 
         private GameController controller;
+        private bool gameStarted = false;
 
         private void Start()
         {
+            Player.gameObject.SetActive(false);
             controller = GameController.Instance;
             controller.Player = Player;
             controller.WinCon = WinCon;
@@ -23,9 +25,14 @@ namespace Jail
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (!gameStarted)
             {
                 controller.StartGame();
+                gameStarted = true;
+            }
+            if (Input.GetKeyDown(KeyCode.Backspace))
+            {
+                controller.RestartGame();
             }
         }
     }
