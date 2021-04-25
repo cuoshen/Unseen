@@ -226,8 +226,9 @@ GameObject:
   m_Component:
   - component: {fileID: 96218413}
   - component: {fileID: 96218414}
+  - component: {fileID: 96218415}
   m_Layer: 0
-  m_Name: MapController
+  m_Name: Game Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -273,8 +274,21 @@ MonoBehaviour:
   - {fileID: 6885707087273849622, guid: bc9de0fdfd51c404b9023ab58985a5a2, type: 3}
   - {fileID: 1443542123442045232, guid: d2573eb8848dc614c82531c4483d3d34, type: 3}
   DoorPrefab: {fileID: 1500216487215308944, guid: 3c5c6742af40db44ca7bdffea41c0405, type: 3}
-  WinCon: {fileID: 347818267825024879, guid: 33359186eb4d08449a2780d3a0e91e50, type: 3}
+--- !u!114 &96218415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 96218412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19e9ef61d50f5234185e8014ec778690, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   Player: {fileID: 3199409538355597170}
+  WinCon: {fileID: 347818267825024879, guid: 33359186eb4d08449a2780d3a0e91e50, type: 3}
+  MapGenerator: {fileID: 96218414}
 --- !u!1 &152062461
 GameObject:
   m_ObjectHideFlags: 0
@@ -632,7 +646,7 @@ MonoBehaviour:
   WinCon: {fileID: 0}
   speed: 6
   gravity: 9.81
-  dashDistance: 2
+  angularSpeed: 1
 --- !u!1 &1607558358
 GameObject:
   m_ObjectHideFlags: 0

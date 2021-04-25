@@ -28,9 +28,9 @@ namespace Jail
         }
 
         public MapGenerator MapGenerator { get; set; }
+        public TopDownPlayerController Player { get; set; }
+        public GameObject WinCon { get; set; }
         private MapGenerator.MapDescription map;
-        public TopDownPlayerController Player;
-        public GameObject WinCon;
 
         public void StartGame()
         {
@@ -53,6 +53,7 @@ namespace Jail
         {
 
         }
+
         private void RebakeNavmesh()
         {
 

@@ -129,12 +129,11 @@ namespace Jail
 
         private void Start()
         {
-
             random = new System.Random();
             roomDensity = InitializeRoomDensity();
-
         }
 
+#if DEBUG_MAPGEN
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Space))
@@ -142,5 +141,6 @@ namespace Jail
                 GenerateMap();
             }
         }
+#endif
     }
 }
