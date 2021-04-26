@@ -117,7 +117,7 @@ namespace Jail
                     enemies.Remove(em);
                     GameObject.Destroy(em);
                 }
-                else if (Vector3.Distance(pos, Player.WinCon.transform.position) <= 20f)
+                else if (Vector3.Distance(pos, Player.WinCon.transform.position) <= 40f)
                 {
                     enemies.Remove(em);
                     GameObject.Destroy(em);
