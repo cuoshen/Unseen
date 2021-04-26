@@ -56,7 +56,6 @@ namespace Jail
             {
                 if (Vector3.Distance(transform.position, WinCon.transform.position) <= 3.0f)
                 {
-                    Debug.Log("You win the game");
                     GameController.Instance.WinGame();
                 }
             }

@@ -76,6 +76,8 @@ namespace Jail
         public void WinGame()
         {
             Player.WinCon.GetComponent<AudioSource>().Play();
+            Player.enabled = false;
+
         }
     }
 }
