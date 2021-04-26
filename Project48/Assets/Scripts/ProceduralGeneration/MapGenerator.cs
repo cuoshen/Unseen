@@ -15,12 +15,23 @@ namespace Jail
         {
             public GameObject center;
             public List<GameObject> rooms;
-            public GameObject startingPoint;
+            public RoomDepth startingPoint;
+        }
+
+        public struct RoomDepth
+        {
+            public RoomDepth(GameObject room, int depth)
+            {
+                this.room = room;
+                this.depth = depth;
+            }
+            public GameObject room;
+            public int depth;
         }
 
         private MapDescription map;
         System.Random random;
-        private const int MAX_RECURSION_DEPTH = 30;
+        private const int MAX_RECURSION_DEPTH = 20;
         /// <summary>
         /// We maintain a look-up table for the possiblity of room spawn with respect to center.
         /// In general, the further away we are from the center, the less possible we are to spawn a new room
@@ -69,7 +80,10 @@ namespace Jail
                     {
                         SpawnProps(newRoom);
                         map.rooms.Add(newRoom);
-                        map.startingPoint = newRoom;
+                        if (depth >= map.startingPoint.depth)
+                        {
+                            map.startingPoint = new RoomDepth(newRoom, depth);
+                        }
                         AppendRooms(newRoom, depth + 1);
                     }
                     else
@@ -123,7 +137,7 @@ namespace Jail
             int[] density = new int[MAX_RECURSION_DEPTH];
             for (int i = 0; i < MAX_RECURSION_DEPTH; i++)
             {
-                density[i] = 100 - 3 * i;
+                density[i] = 100 - 5 * i;
             }
             return density;
         }
