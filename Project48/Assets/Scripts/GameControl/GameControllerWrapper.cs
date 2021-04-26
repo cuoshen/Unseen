@@ -20,7 +20,7 @@ namespace Jail
             Player.gameObject.SetActive(false);
             controller = GameController.Instance;
             controller.Player = Player;
-            controller.WinCon = WinCon;
+            controller.WinConPrefab = WinCon;
             controller.MapGenerator = MapGenerator;
         }
 
