@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
+using UnityEngine.AI;
 namespace Jail
 {
     /// <summary>
@@ -73,10 +73,9 @@ namespace Jail
 
         private void RebakeNavmesh()
         {
-            foreach (GameObject room in map.rooms)
-            {
-                //room.AI.BuildNavMesh();
-            }
+            /*NavMeshSurface nm = new NavMeshSurface();
+
+            nm.BuildNavMesh();*/
         }
 
 
