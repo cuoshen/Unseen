@@ -14,10 +14,10 @@ namespace Jail
         [SerializeField]
         private float gravity = 9.81f;
         [SerializeField]
-        private float angularSpeed = 15.0f;
+        private float angularSpeed = 1.0f;
         public PlayerState state;
         private Animator animator;
-        private List<Jail.AI> enemies;
+        private List<EnemyAI> enemies;
 
         // Start is called before the first frame update
         void Awake()
@@ -29,17 +29,16 @@ namespace Jail
 
         void CheckAttack()
         {
-            enemies = new List<Jail.AI>();
+            enemies = new List<EnemyAI>();
             GameObject[] ems = GameObject.FindGameObjectsWithTag("Enemy");
             foreach (GameObject em in ems)
             {
-                enemies.Add((Jail.AI)em.GetComponent(typeof(Jail.AI)));
-
+                enemies.Add((EnemyAI)em.GetComponent(typeof(EnemyAI)));
             }
             
             float disToDie = 2f;
             float distance;
-            foreach (AI em in enemies)
+            foreach (EnemyAI em in enemies)
             {
                 distance = Vector3.Distance(transform.position, em.transform.position);
                 if (em.state == EnemyState.ATTACK && distance <= disToDie)

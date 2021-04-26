@@ -13,13 +13,15 @@ namespace Jail
         MOVE
     }
 
-    public class AI : MonoBehaviour
+    public class EnemyAI : MonoBehaviour
     {
         private GameObject player;
         public EnemyState state = EnemyState.IDLE;
         private float distance;
         private float EncounterDis = 10f;
         private float attackDis = 4f;
+        float speed = 2f;
+        float angularSpeed = 3.0f;
 
         private int stunnedCounter = 0;
         private NavMeshAgent agent;
@@ -30,7 +32,7 @@ namespace Jail
         // Start is called before the first frame update
         void Start()
         {
-            player = GameObject.FindWithTag("Player");
+            player = GameController.Instance.Player.gameObject;
             agent = GetComponent<NavMeshAgent>();
             animator = gameObject.GetComponent<Animator>();
             cc = GetComponent<CharacterController>();
@@ -59,7 +61,6 @@ namespace Jail
                 }
                 return;
             }
-            
             if ( EncounterDis <= distance)
             {
                 state = EnemyState.IDLE;
@@ -67,35 +68,13 @@ namespace Jail
             else if (attackDis <= distance && distance < EncounterDis )
             {
                 state = EnemyState.MOVE;
-
-                Vector3 offset = player.transform.position - transform.position;
-                float speed = 2f;
-                float x = 0, z = 0;
-                float angularSpeed = 3.0f;
-                if (offset.z > 0)
-                {
-                    z = 1;
-                }
-                else if (offset.z < 0)
-                {
-                    z = -1;
-                }
-
-                if (offset.x > 0)
-                {
-                    x = 1;
-
-                }
-                else if (offset.x < 0)
-                {
-                    x = -1;
-                }
-                Vector3 direction = new Vector3(x, 0, z);
+                Vector3 diff = player.transform.position - transform.position;
+                diff = diff.normalized;
+                Vector3 direction = new Vector3(diff.x, 0, diff.z);
                 //NextPosition = transform.position + new Vector3(x, 0, z);
                 Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, angularSpeed);
                 cc.Move(direction * speed * Time.deltaTime);
-                //agent.SetDestination(player.transform.position);
             } 
             else 
             {
