@@ -42,6 +42,7 @@ namespace Jail
         private MapGenerator.MapDescription map;
         private NavMeshData navMeshData;
         private NavMeshDataInstance navMeshDataInstance;
+        private List<GameObject> enemies = new List<GameObject>();
 
         public void StartGame()
         {
@@ -83,7 +84,8 @@ namespace Jail
 
         public void SpawnEnemy(GameObject enemy, Vector3 pos)
         {
-            GameObject.Instantiate(enemy, pos, enemy.transform.rotation);
+            enemies.Add(
+                GameObject.Instantiate(enemy, pos, enemy.transform.rotation));
         }
 
         public void SpawnEnemy(GameObject enemy)
@@ -99,27 +101,30 @@ namespace Jail
                     SpawnEnemy(enemy, pos);
                 }
             }
-            //GameObject.Instantiate(enemy, pos, enemy.transform.rotation);
         }
-
 
         public void KillEnemy()
         {
-
             float tooFar = 60f;
-            GameObject[] ems = GameObject.FindGameObjectsWithTag("Enemy");
-            foreach (GameObject em in ems)
+            int i = 0;
+            while (i < enemies.Count)
             {
+                GameObject em = enemies[i];
                 Vector3 pos = em.transform.position;
                 float distance = Vector3.Distance(pos, Player.gameObject.transform.position);
                 if (distance > tooFar)
                 {
+                    enemies.Remove(em);
                     GameObject.Destroy(em);
                 }
+                else if (Vector3.Distance(pos, Player.WinCon.transform.position) <= 20f)
+                {
+                    enemies.Remove(em);
+                    GameObject.Destroy(em);
+                }
+                i++;
             }
         }
-
-
 
         private void RebakeNavmesh()
         {
