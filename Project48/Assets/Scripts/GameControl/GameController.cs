@@ -162,8 +162,13 @@ namespace Jail
         public void WinGame()
         {
             persistentSound.Stop();
+            foreach (GameObject enemy in enemies)
+            {
+                enemy.GetComponent<AudioSource>().enabled = false;
+            }
             Player.WinCon.GetComponent<AudioSource>().Play();
             Player.enabled = false;
+            Debug.Log("You win the game");
             // Delay activasion credits screen
             delayedActivationController.DelayedActivation(3.0f);
         }
