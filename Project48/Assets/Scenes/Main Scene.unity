@@ -422,6 +422,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 3199409538355597170}
+  VantagePoint: {fileID: 1883778717}
   Mode: 0
   Offset: {x: 0, y: 10, z: -10}
 --- !u!82 &152062467
