@@ -117,7 +117,7 @@ namespace Jail
                     enemies.Remove(em);
                     GameObject.Destroy(em);
                 }
-                else if (Vector3.Distance(pos, Player.WinCon.transform.position) <= 20f)
+                else if (Vector3.Distance(pos, Player.WinCon.transform.position) <= 40f)
                 {
                     enemies.Remove(em);
                     GameObject.Destroy(em);
@@ -162,8 +162,13 @@ namespace Jail
         public void WinGame()
         {
             persistentSound.Stop();
+            foreach (GameObject enemy in enemies)
+            {
+                enemy.GetComponent<AudioSource>().enabled = false;
+            }
             Player.WinCon.GetComponent<AudioSource>().Play();
             Player.enabled = false;
+            Debug.Log("You win the game");
             // Delay activasion credits screen
             delayedActivationController.DelayedActivation(3.0f);
         }
