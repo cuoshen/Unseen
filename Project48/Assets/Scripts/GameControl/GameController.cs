@@ -10,6 +10,8 @@ namespace Jail
     /// </summary>
     class GameController
     {
+
+        public AudioSource BGM;
         private static GameController instance;
         public static GameController Instance
         {
@@ -66,6 +68,19 @@ namespace Jail
             GameObject.Instantiate(enemy, pos, enemy.transform.rotation);
 
             
+        }
+
+
+        public void changeBGM(AudioClip music)
+        {
+
+            if (BGM.name == music.name)
+            {
+                return;
+            }
+            BGM.Stop();
+            BGM.clip = music;
+            BGM.Play();
         }
 
 

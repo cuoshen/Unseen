@@ -71,7 +71,7 @@ namespace Jail
             else if (attackDis <= distance && distance < EncounterDis )
             {
                 state = EnemyState.MOVE;
-                agent.SetDestination(player.transform.position);
+                //agent.SetDestination(player.transform.position);
             } 
             else 
             {
