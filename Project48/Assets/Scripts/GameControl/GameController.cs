@@ -90,6 +90,13 @@ namespace Jail
 
         public void SpawnEnemy(GameObject enemy)
         {
+
+
+            if (enemies.Count > 10)
+            {
+                KillEnemy();
+                return;
+            }
             float minDis = 20f;
             float maxDis = 40f;
             foreach (GameObject room in map.rooms)
@@ -105,7 +112,7 @@ namespace Jail
 
         public void KillEnemy()
         {
-            float tooFar = 60f;
+            float tooFar = 40f;
             int i = 0;
             while (i < enemies.Count)
             {

@@ -79,7 +79,7 @@ namespace Jail
                 Vector3 offset = player.transform.position - transform.position;
                 float speed = 2f;
                 float x = 0, z = 0;
-                float angularSpeed = 15.0f;
+                float angularSpeed = 3.0f;
                 if (offset.z > 0)
                 {
                     z = 1;
