@@ -17,7 +17,7 @@ namespace Jail
         private float angularSpeed = 15.0f;
         public PlayerState state;
         private Animator animator;
-        private List<Jail.AI> enemies = new List<Jail.AI>();
+        private List<Jail.AI> enemies;
 
         // Start is called before the first frame update
         void Awake()
@@ -32,7 +32,7 @@ namespace Jail
 
         void checkAttack()
         {
-
+            enemies = new List<Jail.AI>();
             GameObject[] ems = GameObject.FindGameObjectsWithTag("Enemy");
             foreach (GameObject em in ems)
             {
