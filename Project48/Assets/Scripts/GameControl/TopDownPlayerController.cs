@@ -25,10 +25,7 @@ namespace Jail
             Character = gameObject.GetComponent<CharacterController>();
             animator = gameObject.GetComponent<Animator>();
             state = PlayerState.IDLE;
-            
-
         }
-
 
         void CheckAttack()
         {
