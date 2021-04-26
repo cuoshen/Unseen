@@ -80,6 +80,16 @@ namespace Jail
             GameObject.Instantiate(enemy, pos, enemy.transform.rotation);
         }
 
+        public void SpawnEnemy(GameObject enemy)
+        {
+            disToPlayer = 30f;
+            foreach (Room room in map.rooms)
+            {
+
+            }
+            GameObject.Instantiate(enemy, pos, enemy.transform.rotation);
+        }
+
         private void RebakeNavmesh()
         {
             /*NavMeshSurface nm = new NavMeshSurface();
