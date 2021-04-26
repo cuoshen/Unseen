@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Jail
 {
-    public enum PlayerState {IDLE, ATTACK, WALK };
+    public enum PlayerState {IDLE, ATTACK, WALK, DEATH };
     class TopDownPlayerController : MonoBehaviour
     {
         public CharacterController Character;
@@ -29,14 +29,41 @@ namespace Jail
             foreach (GameObject em in ems)
             {
                 enemies.Add(em.GetComponent<AI>());
+
             }
 
+        }
+
+
+        void checkAttack()
+        {
+            if (enemies == null)
+            {
+                return;
+            }
+            float disToDie = 0.5f;
+            float distance;
+            foreach (AI em in enemies)
+            {
+                distance = Vector3.Distance(transform.position, em.transform.position);
+                if (em.state == EnemyState.ATTACK && distance <= disToDie)
+                {
+                    state = PlayerState.DEATH;
+                }
+            }
         }
 
         // Update is called once per frame
         void Update()
         {
             TryToRestoreIdle();
+            checkAttack();
+            if (state == PlayerState.DEATH)
+            {
+                GameController.Instance.PlayerGotEaten();
+            }
+
+
 
             float horizontal = Input.GetAxisRaw("Horizontal");
             float vertical = Input.GetAxisRaw("Vertical");
