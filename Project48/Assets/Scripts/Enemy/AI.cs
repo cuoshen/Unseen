@@ -13,8 +13,6 @@ namespace Jail
         MOVE
     }
 
-
-
     public class AI : MonoBehaviour
     {
         private GameObject player;
@@ -29,8 +27,6 @@ namespace Jail
         private Animator animator;
         private CharacterController cc;
 
-
-
         // Start is called before the first frame update
         void Start()
         {
@@ -43,16 +39,13 @@ namespace Jail
         // Update is called once per frame
         void Update()
         {
-
             distance = Vector3.Distance(player.transform.position, transform.position);
             isAttacked = player.GetComponent<TopDownPlayerController>().state == PlayerState.ATTACK && distance <= 3;
             //Debug.Log(distance);
             if (isAttacked)
             {
-
                 state = EnemyState.STUNNED;
                 stunnedCounter = 100;
-
             }
             else if (state == EnemyState.STUNNED)
             {
@@ -66,7 +59,6 @@ namespace Jail
                 }
                 return;
             }
-
             
             if ( EncounterDis <= distance)
             {
@@ -87,7 +79,6 @@ namespace Jail
                 else if (offset.z < 0)
                 {
                     z = -1;
-
                 }
 
                 if (offset.x > 0)
@@ -111,7 +102,6 @@ namespace Jail
                 state = EnemyState.ATTACK;
             }
 
-
             switch (state)
             {
                 case EnemyState.IDLE:
@@ -127,7 +117,6 @@ namespace Jail
                     animator.Play("Stunned");
                     break;
             }
-
         }
     }
 }
