@@ -9,6 +9,7 @@ namespace Jail
     {
         public void OnGameStart()
         {
+            Camera.main.GetComponent<AudioSource>().Play();
             SceneManager.LoadScene(1);
         }
     }
