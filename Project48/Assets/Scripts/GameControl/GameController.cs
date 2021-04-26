@@ -85,6 +85,31 @@ namespace Jail
             /*NavMeshSurface nm = new NavMeshSurface();
 
             nm.BuildNavMesh();*/
+            NavMeshBuildSettings settings = new NavMeshBuildSettings();
+            settings.agentClimb = 0.75f;
+            settings.agentHeight = 2.0f;
+            settings.agentRadius = 0.5f;
+            settings.agentSlope = 45.0f;
+            List<NavMeshBuildSource> sources = new List<NavMeshBuildSource>();
+            List<Mesh> roomMeshes = new List<Mesh>();
+            // Build sources
+            foreach (GameObject roomObj in map.rooms)
+            {
+                NavMeshBuildSource src = new NavMeshBuildSource();
+                src.transform = roomObj.transform.localToWorldMatrix;
+                src.shape = NavMeshBuildSourceShape.Mesh;
+                Mesh roomMesh = roomObj.GetComponent<MeshFilter>().mesh;
+                roomMeshes.Add(roomMesh);
+                src.sourceObject = roomMesh;
+                src.size = new Vector3(10, 10, 10);
+                sources.Add(src);
+            }
+            NavMeshBuilder.BuildNavMeshData(settings, sources, new Bounds(), Vector3.zero, Quaternion.identity);
+            Debug.Log("Navmesh built successfully");
+            foreach (Mesh m in roomMeshes)
+            {
+                m.UploadMeshData(true);
+            }
         }
 
         public void WinGame()
