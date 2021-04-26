@@ -290,6 +290,7 @@ MonoBehaviour:
   Enemy: {fileID: 3224609178082940146, guid: 0b196a2647a6c0a49b98c4fbc6f63ffa, type: 3}
   WinCon: {fileID: 347818267825024879, guid: 33359186eb4d08449a2780d3a0e91e50, type: 3}
   MapGenerator: {fileID: 96218414}
+  musics: []
 --- !u!1 &152062461
 GameObject:
   m_ObjectHideFlags: 0
@@ -421,6 +422,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 3199409538355597170}
+  VantagePoint: {fileID: 1883778717}
   Mode: 0
   Offset: {x: 0, y: 10, z: -10}
 --- !u!82 &152062467
@@ -953,10 +955,6 @@ PrefabInstance:
     - target: {fileID: 3164956843992085849, guid: 6bfb0de2cc626054bb150c8492e26f18, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_audioClip
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 9010581007214784291, guid: 6bfb0de2cc626054bb150c8492e26f18, type: 3}
       propertyPath: m_Controller

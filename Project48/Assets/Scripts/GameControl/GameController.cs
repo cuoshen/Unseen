@@ -44,6 +44,7 @@ namespace Jail
             Player.gameObject.transform.position = map.startingPoint.transform.position + new Vector3(0.0f, 1.0f, 0.0f);
             Player.Character.enabled = true;
             RebakeNavmesh();
+            Camera.main.GetComponent<CameraMovement>().DragToVantagePoint();
         }
 
         public void RestartGame()
