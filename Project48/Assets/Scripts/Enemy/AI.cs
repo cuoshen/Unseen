@@ -27,6 +27,9 @@ namespace Jail
         private NavMeshAgent agent;
         public bool isAttacked = false;
         private Animator animator;
+        private CharacterController cc;
+
+
 
         // Start is called before the first frame update
         void Start()
@@ -34,6 +37,7 @@ namespace Jail
             player = GameObject.FindWithTag("Player");
             agent = GetComponent<NavMeshAgent>();
             animator = gameObject.GetComponent<Animator>();
+            cc = GetComponent<CharacterController>();
         }
 
         // Update is called once per frame
