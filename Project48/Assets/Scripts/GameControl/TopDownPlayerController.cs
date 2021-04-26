@@ -30,7 +30,7 @@ namespace Jail
         }
 
 
-        void checkAttack()
+        void CheckAttack()
         {
             enemies = new List<Jail.AI>();
             GameObject[] ems = GameObject.FindGameObjectsWithTag("Enemy");
@@ -57,13 +57,11 @@ namespace Jail
         void Update()
         {
             TryToRestoreIdle();
-            checkAttack();
+            CheckAttack();
             if (state == PlayerState.DEATH)
             {
                 GameController.Instance.PlayerGotEaten();
             }
-
-
 
             float horizontal = Input.GetAxisRaw("Horizontal");
             float vertical = Input.GetAxisRaw("Vertical");
