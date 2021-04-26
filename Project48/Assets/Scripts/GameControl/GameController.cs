@@ -85,12 +85,13 @@ namespace Jail
 
         public void SpawnEnemy(GameObject enemy)
         {
-            disToPlayer = 30f;
-            foreach (Room room in map.rooms)
+            float disToPlayer = 30f;
+            foreach (GameObject room in map.rooms)
             {
-
+                /*Vector3 pos = room.transform.position;
+                float distance = Vector3.Distance(pos, Player.gameObject.transform.positon);*/
             }
-            GameObject.Instantiate(enemy, pos, enemy.transform.rotation);
+            //GameObject.Instantiate(enemy, pos, enemy.transform.rotation);
         }
 
         private void RebakeNavmesh()
