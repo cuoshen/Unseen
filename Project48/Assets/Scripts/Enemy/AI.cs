@@ -78,30 +78,27 @@ namespace Jail
                 Vector3 offset = player.transform.position - transform.position;
                 float speed = 3f;
                 float x = 0, z = 0;
-                if (Mathf.Abs(offset.z) > Mathf.Abs(offset.x))
-                {
-                    if (offset.z > 0)
-                    {
-                        z = 1;
-                    }
-                    else
-                    {
-                        z = -1;
 
-                    }
-                }
-                else
+                if (offset.z > 0)
                 {
-                    if (offset.x > 0)
-                    {
-                        x = 1;
-
-                    }
-                    else
-                    {
-                        x = -1;
-                    }
+                    z = 1;
                 }
+                else if (offset.z < 0)
+                {
+                    z = -1;
+
+                }
+
+                if (offset.x > 0)
+                {
+                    x = 1;
+
+                }
+                else if (offset.x < 0)
+                {
+                    x = -1;
+                }
+                
                 //NextPosition = transform.position + new Vector3(x, 0, z);
 
                 cc.Move(new Vector3(x, 0, z) * speed * Time.deltaTime);
