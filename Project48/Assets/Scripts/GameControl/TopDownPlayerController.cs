@@ -34,7 +34,6 @@ namespace Jail
             float horizontal = Input.GetAxisRaw("Horizontal");
             float vertical = Input.GetAxisRaw("Vertical");
             Vector3 direction = new Vector3(horizontal, 0.0f, vertical);
-
             if (Input.GetMouseButtonDown(0) && state != PlayerState.WALK)
             {
                 state = PlayerState.ATTACK;
@@ -58,6 +57,11 @@ namespace Jail
                 {
                     GameController.Instance.WinGame();
                 }
+            }
+
+            if (transform.position.y <= -20.0f)
+            {
+                GameController.Instance.PlayerFallToDeath();
             }
         }
 

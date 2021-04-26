@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
+
 namespace Jail
 {
     /// <summary>
@@ -30,20 +32,30 @@ namespace Jail
         public MapGenerator MapGenerator { get; set; }
         public TopDownPlayerController Player { get; set; }
         public GameObject WinConPrefab { get; set; }
-        public AudioSource BGM;
+        public Image BlackScreen { get; set; }
+        public AudioClip FallSound { get; set; }
 
+        private AudioSource persistentSound;
         private MapGenerator.MapDescription map;
 
         public void StartGame()
         {
             map = MapGenerator.GenerateMap();
             Player.WinCon = GameObject.Instantiate(WinConPrefab, new Vector3(0, 2, 0), Quaternion.identity);
-            // In the end we place player character in starting room
             Player.gameObject.SetActive(true);
             Player.Character.enabled = false;
             Player.gameObject.transform.position = map.startingPoint.transform.position + new Vector3(0.0f, 1.0f, 0.0f);
             Player.Character.enabled = true;
+
             RebakeNavmesh();
+
+            BlackScreen.gameObject.SetActive(false);
+
+            persistentSound = Camera.main.GetComponent<AudioSource>();
+            if (!persistentSound.isPlaying)
+            {
+                persistentSound.Play();
+            }
             Camera.main.GetComponent<CameraMovement>().DragToVantagePoint();
         }
 
@@ -76,8 +88,22 @@ namespace Jail
 
         public void WinGame()
         {
+            persistentSound.Stop();
             Player.WinCon.GetComponent<AudioSource>().Play();
             Player.enabled = false;
+            // Full Screen Image
+        }
+
+        public void PlayerFallToDeath()
+        {
+            Player.enabled = false;
+            BlackScreen.gameObject.SetActive(true);
+            persistentSound.Stop();
+            persistentSound.PlayOneShot(FallSound);
+        }
+
+        public void PlayerGotEaten()
+        {
 
         }
     }

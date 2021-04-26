@@ -118,10 +118,6 @@ namespace Jail
             }
         }
 
-
-
-
-
         private int[] InitializeRoomDensity()
         {
             int[] density = new int[MAX_RECURSION_DEPTH];
