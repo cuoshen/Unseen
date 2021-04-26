@@ -297,6 +297,7 @@ MonoBehaviour:
   BlackScreen: {fileID: 498807170}
   CreditsScreen: {fileID: 784071908}
   delayedActivationController: {fileID: 96218416}
+  InvisibleEnemy: {fileID: 4311230534669276630, guid: e8f4cfbb553813045b87144930bd6b2a, type: 3}
 --- !u!114 &96218416
 MonoBehaviour:
   m_ObjectHideFlags: 0

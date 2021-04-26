@@ -16,10 +16,10 @@ namespace Jail
         public Image BlackScreen;
         public GameObject CreditsScreen;
         public DelayedActivationController delayedActivationController;
+        public GameObject InvisibleEnemy;
 
         private GameController controller;
         private bool gameStarted = false;
-
 
         private void Start()
         {
@@ -33,6 +33,7 @@ namespace Jail
             controller.EatenSound = Musics[1];
             controller.CreditsScreen = CreditsScreen;
             controller.delayedActivationController = delayedActivationController;
+            controller.InvisibleEnemy = InvisibleEnemy;
         }
 
         private void Update()
@@ -41,17 +42,6 @@ namespace Jail
             {
                 controller.StartGame();
                 gameStarted = true;
-            }
-
-            if (UnityEngine.Random.Range(1, 1000) == 1)
-            {
-                controller.SpawnEnemy(Enemy);
-                
-            }
-            if (Input.GetKeyDown(KeyCode.G))
-            {
-                Vector3 pos = GameObject.FindWithTag("Player").transform.position;
-                controller.SpawnEnemy(Enemy, pos);
             }
 
             if (Input.GetKeyDown(KeyCode.Backspace))

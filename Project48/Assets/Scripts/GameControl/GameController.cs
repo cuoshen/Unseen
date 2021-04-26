@@ -37,6 +37,7 @@ namespace Jail
         public AudioClip EatenSound { get; set; }
         public GameObject CreditsScreen { get; set; }
         public DelayedActivationController delayedActivationController { get; set; }
+        public GameObject InvisibleEnemy { get; set; }
 
         private AudioSource persistentSound;
         private MapGenerator.MapDescription map;
@@ -65,6 +66,8 @@ namespace Jail
                 persistentSound.Play();
             }
             Camera.main.GetComponent<CameraMovement>().DragToVantagePoint();
+
+            enemies = SpawnInvisibleEnemies(5);
         }
 
         public void RestartGame()
@@ -80,57 +83,23 @@ namespace Jail
             {
                 GameObject.Destroy(map.rooms[i]);
             }
-        }
-
-        public void SpawnEnemy(GameObject enemy, Vector3 pos)
-        {
-            enemies.Add(
-                GameObject.Instantiate(enemy, pos, enemy.transform.rotation));
-        }
-
-        public void SpawnEnemy(GameObject enemy)
-        {
-
-
-            if (enemies.Count > 10)
+            for (int i = 0; i < enemies.Count; i++)
             {
-                KillEnemy();
-                return;
-            }
-            float minDis = 20f;
-            float maxDis = 40f;
-            foreach (GameObject room in map.rooms)
-            {
-                Vector3 pos = room.transform.position;
-                float distance = Vector3.Distance(pos, Player.gameObject.transform.position);
-                if (minDis < distance && distance <= maxDis)
-                {
-                    SpawnEnemy(enemy, pos);
-                }
+                GameObject.Destroy(enemies[i]);
             }
         }
 
-        public void KillEnemy()
+        public List<GameObject> SpawnInvisibleEnemies(int count)
         {
-            float tooFar = 40f;
-            int i = 0;
-            while (i < enemies.Count)
+            List<GameObject> enemies = new List<GameObject>();
+            for (int i = 0; i < count; i++)
             {
-                GameObject em = enemies[i];
-                Vector3 pos = em.transform.position;
-                float distance = Vector3.Distance(pos, Player.gameObject.transform.position);
-                if (distance > tooFar)
-                {
-                    enemies.Remove(em);
-                    GameObject.Destroy(em);
-                }
-                else if (Vector3.Distance(pos, Player.WinCon.transform.position) <= 40f)
-                {
-                    enemies.Remove(em);
-                    GameObject.Destroy(em);
-                }
-                i++;
+                GameObject room = map.rooms[UnityEngine.Random.Range(1, map.rooms.Count)];
+                GameObject newSpawn = 
+                    GameObject.Instantiate(InvisibleEnemy, room.transform.position, room.transform.rotation);
+                enemies.Add(newSpawn);
             }
+            return enemies;
         }
 
         private void RebakeNavmesh()

@@ -15,7 +15,7 @@ namespace Jail
         private float gravity = 9.81f;
         [SerializeField]
         private float angularSpeed = 1.0f;
-        public PlayerState state;
+        private PlayerState state;
         private Animator animator;
         private List<EnemyAI> enemies;
 
@@ -54,10 +54,6 @@ namespace Jail
         {
             TryToRestoreIdle();
             CheckAttack();
-            if (state == PlayerState.DEATH)
-            {
-                GameController.Instance.PlayerGotEaten();
-            }
 
             float horizontal = Input.GetAxisRaw("Horizontal");
             float vertical = Input.GetAxisRaw("Vertical");
@@ -81,7 +77,7 @@ namespace Jail
 
             if (Input.GetKeyDown(KeyCode.F) && state == PlayerState.IDLE)    // Grab wincon and end the game if possible
             {
-                if (Vector3.Distance(transform.position, WinCon.transform.position) <= 3.0f)
+                if (Vector3.Distance(transform.position, WinCon.transform.position) <= 5.0f)
                 {
                     GameController.Instance.WinGame();
                 }
