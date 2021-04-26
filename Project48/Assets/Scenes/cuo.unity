@@ -287,6 +287,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 3199409538355597170}
+  Enemy: {fileID: 3705125241489051192, guid: 111c22d5dc529de4d92f14f590f45856, type: 3}
   WinCon: {fileID: 347818267825024879, guid: 33359186eb4d08449a2780d3a0e91e50, type: 3}
   MapGenerator: {fileID: 96218414}
 --- !u!1 &152062461
@@ -647,6 +648,7 @@ MonoBehaviour:
   speed: 6
   gravity: 9.81
   angularSpeed: 1
+  state: 0
 --- !u!1 &1607558358
 GameObject:
   m_ObjectHideFlags: 0
@@ -759,6 +761,10 @@ PrefabInstance:
     - target: {fileID: 2353130631441330147, guid: 6bfb0de2cc626054bb150c8492e26f18, type: 3}
       propertyPath: m_Name
       value: GoodHumanPlayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 2353130631441330147, guid: 6bfb0de2cc626054bb150c8492e26f18, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 3164956843992085849, guid: 6bfb0de2cc626054bb150c8492e26f18, type: 3}
       propertyPath: m_RootOrder

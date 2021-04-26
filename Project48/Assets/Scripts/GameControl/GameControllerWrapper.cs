@@ -8,9 +8,10 @@ namespace Jail
     class GameControllerWrapper : MonoBehaviour
     {
         public TopDownPlayerController Player;
+        public GameObject Enemy;
         public GameObject WinCon;
         public MapGenerator MapGenerator;
-
+        
         private GameController controller;
         private bool gameStarted = false;
 
@@ -23,6 +24,10 @@ namespace Jail
             controller.MapGenerator = MapGenerator;
         }
 
+
+
+
+
         private void Update()
         {
             if (!gameStarted)
@@ -30,6 +35,14 @@ namespace Jail
                 controller.StartGame();
                 gameStarted = true;
             }
+
+            if (Input.GetKeyDown(KeyCode.G))
+            {
+                Vector3 pos = GameObject.FindWithTag("Player").transform.position;
+                controller.EnemySpawn(Enemy, pos);
+            }
+
+
             if (Input.GetKeyDown(KeyCode.Backspace))
             {
                 controller.RestartGame();

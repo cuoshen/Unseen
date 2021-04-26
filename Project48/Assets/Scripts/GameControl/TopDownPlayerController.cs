@@ -15,7 +15,7 @@ namespace Jail
         private float gravity = 9.81f;
         [SerializeField]
         private float angularSpeed = 15.0f;
-        private PlayerState state;
+        public PlayerState state;
         private Animator animator;
 
         // Start is called before the first frame update

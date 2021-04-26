@@ -10,6 +10,8 @@ namespace Jail
     /// </summary>
     class GameController
     {
+
+        
         private static GameController instance;
         public static GameController Instance
         {
@@ -59,9 +61,22 @@ namespace Jail
             }
         }
 
+        public void EnemySpawn(GameObject enemy, Vector3 pos)
+        {
+
+
+            GameObject.Instantiate(enemy, pos, enemy.transform.rotation);
+
+            
+        }
+
+
         private void RebakeNavmesh()
         {
 
         }
+
+
+
     }
 }
