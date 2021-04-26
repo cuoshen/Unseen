@@ -24,7 +24,6 @@ namespace Jail
         float angularSpeed = 3.0f;
 
         private int stunnedCounter = 0;
-        private NavMeshAgent agent;
         public bool isAttacked = false;
         private Animator animator;
         private CharacterController cc;
@@ -33,7 +32,6 @@ namespace Jail
         void Start()
         {
             player = GameController.Instance.Player.gameObject;
-            agent = GetComponent<NavMeshAgent>();
             animator = gameObject.GetComponent<Animator>();
             cc = GetComponent<CharacterController>();
         }
@@ -71,9 +69,8 @@ namespace Jail
                 Vector3 diff = player.transform.position - transform.position;
                 diff = diff.normalized;
                 Vector3 direction = new Vector3(diff.x, 0, diff.z);
-                //NextPosition = transform.position + new Vector3(x, 0, z);
                 Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, angularSpeed);
+                transform.rotation = targetRotation;
                 cc.Move(direction * speed * Time.deltaTime);
             } 
             else 
