@@ -48,6 +48,8 @@ namespace Jail
                 gameStarted = true;
                 gamestate = GameStates.PROGRESS;
             }
+            controller.SpawnEnemy(Enemy);
+            controller.KillEnemy();
             if (Input.GetKeyDown(KeyCode.G))
             {
                 Vector3 pos = GameObject.FindWithTag("Player").transform.position;

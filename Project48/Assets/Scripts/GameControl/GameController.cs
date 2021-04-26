@@ -85,14 +85,38 @@ namespace Jail
 
         public void SpawnEnemy(GameObject enemy)
         {
-            float disToPlayer = 30f;
+            float minDis = 20f;
+            float maxDis = 40f;
             foreach (GameObject room in map.rooms)
             {
-                /*Vector3 pos = room.transform.position;
-                float distance = Vector3.Distance(pos, Player.gameObject.transform.positon);*/
+                Vector3 pos = room.transform.position;
+                float distance = Vector3.Distance(pos, Player.gameObject.transform.position);
+                if (minDis < distance && distance <= maxDis)
+                {
+                    SpawnEnemy(enemy, pos);
+                }
             }
             //GameObject.Instantiate(enemy, pos, enemy.transform.rotation);
         }
+
+
+        public void KillEnemy()
+        {
+
+            float tooFar = 60f;
+            GameObject[] ems = GameObject.FindGameObjectsWithTag("Enemy");
+            foreach (GameObject em in ems)
+            {
+                Vector3 pos = em.transform.position;
+                float distance = Vector3.Distance(pos, Player.gameObject.transform.position);
+                if (distance > tooFar)
+                {
+                    GameObject.Destroy(em);
+                }
+            }
+        }
+
+
 
         private void RebakeNavmesh()
         {
