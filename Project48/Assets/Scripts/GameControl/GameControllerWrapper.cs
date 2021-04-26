@@ -36,22 +36,7 @@ namespace Jail
 
         private void MusicControl()
         {
-
-            switch (gamestate)
-            {
-                case GameStates.PROGRESS:
-                    controller.ChangeBGM(musics[0]);
-                    break;
-                case GameStates.FAIL:
-                    controller.ChangeBGM(musics[1]);
-                    break;
-                case GameStates.WIN:
-                    controller.ChangeBGM(musics[2]);
-                    break;
-            }
         }
-        
-
 
     private void Update()
         {
@@ -65,12 +50,8 @@ namespace Jail
             if (Input.GetKeyDown(KeyCode.G))
             {
                 Vector3 pos = GameObject.FindWithTag("Player").transform.position;
-                controller.EnemySpawn(Enemy, pos);
+                controller.SpawnEnemy(Enemy, pos);
             }
-
-
-
-
 
             if (Input.GetKeyDown(KeyCode.Backspace))
             {

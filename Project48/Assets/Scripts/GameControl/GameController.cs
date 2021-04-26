@@ -10,8 +10,6 @@ namespace Jail
     /// </summary>
     class GameController
     {
-
-        public AudioSource BGM;
         private static GameController instance;
         public static GameController Instance
         {
@@ -32,6 +30,8 @@ namespace Jail
         public MapGenerator MapGenerator { get; set; }
         public TopDownPlayerController Player { get; set; }
         public GameObject WinConPrefab { get; set; }
+        public AudioSource BGM;
+
         private MapGenerator.MapDescription map;
 
         public void StartGame()
@@ -61,28 +61,10 @@ namespace Jail
             }
         }
 
-        public void EnemySpawn(GameObject enemy, Vector3 pos)
+        public void SpawnEnemy(GameObject enemy, Vector3 pos)
         {
-
-
             GameObject.Instantiate(enemy, pos, enemy.transform.rotation);
-
-            
         }
-
-
-        public void ChangeBGM(AudioClip music)
-        {
-
-            if (BGM.name == music.name)
-            {
-                return;
-            }
-            BGM.Stop();
-            BGM.clip = music;
-            BGM.Play();
-        }
-
 
         private void RebakeNavmesh()
         {
