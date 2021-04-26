@@ -48,7 +48,12 @@ namespace Jail
                 gameStarted = true;
                 gamestate = GameStates.PROGRESS;
             }
-            controller.SpawnEnemy(Enemy);
+
+            if (UnityEngine.Random.Range(1, 1000) == 1)
+            {
+                controller.SpawnEnemy(Enemy);
+                
+            }
             controller.KillEnemy();
             if (Input.GetKeyDown(KeyCode.G))
             {
