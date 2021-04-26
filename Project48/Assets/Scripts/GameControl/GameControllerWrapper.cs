@@ -42,7 +42,12 @@ namespace Jail
                 controller.StartGame();
                 gameStarted = true;
             }
-            controller.SpawnEnemy(Enemy);
+
+            if (UnityEngine.Random.Range(1, 1000) == 1)
+            {
+                controller.SpawnEnemy(Enemy);
+                
+            }
             controller.KillEnemy();
             if (Input.GetKeyDown(KeyCode.G))
             {
