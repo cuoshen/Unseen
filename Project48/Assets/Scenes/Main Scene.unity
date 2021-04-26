@@ -292,6 +292,7 @@ MonoBehaviour:
   MapGenerator: {fileID: 96218414}
   Musics:
   - {fileID: 8300000, guid: 11803a68b8fb5ce48b382b3eb8ed2442, type: 3}
+  - {fileID: 8300000, guid: 304786d792f82ab4daa3b50182fd1c8c, type: 3}
   BlackScreen: {fileID: 498807170}
 --- !u!1 &152062461
 GameObject:

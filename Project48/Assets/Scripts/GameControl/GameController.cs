@@ -34,7 +34,7 @@ namespace Jail
         public GameObject WinConPrefab { get; set; }
         public Image BlackScreen { get; set; }
         public AudioClip FallSound { get; set; }
-
+        public AudioClip EatenSound { get; set; }
         private AudioSource persistentSound;
         private MapGenerator.MapDescription map;
 
@@ -105,7 +105,10 @@ namespace Jail
 
         public void PlayerGotEaten()
         {
-
+            Player.enabled = false;
+            BlackScreen.gameObject.SetActive(true);
+            persistentSound.Stop();
+            persistentSound.PlayOneShot(EatenSound);
         }
     }
 }

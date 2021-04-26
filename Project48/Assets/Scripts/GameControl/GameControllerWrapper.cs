@@ -37,6 +37,7 @@ namespace Jail
             controller.MapGenerator = MapGenerator;
             controller.BlackScreen = BlackScreen;
             controller.FallSound = Musics[0];
+            controller.EatenSound = Musics[1];
         }
 
         private void MusicControl()

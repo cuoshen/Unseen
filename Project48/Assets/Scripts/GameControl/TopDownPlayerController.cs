@@ -17,7 +17,7 @@ namespace Jail
         private float angularSpeed = 15.0f;
         public PlayerState state;
         private Animator animator;
-        private List<AI> enemies;
+        private List<Jail.AI> enemies = new List<Jail.AI>();
 
         // Start is called before the first frame update
         void Awake()
@@ -25,23 +25,22 @@ namespace Jail
             Character = gameObject.GetComponent<CharacterController>();
             animator = gameObject.GetComponent<Animator>();
             state = PlayerState.IDLE;
-            GameObject[] ems = GameObject.FindGameObjectsWithTag("Enemy");
-            foreach (GameObject em in ems)
-            {
-                enemies.Add(em.GetComponent<AI>());
-
-            }
+            
 
         }
 
 
         void checkAttack()
         {
-            if (enemies == null)
+
+            GameObject[] ems = GameObject.FindGameObjectsWithTag("Enemy");
+            foreach (GameObject em in ems)
             {
-                return;
+                enemies.Add((Jail.AI)em.GetComponent(typeof(Jail.AI)));
+
             }
-            float disToDie = 0.5f;
+            
+            float disToDie = 2f;
             float distance;
             foreach (AI em in enemies)
             {
@@ -49,6 +48,7 @@ namespace Jail
                 if (em.state == EnemyState.ATTACK && distance <= disToDie)
                 {
                     state = PlayerState.DEATH;
+                    return;
                 }
             }
         }

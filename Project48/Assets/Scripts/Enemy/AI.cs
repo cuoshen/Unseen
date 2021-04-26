@@ -21,7 +21,7 @@ namespace Jail
         public EnemyState state = EnemyState.IDLE;
         private float distance;
         private float EncounterDis = 10f;
-        private float attackDis = 2f;
+        private float attackDis = 4f;
 
         private int stunnedCounter = 0;
         private NavMeshAgent agent;
