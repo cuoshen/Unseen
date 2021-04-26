@@ -40,10 +40,6 @@ namespace Jail
             controller.EatenSound = Musics[1];
         }
 
-        private void MusicControl()
-        {
-        }
-
     private void Update()
         {
             if (!gameStarted)
@@ -52,7 +48,6 @@ namespace Jail
                 gameStarted = true;
                 gamestate = GameStates.PROGRESS;
             }
-            MusicControl();
             if (Input.GetKeyDown(KeyCode.G))
             {
                 Vector3 pos = GameObject.FindWithTag("Player").transform.position;
@@ -62,6 +57,11 @@ namespace Jail
             if (Input.GetKeyDown(KeyCode.Backspace))
             {
                 controller.RestartGame();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                Application.Quit();
             }
         }
     }
