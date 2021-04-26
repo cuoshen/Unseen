@@ -51,7 +51,7 @@ namespace Jail
 
             Character.Move(new Vector3(0, -1, 0) * gravity * Time.deltaTime);
 
-            if (Input.GetKeyDown(KeyCode.F))    // Grab wincon and end the game if possible
+            if (Input.GetKeyDown(KeyCode.F) && state == PlayerState.IDLE)    // Grab wincon and end the game if possible
             {
                 if (Vector3.Distance(transform.position, WinCon.transform.position) <= 3.0f)
                 {

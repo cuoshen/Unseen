@@ -41,8 +41,9 @@ namespace Jail
         public void StartGame()
         {
             map = MapGenerator.GenerateMap();
-            Player.WinCon = GameObject.Instantiate(WinConPrefab, new Vector3(0, 2, 0), Quaternion.identity);
             Player.gameObject.SetActive(true);
+            Player.enabled = true;
+            Player.WinCon = GameObject.Instantiate(WinConPrefab, new Vector3(0, 2, 0), Quaternion.identity);
             Player.Character.enabled = false;
             Player.gameObject.transform.position = map.startingPoint.transform.position + new Vector3(0.0f, 1.0f, 0.0f);
             Player.Character.enabled = true;
