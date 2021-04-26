@@ -133,15 +133,5 @@ namespace Jail
             random = new System.Random();
             roomDensity = InitializeRoomDensity();
         }
-
-#if DEBUG_MAPGEN
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                GenerateMap();
-            }
-        }
-#endif
     }
 }
