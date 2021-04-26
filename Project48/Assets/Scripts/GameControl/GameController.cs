@@ -94,9 +94,10 @@ namespace Jail
             List<GameObject> enemies = new List<GameObject>();
             for (int i = 0; i < count; i++)
             {
+                Vector3 randomOffset = new Vector3(UnityEngine.Random.Range(-3.0f, 3.0f), 0, UnityEngine.Random.Range(-3.0f, 3.0f));
                 GameObject room = map.rooms[UnityEngine.Random.Range(1, map.rooms.Count)];
                 GameObject newSpawn = 
-                    GameObject.Instantiate(InvisibleEnemy, room.transform.position, room.transform.rotation);
+                    GameObject.Instantiate(InvisibleEnemy, room.transform.position + randomOffset, room.transform.rotation);
                 enemies.Add(newSpawn);
             }
             return enemies;
