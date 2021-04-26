@@ -35,8 +35,11 @@ namespace Jail
         public Image BlackScreen { get; set; }
         public AudioClip FallSound { get; set; }
         public AudioClip EatenSound { get; set; }
+
         private AudioSource persistentSound;
         private MapGenerator.MapDescription map;
+        private NavMeshData navMeshData;
+        private NavMeshDataInstance navMeshDataInstance;
 
         public void StartGame()
         {
@@ -82,9 +85,10 @@ namespace Jail
 
         private void RebakeNavmesh()
         {
-            /*NavMeshSurface nm = new NavMeshSurface();
-
-            nm.BuildNavMesh();*/
+            if (navMeshDataInstance.valid)
+            {
+                NavMesh.RemoveNavMeshData(navMeshDataInstance);
+            }
             NavMeshBuildSettings settings = new NavMeshBuildSettings();
             settings.agentClimb = 0.75f;
             settings.agentHeight = 2.0f;
@@ -104,8 +108,12 @@ namespace Jail
                 src.size = new Vector3(10, 10, 10);
                 sources.Add(src);
             }
-            NavMeshBuilder.BuildNavMeshData(settings, sources, new Bounds(), Vector3.zero, Quaternion.identity);
-            Debug.Log("Navmesh built successfully");
+            navMeshData = NavMeshBuilder.BuildNavMeshData(settings, sources, new Bounds(), Vector3.zero, Quaternion.identity);
+            navMeshDataInstance = NavMesh.AddNavMeshData(navMeshData);
+            if (navMeshDataInstance.valid)
+            {
+                Debug.Log("Navmesh built successfully");
+            }
             foreach (Mesh m in roomMeshes)
             {
                 m.UploadMeshData(true);
