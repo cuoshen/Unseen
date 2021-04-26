@@ -129,7 +129,7 @@ namespace Jail
         public void PlayerGotEaten()
         {
             HandlePlayerDeath();
-            persistentSound.PlayOneShot(FailSound);
+            persistentSound.PlayOneShot(EatenSound);
         }
 
         private void HandlePlayerDeath()
