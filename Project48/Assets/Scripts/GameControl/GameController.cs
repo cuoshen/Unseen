@@ -35,6 +35,8 @@ namespace Jail
         public Image BlackScreen { get; set; }
         public AudioClip FallSound { get; set; }
         public AudioClip EatenSound { get; set; }
+        public GameObject CreditsScreen { get; set; }
+        public DelayedActivationController delayedActivationController { get; set; }
 
         private AudioSource persistentSound;
         private MapGenerator.MapDescription map;
@@ -48,12 +50,13 @@ namespace Jail
             Player.enabled = true;
             Player.WinCon = GameObject.Instantiate(WinConPrefab, new Vector3(0, 2, 0), Quaternion.identity);
             Player.Character.enabled = false;
-            Player.gameObject.transform.position = map.startingPoint.transform.position + new Vector3(0.0f, 1.0f, 0.0f);
+            Player.gameObject.transform.position = map.startingPoint.room.transform.position + new Vector3(0.0f, 1.0f, 0.0f);
             Player.Character.enabled = true;
 
             RebakeNavmesh();
 
             BlackScreen.gameObject.SetActive(false);
+            CreditsScreen.SetActive(false);
 
             persistentSound = Camera.main.GetComponent<AudioSource>();
             if (!persistentSound.isPlaying)
@@ -145,10 +148,6 @@ namespace Jail
             }
             navMeshData = NavMeshBuilder.BuildNavMeshData(settings, sources, new Bounds(), Vector3.zero, Quaternion.identity);
             navMeshDataInstance = NavMesh.AddNavMeshData(navMeshData);
-            if (navMeshDataInstance.valid)
-            {
-                Debug.Log("Navmesh built successfully");
-            }
             foreach (Mesh m in roomMeshes)
             {
                 m.UploadMeshData(true);
@@ -160,7 +159,8 @@ namespace Jail
             persistentSound.Stop();
             Player.WinCon.GetComponent<AudioSource>().Play();
             Player.enabled = false;
-            // Full Screen Image
+            // Delay activasion credits screen
+            delayedActivationController.DelayedActivation(3.0f);
         }
 
         public void PlayerFallToDeath()

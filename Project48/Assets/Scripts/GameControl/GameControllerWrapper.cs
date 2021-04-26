@@ -6,14 +6,6 @@ using UnityEngine.UI;
 
 namespace Jail
 {
-
-    public enum GameStates
-    {
-        WIN,
-        FAIL,
-        PROGRESS,
-        TOSTART
-    };
     class GameControllerWrapper : MonoBehaviour
     {
         public TopDownPlayerController Player;
@@ -22,11 +14,12 @@ namespace Jail
         public MapGenerator MapGenerator;
         public AudioClip[] Musics;
         public Image BlackScreen;
+        public GameObject CreditsScreen;
+        public DelayedActivationController delayedActivationController;
 
         private GameController controller;
         private bool gameStarted = false;
-        private GameStates gamestate = GameStates.TOSTART;
-        
+
 
         private void Start()
         {
@@ -38,6 +31,8 @@ namespace Jail
             controller.BlackScreen = BlackScreen;
             controller.FallSound = Musics[0];
             controller.EatenSound = Musics[1];
+            controller.CreditsScreen = CreditsScreen;
+            controller.delayedActivationController = delayedActivationController;
         }
 
         private void Update()
@@ -46,7 +41,6 @@ namespace Jail
             {
                 controller.StartGame();
                 gameStarted = true;
-                gamestate = GameStates.PROGRESS;
             }
 
             if (UnityEngine.Random.Range(1, 1000) == 1)
