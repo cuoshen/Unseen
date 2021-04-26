@@ -14,7 +14,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &919177686
 Transform:
@@ -44,7 +44,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &1486782087
 Transform:
@@ -74,7 +74,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &1632744450
 Transform:
@@ -104,7 +104,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &2065671288
 Transform:
@@ -134,7 +134,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &5980457523312932290
 Transform:
@@ -192,6 +192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DoorsDirectory: {fileID: 6362606330561879199}
+  PropSpawnDirectory: {fileID: 0}
   Length: 10
 --- !u!1 &6362606330561879199
 GameObject:
@@ -207,7 +208,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &7569647767880909518
 Transform:
@@ -234,6 +235,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5980457523312932290}
     m_Modifications:
+    - target: {fileID: 247928739308534001, guid: bc9de0fdfd51c404b9023ab58985a5a2, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 288805236814078426, guid: bc9de0fdfd51c404b9023ab58985a5a2, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1013826462531837005, guid: bc9de0fdfd51c404b9023ab58985a5a2, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1054159707800986608, guid: bc9de0fdfd51c404b9023ab58985a5a2, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -290,9 +303,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2967648809252150272, guid: bc9de0fdfd51c404b9023ab58985a5a2, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 6885707087273849622, guid: bc9de0fdfd51c404b9023ab58985a5a2, type: 3}
       propertyPath: m_Name
       value: lamp light (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6885707087273849622, guid: bc9de0fdfd51c404b9023ab58985a5a2, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc9de0fdfd51c404b9023ab58985a5a2, type: 3}
@@ -360,6 +381,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: room1 + lights Complete
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 03f3d830c4bcdcd4eb249a26fb810690, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 03f3d830c4bcdcd4eb249a26fb810690, type: 3}
 --- !u!1 &1271140073714239875 stripped
@@ -379,6 +404,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5980457523312932290}
     m_Modifications:
+    - target: {fileID: 247928739308534001, guid: bc9de0fdfd51c404b9023ab58985a5a2, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 288805236814078426, guid: bc9de0fdfd51c404b9023ab58985a5a2, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1013826462531837005, guid: bc9de0fdfd51c404b9023ab58985a5a2, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1054159707800986608, guid: bc9de0fdfd51c404b9023ab58985a5a2, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -435,9 +472,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2967648809252150272, guid: bc9de0fdfd51c404b9023ab58985a5a2, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 6885707087273849622, guid: bc9de0fdfd51c404b9023ab58985a5a2, type: 3}
       propertyPath: m_Name
       value: lamp light
+      objectReference: {fileID: 0}
+    - target: {fileID: 6885707087273849622, guid: bc9de0fdfd51c404b9023ab58985a5a2, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc9de0fdfd51c404b9023ab58985a5a2, type: 3}

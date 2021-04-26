@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 052aa7e7ff7045c4fa9b23ba12c2f357
+guid: 1713c2fcd34c7f946823cf03684e1ee9
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
@@ -23,7 +23,7 @@ ModelImporter:
     second: metarig|metarigAction.001
   - first:
       74: -5784005261616917065
-    second: Stunned
+    second: Enemy Attack
   - first:
       74: -8639993316982285888
     second: Armature.001|ArmatureAction.001
@@ -73,7 +73,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -236,17 +236,17 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Stunned
+      name: Enemy Attack
       takeName: Armature.001|Armature.001Action.001
       internalID: 0
-      firstFrame: 62
-      lastFrame: 124
+      firstFrame: 0
+      lastFrame: 88
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
-      hasAdditiveReferencePose: 0
+      hasAdditiveReferencePose: 1
       loopTime: 1
       loopBlend: 1
       loopBlendOrientation: 0

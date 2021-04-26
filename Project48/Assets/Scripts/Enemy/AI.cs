@@ -42,7 +42,7 @@ namespace Jail
 
             distance = Vector3.Distance(player.transform.position, transform.position);
             isAttacked = player.GetComponent<TopDownPlayerController>().state == PlayerState.ATTACK && distance <= 3;
-            Debug.Log(distance);
+            //Debug.Log(distance);
             if (isAttacked)
             {
 

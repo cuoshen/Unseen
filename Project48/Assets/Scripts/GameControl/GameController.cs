@@ -73,7 +73,10 @@ namespace Jail
 
         private void RebakeNavmesh()
         {
-
+            foreach (GameObject room in map.rooms)
+            {
+                //room.AI.BuildNavMesh();
+            }
         }
 
 

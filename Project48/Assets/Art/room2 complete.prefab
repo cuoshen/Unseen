@@ -14,7 +14,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &1732679873
 Transform:
@@ -44,7 +44,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &1925907530
 Transform:
@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DoorsDirectory: {fileID: 8460580398111682445}
+  PropSpawnDirectory: {fileID: 0}
   Length: 10
 --- !u!1 &8460580398111682445
 GameObject:
@@ -115,7 +116,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &1085654350831817361
 Transform:
@@ -191,6 +192,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: d2e0b838ac77f9a47a0dbd17a0c9d1dc, type: 3}
       propertyPath: m_Name
       value: room2 complete
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d2e0b838ac77f9a47a0dbd17a0c9d1dc, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2e0b838ac77f9a47a0dbd17a0c9d1dc, type: 3}
