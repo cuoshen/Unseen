@@ -75,10 +75,11 @@ namespace Jail
             else if (attackDis <= distance && distance < EncounterDis )
             {
                 state = EnemyState.MOVE;
-                Vector3 offset = player.transform.position - transform.position;
-                float speed = 3f;
-                float x = 0, z = 0;
 
+                Vector3 offset = player.transform.position - transform.position;
+                float speed = 2f;
+                float x = 0, z = 0;
+                float angularSpeed = 15.0f;
                 if (offset.z > 0)
                 {
                     z = 1;
@@ -98,10 +99,11 @@ namespace Jail
                 {
                     x = -1;
                 }
-                
+                Vector3 direction = new Vector3(x, 0, z);
                 //NextPosition = transform.position + new Vector3(x, 0, z);
-
-                cc.Move(new Vector3(x, 0, z) * speed * Time.deltaTime);
+                Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, angularSpeed);
+                cc.Move(direction * speed * Time.deltaTime);
                 //agent.SetDestination(player.transform.position);
             } 
             else 
