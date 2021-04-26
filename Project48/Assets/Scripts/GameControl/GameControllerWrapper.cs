@@ -30,7 +30,7 @@ namespace Jail
             Player.gameObject.SetActive(false);
             controller = GameController.Instance;
             controller.Player = Player;
-            controller.WinCon = WinCon;
+            controller.WinConPrefab = WinCon;
             controller.MapGenerator = MapGenerator;
         }
 
@@ -40,7 +40,7 @@ namespace Jail
             switch (gamestate)
             {
                 case GameStates.PROGRESS:
-                    controller.changeBGM(musics[0]);
+                    controller.ChangeBGM(musics[0]);
                     break;
                 case GameStates.FAIL:
                     controller.ChangeBGM(musics[1]);

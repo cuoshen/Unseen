@@ -31,13 +31,13 @@ namespace Jail
 
         public MapGenerator MapGenerator { get; set; }
         public TopDownPlayerController Player { get; set; }
-        public GameObject WinCon { get; set; }
+        public GameObject WinConPrefab { get; set; }
         private MapGenerator.MapDescription map;
 
         public void StartGame()
         {
             map = MapGenerator.GenerateMap();
-            Player.WinCon = GameObject.Instantiate(WinCon, new Vector3(0, 2, 0), Quaternion.identity);
+            Player.WinCon = GameObject.Instantiate(WinConPrefab, new Vector3(0, 2, 0), Quaternion.identity);
             // In the end we place player character in starting room
             Player.gameObject.SetActive(true);
             Player.Character.enabled = false;
@@ -71,7 +71,7 @@ namespace Jail
         }
 
 
-        public void changeBGM(AudioClip music)
+        public void ChangeBGM(AudioClip music)
         {
 
             if (BGM.name == music.name)
@@ -91,7 +91,9 @@ namespace Jail
             nm.BuildNavMesh();*/
         }
 
-
-
+        public void WinGame()
+        {
+            Player.WinCon.GetComponent<AudioSource>().Play();
+        }
     }
 }
