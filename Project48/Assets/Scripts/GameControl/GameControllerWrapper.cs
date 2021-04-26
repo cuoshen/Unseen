@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Jail
 {
@@ -19,7 +20,9 @@ namespace Jail
         public GameObject Enemy;
         public GameObject WinCon;
         public MapGenerator MapGenerator;
-        public AudioClip[] musics;
+        public AudioClip[] Musics;
+        public Image BlackScreen;
+
         private GameController controller;
         private bool gameStarted = false;
         private GameStates gamestate = GameStates.TOSTART;
@@ -32,6 +35,8 @@ namespace Jail
             controller.Player = Player;
             controller.WinConPrefab = WinCon;
             controller.MapGenerator = MapGenerator;
+            controller.BlackScreen = BlackScreen;
+            controller.FallSound = Musics[0];
         }
 
         private void MusicControl()
