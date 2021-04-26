@@ -43,6 +43,7 @@ namespace Jail
 
         public void DragToVantagePoint()
         {
+            hasBeenToVantage = false;
             Mode = CameraMode.VANTAGE;
         }
     }
