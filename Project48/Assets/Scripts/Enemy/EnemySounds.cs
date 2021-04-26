@@ -16,23 +16,23 @@ public class EnemySounds : MonoBehaviour
 
     private void m1()
     {
-        AudioClip clip = GetRandomClip();
+
         audioSource.PlayOneShot(clips[0]);
     }
 
     private void m2()
     {
-        AudioClip clip = GetRandomClip();
+
         audioSource.PlayOneShot(clips[1]);
     }
     private void m3()
     {
-        AudioClip clip = GetRandomClip();
+
         audioSource.PlayOneShot(clips[2]);
     }
     private void m4()
     {
-        AudioClip clip = GetRandomClip();
+
         audioSource.PlayOneShot(clips[3]);
     }
 
