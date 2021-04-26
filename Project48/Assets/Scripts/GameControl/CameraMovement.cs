@@ -13,7 +13,7 @@ namespace Jail
         public CameraMode Mode;
         public Vector3 Offset;
         private bool hasBeenToVantage = false;
-        private float speed = 100.0f;
+        private float speed = 150.0f;
         private Vector3 followPos;
 
         private void Update()

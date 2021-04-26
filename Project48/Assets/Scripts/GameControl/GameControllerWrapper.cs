@@ -40,7 +40,7 @@ namespace Jail
             controller.EatenSound = Musics[1];
         }
 
-    private void Update()
+        private void Update()
         {
             if (!gameStarted)
             {
