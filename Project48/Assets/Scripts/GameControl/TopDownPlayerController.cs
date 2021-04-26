@@ -17,6 +17,7 @@ namespace Jail
         private float angularSpeed = 15.0f;
         public PlayerState state;
         private Animator animator;
+        private List<AI> enemies;
 
         // Start is called before the first frame update
         void Awake()
@@ -24,6 +25,12 @@ namespace Jail
             Character = gameObject.GetComponent<CharacterController>();
             animator = gameObject.GetComponent<Animator>();
             state = PlayerState.IDLE;
+            GameObject[] ems = GameObject.FindGameObjectsWithTag("Enemy");
+            foreach (GameObject em in ems)
+            {
+                enemies.Add(em.GetComponent<AI>());
+            }
+
         }
 
         // Update is called once per frame
