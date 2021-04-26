@@ -40,7 +40,7 @@ namespace Jail
             switch (gamestate)
             {
                 case GameStates.PROGRESS:
-                    controller.changeBGM(musics[0]);
+                    controller.ChangeBGM(musics[0]);
                     break;
                 case GameStates.FAIL:
                     controller.ChangeBGM(musics[1]);

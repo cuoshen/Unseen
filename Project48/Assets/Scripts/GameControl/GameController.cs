@@ -71,7 +71,7 @@ namespace Jail
         }
 
 
-        public void changeBGM(AudioClip music)
+        public void ChangeBGM(AudioClip music)
         {
 
             if (BGM.name == music.name)
