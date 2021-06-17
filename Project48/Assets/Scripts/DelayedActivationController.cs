@@ -4,9 +4,6 @@ using UnityEngine;
 
 namespace Jail
 {
-    /// <summary>
-    /// For given action, delay it by a certain period of time
-    /// </summary>
     class DelayedActivationController : MonoBehaviour
     {
         private float t = 0.0f;
