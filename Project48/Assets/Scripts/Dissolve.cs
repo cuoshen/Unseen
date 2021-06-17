@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Dissolve script controls the dissolve shader
+/// </summary>
 [RequireComponent(typeof(Renderer))]
 public class Dissolve : MonoBehaviour
 {
