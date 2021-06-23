@@ -57,7 +57,7 @@ namespace Jail
 
             float horizontal = Input.GetAxisRaw("Horizontal");
             float vertical = Input.GetAxisRaw("Vertical");
-            Vector3 direction = new Vector3(horizontal, 0.0f, vertical);
+            Vector3 direction = new Vector3(horizontal, 0.0f, vertical).normalized;
             if (Input.GetMouseButtonDown(0) && state != PlayerState.WALK)
             {
                 state = PlayerState.ATTACK;
