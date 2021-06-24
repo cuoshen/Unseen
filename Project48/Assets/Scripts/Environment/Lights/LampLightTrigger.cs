@@ -13,12 +13,15 @@ namespace Jail
 
         Light light;
         SphereCollider sphereCollider;
+        
+
+        private Material material;
 
         public float trigger_radius;
-        //public bool instant_on;
-        //public bool instant_off;
         public float min_intensity;
         public float max_intensity;
+        // Color of children <lamp sphere>
+        public Color color;
 
         public AnimationCurve on_curve, off_curve;
         private float on_time_elapsed;
@@ -32,6 +35,10 @@ namespace Jail
             // init gameObject references
             light = GetComponent<Light>();
             sphereCollider = GetComponent<SphereCollider>();
+            material = transform.Find("lamp_sphere").GetComponent<MeshRenderer>().material;
+            material.color = color;
+
+            light.type = LightType.Point;
 
             // force collider to be trigger
             sphereCollider.isTrigger = true;
@@ -53,32 +60,15 @@ namespace Jail
             {
                 on_time_elapsed += Time.deltaTime;
                 light.intensity = min_intensity + on_curve.Evaluate(on_time_elapsed) * max_intensity;
-                //if (instant_on)
-                //{
-                //    // instant react
-                //    light.intensity = max_intensity;
-                //}
-                //else
-                //{
-                //    // smooth react
-                //    light.intensity = Mathf.Lerp(light.intensity, max_intensity, Time.deltaTime);
-                //}
             }
             else
             {
                 off_time_elapsed += Time.deltaTime;
                 light.intensity = min_intensity + off_curve.Evaluate(off_time_elapsed) * max_intensity;
-                //if (instant_off)
-                //{
-                //    // instant react
-                //    light.intensity = min_intensity;
-                //}
-                //else
-                //{
-                //    // smooth react
-                //    light.intensity = Mathf.Lerp(light.intensity, min_intensity, Time.deltaTime);
-                //}
             }
+            color.a = light.intensity;
+            material.color = color;
+            transform.Find("lamp_sphere").GetComponent<MeshRenderer>().material = material;
         }
 
         // object enter
