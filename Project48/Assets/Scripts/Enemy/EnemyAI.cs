@@ -20,7 +20,7 @@ namespace Jail
         private float distance;
         private float EncounterDis = 10f;
         private float attackDis = 2f;
-        float speed = 0f;
+        float speed = 4.8f;
 
         private int stunnedCounter = 0;
         public bool isAttacked = false;
@@ -30,7 +30,7 @@ namespace Jail
         // Start is called before the first frame update
         void Start()
         {
-            player = GameController.Instance.Player.gameObject;
+            player = GameObject.FindWithTag("Player");
             animator = gameObject.GetComponent<Animator>();
             cc = GetComponent<CharacterController>();
         }
