@@ -19,7 +19,7 @@ public class EnemyAI : MonoBehaviour
     private float distance;
     private float EncounterDis = 10f;
     private float attackDis = 2f;
-    float speed = 0f;
+    float speed = 4.8f;;
 
     private int stunnedCounter = 0;
     public bool isAttacked = false;
