@@ -34,20 +34,20 @@ namespace Jail
         {
             // init gameObject references
             light = GetComponent<Light>();
-            sphereCollider = GetComponent<SphereCollider>();
-            material = transform.Find("lamp_sphere").GetComponent<MeshRenderer>().material;
-            material.color = color;
-
             light.type = LightType.Point;
+            light.color = color;
 
+            sphereCollider = GetComponent<SphereCollider>();
             // force collider to be trigger
             sphereCollider.isTrigger = true;
-
             // set trigger radius
             if (trigger_radius >= 0)
             {
                 sphereCollider.radius = trigger_radius;
             }
+
+            material = GetComponent<MeshRenderer>().materials[0];
+            material.SetColor("_EmissionColor", color * light.intensity / 10);
 
             on_curve.postWrapMode = WrapMode.Clamp;
             off_curve.postWrapMode = WrapMode.Clamp;
@@ -66,9 +66,8 @@ namespace Jail
                 off_time_elapsed += Time.deltaTime;
                 light.intensity = min_intensity + off_curve.Evaluate(off_time_elapsed) * max_intensity;
             }
-            color.a = light.intensity;
-            material.color = color;
-            transform.Find("lamp_sphere").GetComponent<MeshRenderer>().material = material;
+            
+            GetComponent<MeshRenderer>().materials[0].SetColor("_EmissionColor", color * light.intensity / 10);
         }
 
         // object enter
