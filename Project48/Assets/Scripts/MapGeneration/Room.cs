@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Jail
 {
-    class LegacyRoom : MonoBehaviour
+    class Room : MonoBehaviour
     {
         public GameObject DoorsDirectory;
         public GameObject PropSpawnDirectory;
