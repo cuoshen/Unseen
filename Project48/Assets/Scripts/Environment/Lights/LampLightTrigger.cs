@@ -23,12 +23,11 @@ namespace Jail
         // Color of children <lamp sphere>
         public Color color;
 
-        public AnimationCurve on_curve, on_curve_enemy, off_curve;
+        public AnimationCurve on_curve, off_curve;
         private float on_time_elapsed;
         private float off_time_elapsed;
 
         private bool triggered;
-        public bool is_enemy;
 
         // Start is called before the first frame update
         void Start()
@@ -51,7 +50,6 @@ namespace Jail
             }
 
             on_curve.postWrapMode = WrapMode.Clamp;
-            on_curve_enemy.postWrapMode = WrapMode.Clamp;
             off_curve.postWrapMode = WrapMode.Clamp;
         }
 
@@ -61,17 +59,7 @@ namespace Jail
             if (triggered)
             {
                 on_time_elapsed += Time.deltaTime;
-                AnimationCurve curve = on_curve;
-                if (is_enemy)
-                {
-                    curve = on_curve_enemy;
-                    if (on_time_elapsed >= 1.0)
-                    {
-                        on_time_elapsed = 0;
-                    }
-                    
-                }                
-                light.intensity = min_intensity + curve.Evaluate(on_time_elapsed) * max_intensity;
+                light.intensity = min_intensity + on_curve.Evaluate(on_time_elapsed) * max_intensity;
             }
             else
             {
@@ -88,22 +76,13 @@ namespace Jail
         {
             off_time_elapsed = 0;
             triggered = true;
-            if (other.tag == "Enemy")
-            {
-                is_enemy = true;
-            } 
         }
 
         // object exit
         private void OnTriggerExit(Collider other)
         {
-            if (other.tag == "Enemy")
-            {
-                is_enemy = false;
-            } 
             on_time_elapsed = 0;
             triggered = false;
-
         }
     }
 }
