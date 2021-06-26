@@ -6,7 +6,7 @@ using System;
 
 namespace Jail
 {
-    class MapGenerator : MonoBehaviour
+    class LegacyMapGenerator : MonoBehaviour
     {
         public GameObject[] RoomPrefabs;
         public GameObject[] PropPrefabs;
@@ -58,7 +58,7 @@ namespace Jail
             {
                 return;
             }
-            Room roomData = room.GetComponent<Room>();
+            LegacyRoom roomData = room.GetComponent<LegacyRoom>();
             if (roomData == null)
             {
                 Debug.LogError("Try to instantiate a room without its data model");
@@ -73,7 +73,7 @@ namespace Jail
                     // Try to add room at this door
                     GameObject newRoom = 
                         GameObject.Instantiate(candidate, 
-                        door.transform.position + door.transform.forward * candidate.GetComponent<Room>().Length, 
+                        door.transform.position + door.transform.forward * candidate.GetComponent<LegacyRoom>().Length, 
                         door.transform.rotation);
                     // Bounding box check
                     if (CanBePlaced(newRoom))
@@ -121,7 +121,7 @@ namespace Jail
 
         private void SpawnProps(GameObject newRoom)
         {
-            Room room = newRoom.GetComponent<Room>();
+            LegacyRoom room = newRoom.GetComponent<LegacyRoom>();
             foreach (GameObject spawnPoint in room.PropSpawns)
             {
                 if (PercentageCheck(50))
