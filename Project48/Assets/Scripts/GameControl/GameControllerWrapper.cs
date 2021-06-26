@@ -11,7 +11,7 @@ namespace Jail
         public TopDownPlayerController Player;
         public GameObject Enemy;
         public GameObject WinCon;
-        public MapGenerator MapGenerator;
+        public LegacyMapGenerator MapGenerator;
         public AudioClip[] Musics;
         public Image BlackScreen;
         public GameObject CreditsScreen;
