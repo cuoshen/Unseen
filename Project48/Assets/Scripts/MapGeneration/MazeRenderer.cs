@@ -34,7 +34,7 @@ public class MazeRenderer : MonoBehaviour
 
             DrawRBMaze(lastEndPos, startPos, endPos, maze);
             lastEndPos += new Vector3(endPos.x - startPos.x, 0, endPos.y - startPos.y + 1);
-            yield return null;
+            yield return null; // Physics.CheckSphere cannot detect colliders generated in the same tick
         }
     }
 
