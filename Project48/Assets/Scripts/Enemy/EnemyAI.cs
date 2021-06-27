@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Jail
+namespace Legacy
 {
     public enum EnemyState
     {

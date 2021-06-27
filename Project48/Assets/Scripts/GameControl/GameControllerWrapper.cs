@@ -4,14 +4,14 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Jail
+namespace Legacy
 {
     class GameControllerWrapper : MonoBehaviour
     {
         public TopDownPlayerController Player;
         public GameObject Enemy;
         public GameObject WinCon;
-        public LegacyMapGenerator MapGenerator;
+        public MapGenerator MapGenerator;
         public AudioClip[] Musics;
         public Image BlackScreen;
         public GameObject CreditsScreen;
