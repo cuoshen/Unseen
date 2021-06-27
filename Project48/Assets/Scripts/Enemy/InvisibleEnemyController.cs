@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Jail
+namespace Legacy
 {
     [RequireComponent(typeof(AudioSource))]
     class InvisibleEnemyController : MonoBehaviour

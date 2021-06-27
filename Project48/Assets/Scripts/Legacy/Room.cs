@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Jail
+namespace Legacy
 {
-    class LegacyRoom : MonoBehaviour
+    class Room : MonoBehaviour
     {
         public GameObject DoorsDirectory;
         public GameObject PropSpawnDirectory;
