@@ -89,7 +89,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trigger_radius: 6
   min_intensity: 0
-  max_intensity: 10
+  max_intensity: 5
   color: {r: 0.9811321, g: 0.8455435, b: 0.4757565, a: 1}
   on_curve:
     serializedVersion: 2
@@ -169,6 +169,12 @@ MonoBehaviour:
     m_PreInfinity: 3
     m_PostInfinity: 3
     m_RotationOrder: 4
+  on_curve_enemy:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   off_curve:
     serializedVersion: 2
     m_Curve:
@@ -211,6 +217,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  is_enemy: 0
 --- !u!1 &8655341394545499133
 GameObject:
   m_ObjectHideFlags: 0
