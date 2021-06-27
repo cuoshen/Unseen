@@ -29,7 +29,7 @@ namespace Jail
         {
         }
 
-        public MapGenerator MapGenerator { get; set; }
+        public LegacyMapGenerator MapGenerator { get; set; }
         public TopDownPlayerController Player { get; set; }
         public GameObject WinConPrefab { get; set; }
         public Image BlackScreen { get; set; }
@@ -40,7 +40,7 @@ namespace Jail
         public GameObject InvisibleEnemy { get; set; }
 
         private AudioSource persistentSound;
-        private MapGenerator.MapDescription map;
+        private LegacyMapGenerator.MapDescription map;
         private NavMeshData navMeshData;
         private NavMeshDataInstance navMeshDataInstance;
         private List<GameObject> enemies = new List<GameObject>();
