@@ -20,7 +20,7 @@ namespace Jail
         private float distance;
         private float EncounterDis = 10f;
         private float attackDis = 2f;
-        float speed = 4.8f;
+        float speed = 4.5f;
 
         private int stunnedCounter = 0;
         public bool isAttacked = false;
