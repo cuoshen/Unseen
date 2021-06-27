@@ -15,6 +15,10 @@ public class MazeGenerator : MonoBehaviour
     Transform floorPrefab = null;
     [SerializeField]
     Transform lightPrefab = null;
+    [SerializeField]
+    Transform startPrefab = null;
+    [SerializeField]
+    Transform endPrefab = null;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +31,9 @@ public class MazeGenerator : MonoBehaviour
     {
         Vector3 lastEndPos = new Vector3(0, 0, 0);
 
+        Transform start = Instantiate(startPrefab, transform);
+        start.localPosition = lastEndPos + new Vector3(0, -0.5f, -1f);
+
         for (int i = 0; i < level; i++)
         {
             WallState[,] maze = RBMazeMapper.CreateMap(rng, width, height);
@@ -38,6 +45,9 @@ public class MazeGenerator : MonoBehaviour
             lastEndPos += new Vector3(endPos.x - startPos.x, 0, endPos.y - startPos.y + 1);
             yield return null; // Physics.CheckSphere cannot detect colliders generated in the same tick
         }
+
+        Transform end = Instantiate(endPrefab, transform);
+        end.localPosition = lastEndPos + new Vector3(0, 0.5f, 0);
     }
 
     /// <summary>
