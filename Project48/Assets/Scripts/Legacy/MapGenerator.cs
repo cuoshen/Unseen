@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using System;
 
-namespace Jail
+namespace Legacy
 {
     class MapGenerator : MonoBehaviour
     {

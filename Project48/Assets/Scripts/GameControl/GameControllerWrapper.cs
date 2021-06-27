@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Jail
+namespace Legacy
 {
     class GameControllerWrapper : MonoBehaviour
     {

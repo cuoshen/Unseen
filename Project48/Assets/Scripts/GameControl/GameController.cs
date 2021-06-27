@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
-namespace Jail
+namespace Legacy
 {
     /// <summary>
     /// Singleton game controller logic

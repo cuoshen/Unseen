@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Jail
+namespace Legacy
 {
     /// <summary>
     /// For given action, delay it by a certain period of time

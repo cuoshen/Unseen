@@ -2,74 +2,72 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Legacy;
 
-namespace Jail
+public enum EnemyState
 {
-    public enum EnemyState
+    ATTACK,
+    STUNNED,
+    IDLE,
+    MOVE
+}
+
+public class EnemyAI : MonoBehaviour
+{
+    private GameObject player;
+    public EnemyState state = EnemyState.IDLE;
+    private float distance;
+    private float EncounterDis = 10f;
+    private float attackDis = 2f;
+    float speed = 0f;
+
+    private int stunnedCounter = 0;
+    public bool isAttacked = false;
+    private Animator animator;
+    private CharacterController cc;
+
+    // Start is called before the first frame update
+    void Start()
     {
-        ATTACK,
-        STUNNED,
-        IDLE,
-        MOVE
+        player = GameController.Instance.Player.gameObject;
+        animator = gameObject.GetComponent<Animator>();
+        cc = GetComponent<CharacterController>();
     }
 
-    public class EnemyAI : MonoBehaviour
+    // Update is called once per frame
+    void Update()
     {
-        private GameObject player;
-        public EnemyState state = EnemyState.IDLE;
-        private float distance;
-        private float EncounterDis = 10f;
-        private float attackDis = 2f;
-        float speed = 0f;
-
-        private int stunnedCounter = 0;
-        public bool isAttacked = false;
-        private Animator animator;
-        private CharacterController cc;
-
-        // Start is called before the first frame update
-        void Start()
+        distance = Vector3.Distance(player.transform.position, transform.position);
+        if ( EncounterDis <= distance)
         {
-            player = GameController.Instance.Player.gameObject;
-            animator = gameObject.GetComponent<Animator>();
-            cc = GetComponent<CharacterController>();
+            state = EnemyState.IDLE;
+        } 
+        else if (attackDis <= distance && distance < EncounterDis )
+        {
+            state = EnemyState.MOVE;
+            Vector3 diff = player.transform.position - transform.position;
+            diff = diff.normalized;
+            Vector3 direction = new Vector3(diff.x, 0, diff.z);
+            Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
+            transform.rotation = targetRotation;
+            cc.Move(direction * speed * Time.deltaTime);
+        } 
+        else 
+        {
+            state = EnemyState.ATTACK;
         }
 
-        // Update is called once per frame
-        void Update()
+        switch (state)
         {
-            distance = Vector3.Distance(player.transform.position, transform.position);
-            if ( EncounterDis <= distance)
-            {
-                state = EnemyState.IDLE;
-            } 
-            else if (attackDis <= distance && distance < EncounterDis )
-            {
-                state = EnemyState.MOVE;
-                Vector3 diff = player.transform.position - transform.position;
-                diff = diff.normalized;
-                Vector3 direction = new Vector3(diff.x, 0, diff.z);
-                Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
-                transform.rotation = targetRotation;
-                cc.Move(direction * speed * Time.deltaTime);
-            } 
-            else 
-            {
-                state = EnemyState.ATTACK;
-            }
-
-            switch (state)
-            {
-                case EnemyState.IDLE:
-                    animator.Play("Idle");
-                    break;
-                case EnemyState.ATTACK:
-                    animator.Play("Attack");
-                    break;
-                case EnemyState.MOVE:
-                    animator.Play("Run");
-                    break;
-            }
+            case EnemyState.IDLE:
+                animator.Play("Idle");
+                break;
+            case EnemyState.ATTACK:
+                animator.Play("Attack");
+                break;
+            case EnemyState.MOVE:
+                animator.Play("Run");
+                break;
         }
     }
 }
