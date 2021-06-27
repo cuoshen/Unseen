@@ -129,7 +129,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-26588
+  m_Name: pb_Mesh23948
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -319,6 +319,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &889555368 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3164956843992085849, guid: 6bfb0de2cc626054bb150c8492e26f18, type: 3}
+  m_PrefabInstance: {fileID: 1135819636}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &924368857
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -394,6 +399,7 @@ GameObject:
   - component: {fileID: 1127541529}
   - component: {fileID: 1127541528}
   - component: {fileID: 1127541527}
+  - component: {fileID: 1127541532}
   m_Layer: 0
   m_Name: Arch
   m_TagString: Untagged
@@ -442,7 +448,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c49ec95b91988694ab5568112b0c4084, type: 2}
+  - {fileID: 2100000, guid: 62b4d9ef0aff4eb4eb0a9155efaa0a9c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4174,6 +4180,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: -150}
+--- !u!114 &1127541532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1127541526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5112318b4430cbd4ab8c82a655961b8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 889555368}
 --- !u!1001 &1135819636
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4723,12 +4742,6 @@ MonoBehaviour:
     m_PreInfinity: 3
     m_PostInfinity: 3
     m_RotationOrder: 4
-  on_curve_enemy:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
   off_curve:
     serializedVersion: 2
     m_Curve:
@@ -4753,7 +4766,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  is_enemy: 0
 --- !u!135 &1842227744
 SphereCollider:
   m_ObjectHideFlags: 0
