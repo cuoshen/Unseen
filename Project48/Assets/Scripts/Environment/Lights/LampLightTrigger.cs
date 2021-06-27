@@ -23,35 +23,33 @@ namespace Jail
         // Color of children <lamp sphere>
         public Color color;
 
-        public AnimationCurve on_curve, on_curve_enemy, off_curve;
+        public AnimationCurve on_curve, off_curve;
         private float on_time_elapsed;
         private float off_time_elapsed;
 
         private bool triggered;
-        public bool is_enemy;
 
         // Start is called before the first frame update
         void Start()
         {
             // init gameObject references
             light = GetComponent<Light>();
-            sphereCollider = GetComponent<SphereCollider>();
-            material = transform.Find("lamp_sphere").GetComponent<MeshRenderer>().material;
-            material.color = color;
-
             light.type = LightType.Point;
+            light.color = color;
 
+            sphereCollider = GetComponent<SphereCollider>();
             // force collider to be trigger
             sphereCollider.isTrigger = true;
-
             // set trigger radius
             if (trigger_radius >= 0)
             {
                 sphereCollider.radius = trigger_radius;
             }
 
+            material = GetComponent<MeshRenderer>().materials[0];
+            material.SetColor("_EmissionColor", color * light.intensity / 10);
+
             on_curve.postWrapMode = WrapMode.Clamp;
-            on_curve_enemy.postWrapMode = WrapMode.Clamp;
             off_curve.postWrapMode = WrapMode.Clamp;
         }
 
@@ -61,26 +59,15 @@ namespace Jail
             if (triggered)
             {
                 on_time_elapsed += Time.deltaTime;
-                AnimationCurve curve = on_curve;
-                if (is_enemy)
-                {
-                    curve = on_curve_enemy;
-                    if (on_time_elapsed >= 1.0)
-                    {
-                        on_time_elapsed = 0;
-                    }
-                    
-                }                
-                light.intensity = min_intensity + curve.Evaluate(on_time_elapsed) * max_intensity;
+                light.intensity = min_intensity + on_curve.Evaluate(on_time_elapsed) * max_intensity;
             }
             else
             {
                 off_time_elapsed += Time.deltaTime;
                 light.intensity = min_intensity + off_curve.Evaluate(off_time_elapsed) * max_intensity;
             }
-            color.a = light.intensity;
-            material.color = color;
-            transform.Find("lamp_sphere").GetComponent<MeshRenderer>().material = material;
+            
+            GetComponent<MeshRenderer>().materials[0].SetColor("_EmissionColor", color * light.intensity / 10);
         }
 
         // object enter
@@ -88,22 +75,13 @@ namespace Jail
         {
             off_time_elapsed = 0;
             triggered = true;
-            if (other.tag == "Enemy")
-            {
-                is_enemy = true;
-            } 
         }
 
         // object exit
         private void OnTriggerExit(Collider other)
         {
-            if (other.tag == "Enemy")
-            {
-                is_enemy = false;
-            } 
             on_time_elapsed = 0;
             triggered = false;
-
         }
     }
 }
