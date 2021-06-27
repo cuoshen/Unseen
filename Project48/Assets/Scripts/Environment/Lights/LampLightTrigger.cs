@@ -20,12 +20,12 @@ public class LampLightTrigger : MonoBehaviour
     // Color of children <lamp sphere>
     public Color color;
 
-        public AnimationCurve on_curve, on_curve_enemy, off_curve;
-        private float on_time_elapsed;
-        private float off_time_elapsed;
+    public AnimationCurve on_curve, on_curve_enemy, off_curve;
+    private float on_time_elapsed;
+    private float off_time_elapsed;
 
-        private bool triggered;
-        public bool is_enemy;
+    private bool triggered;
+    public bool is_enemy;
 
     // Start is called before the first frame update
     void Start()
@@ -75,13 +75,6 @@ public class LampLightTrigger : MonoBehaviour
         {
             off_time_elapsed += Time.deltaTime;
             light.intensity = min_intensity + off_curve.Evaluate(off_time_elapsed) * max_intensity;
-
-            off_time_elapsed = 0;
-            triggered = true;
-            if (other.tag == "Enemy")
-            {
-                is_enemy = true;
-            }
         }
         color.a = light.intensity;
         material.color = color;
