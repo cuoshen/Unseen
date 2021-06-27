@@ -41,10 +41,10 @@ public class MazeGenerator : MonoBehaviour
     /// <summary>
     /// Generate an individual rectangular RB maze, its entrance connected to the exit of the previous maze
     /// </summary>
-    /// <param name="lastEndPos"></param> Global position of the exit of previous maze
-    /// <param name="startPos"></param> Local position of the entrance of current maze
-    /// <param name="endPos"></param> Local position of  the exit of current maze
-    /// <param name="maze"></param> Matrix representing current maze
+    /// <param name="lastEndPos"> Global position of the exit of previous maze</param>
+    /// <param name="startPos"> Local position of the entrance of current maze</param>
+    /// <param name="endPos"> Local position of  the exit of current maze</param>
+    /// <param name="maze"> Matrix representing current maze</param>
     void GenerateRBMaze(Vector3 lastEndPos, Vector2Int startPos, Vector2Int endPos, WallState[,] maze)
     {
         GameObject mazeGO = new GameObject("RB Maze");
