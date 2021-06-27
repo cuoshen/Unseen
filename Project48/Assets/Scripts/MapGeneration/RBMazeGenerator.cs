@@ -37,10 +37,10 @@ public static class RBMazeGenerator
         }
     }
 
-    static WallState[,] ApplyRecursiveBacktracker(WallState[,] maze, int width, int height)
+    static WallState[,] ApplyRecursiveBacktracker(System.Random rng, WallState[,] maze)
     {
-        // here we make changes
-        System.Random rng = new System.Random(/*seed*/);
+        int width = maze.GetLength(0);
+        int height = maze.GetLength(1);
         Stack<Vector2Int> posStack = new Stack<Vector2Int>();
         Vector2Int initPos = new Vector2Int(rng.Next(width), rng.Next(height));
         Vector2Int position = initPos;
@@ -51,7 +51,7 @@ public static class RBMazeGenerator
         while (posStack.Count > 0)
         {
             Vector2Int current = posStack.Pop();
-            List<Neighbour> neighbours = GetUnvisitedNeighbours(current, maze, width, height);
+            List<Neighbour> neighbours = GetUnvisitedNeighbours(current, maze);
 
             if (neighbours.Count > 0)
             {
@@ -72,8 +72,10 @@ public static class RBMazeGenerator
         return maze;
     }
 
-    static List<Neighbour> GetUnvisitedNeighbours(Vector2Int p, WallState[,] maze, int width, int height)
+    static List<Neighbour> GetUnvisitedNeighbours(Vector2Int p, WallState[,] maze)
     {
+        int width = maze.GetLength(0);
+        int height = maze.GetLength(1);
         List<Neighbour> list = new List<Neighbour>();
 
         if (p.x > 0) // LEFT
@@ -127,7 +129,7 @@ public static class RBMazeGenerator
         return list;
     }
 
-    public static WallState[,] Generate(int width, int height)
+    public static WallState[,] Generate(System.Random rng, int width, int height)
     {
         WallState[,] maze = new WallState[width, height];
         WallState initial = WallState.RIGHT | WallState.LEFT | WallState.UP | WallState.DOWN;
@@ -139,6 +141,6 @@ public static class RBMazeGenerator
             }
         }
         
-        return ApplyRecursiveBacktracker(maze, width, height);
+        return ApplyRecursiveBacktracker(rng, maze);
     }
 }

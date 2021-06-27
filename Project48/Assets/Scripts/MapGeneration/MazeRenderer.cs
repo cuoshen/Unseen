@@ -23,12 +23,12 @@ public class MazeRenderer : MonoBehaviour
     IEnumerator DrawLevel()
     {
         Vector3 lastEndPos = new Vector3(0, 0, 0);
+        System.Random rng = new System.Random(/*seed*/);
 
         for (int i = 0; i < level; i++)
         {
-            WallState[,] maze = RBMazeGenerator.Generate(width, height);
+            WallState[,] maze = RBMazeGenerator.Generate(rng, width, height);
 
-            System.Random rng = new System.Random(/*seed*/);
             Vector2Int startPos = new Vector2Int(rng.Next(width), 0);
             Vector2Int endPos = new Vector2Int(rng.Next(width), height - 1);
 
