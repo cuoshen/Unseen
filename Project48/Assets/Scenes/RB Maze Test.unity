@@ -411,6 +411,8 @@ MonoBehaviour:
   wallPrefab: {fileID: 7599237671437475100, guid: 74e6de8e5b70c384ea5644d7429ceb19, type: 3}
   floorPrefab: {fileID: 634900085634603167, guid: c2536af29a86e154f82a0b8789b78493, type: 3}
   lightPrefab: {fileID: 5674479914053777869, guid: b1c730f215eff1641885309e004770cf, type: 3}
+  startPrefab: {fileID: 4459196779015730797, guid: cf6767f6c193e954b811cd2de006a999, type: 3}
+  endPrefab: {fileID: 6708590964914837869, guid: e462882065328ca4fa37c5e134cf0e3e, type: 3}
 --- !u!4 &2068360654
 Transform:
   m_ObjectHideFlags: 0
