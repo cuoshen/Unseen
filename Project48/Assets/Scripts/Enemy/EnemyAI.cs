@@ -29,7 +29,7 @@ public class EnemyAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameController.Instance.Player.gameObject;
+        player = GameObject.FindWithTag("Player");
         animator = gameObject.GetComponent<Animator>();
         cc = GetComponent<CharacterController>();
     }
