@@ -17,10 +17,10 @@ public class MazeRenderer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        DrawLevel();
+        StartCoroutine("DrawLevel");
     }
 
-    void DrawLevel()
+    IEnumerator DrawLevel()
     {
         Vector3 lastEndPos = new Vector3(0, 0, 0);
 
@@ -34,6 +34,7 @@ public class MazeRenderer : MonoBehaviour
 
             DrawRBMaze(lastEndPos, startPos, endPos, maze);
             lastEndPos += new Vector3(endPos.x - startPos.x, 0, endPos.y - startPos.y + 1);
+            yield return null;
         }
     }
 
