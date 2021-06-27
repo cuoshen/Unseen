@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 public class MazeGenerator : MonoBehaviour
 {
+    System.Random rng;
     int width = 10;
     int height = 10;
     int level = 3;
@@ -19,13 +19,13 @@ public class MazeGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        rng = new System.Random(/*seed*/);
         StartCoroutine("GenerateLevel");
     }
 
     IEnumerator GenerateLevel()
     {
         Vector3 lastEndPos = new Vector3(0, 0, 0);
-        System.Random rng = new System.Random(/*seed*/);
 
         for (int i = 0; i < level; i++)
         {
@@ -63,58 +63,83 @@ public class MazeGenerator : MonoBehaviour
             for (int j = 0; j < height; j++)
             {
                 WallState cell = maze[i, j];
+                List<Vector3> wallPosList = new List<Vector3>();
+                List<Vector3> wallAngleList = new List<Vector3>();
                 Vector3 position = new Vector3(-width / 2 + i, 0, -height / 2 + j);
+                int layerMask = 1 << 6;
 
                 if (cell.HasFlag(WallState.UP) && new Vector2Int(i,j) != endPos)
                 {
                     Vector3 newPos = position + new Vector3(0, 0.5f, 0.5f);
-                    if(!Physics.CheckSphere(mazeTransform.position + newPos, 0.1f))
+                    Vector3 newAngle = new Vector3(0, 0, 0);
+                    wallPosList.Add(newPos);
+                    wallAngleList.Add(newAngle);
+
+                    if (!Physics.CheckSphere(mazeTransform.position + newPos, 0.1f, layerMask))
                     {
                         Transform newWall = Instantiate(wallPrefab, mazeTransform);
                         newWall.localPosition = newPos;
-                        Transform newLight = Instantiate(lightPrefab, newWall);
+                        newWall.localEulerAngles = newAngle;
                     }
                 }
 
                 if (cell.HasFlag(WallState.LEFT))
                 {
                     Vector3 newPos = position + new Vector3(-0.5f, 0.5f, 0);
-                    if (!Physics.CheckSphere(mazeTransform.position + newPos, 0.1f))
+                    Vector3 newAngle = new Vector3(0, -90, 0);
+                    wallPosList.Add(newPos);
+                    wallAngleList.Add(newAngle);
+
+                    if (!Physics.CheckSphere(mazeTransform.position + newPos, 0.1f, layerMask))
                     {
                         Transform newWall = Instantiate(wallPrefab, mazeTransform);
                         newWall.localPosition = newPos;
-                        newWall.eulerAngles = new Vector3(0, 90, 0);
-                        Transform newLight = Instantiate(lightPrefab, newWall);
+                        newWall.localEulerAngles = newAngle;
                     }
                 }
 
-                if (j == 0)
+                if (cell.HasFlag(WallState.DOWN) && new Vector2Int(i, j) != startPos)
                 {
-                    if (cell.HasFlag(WallState.DOWN) && new Vector2Int(i, j) != startPos)
+                    Vector3 newPos = position + new Vector3(0, 0.5f, -0.5f);
+                    Vector3 newAngle = new Vector3(0, 180, 0);
+                    wallPosList.Add(newPos);
+                    wallAngleList.Add(newAngle);
+
+                    if (j == 0)
                     {
-                        Vector3 newPos = position + new Vector3(0, 0.5f, -0.5f);
-                        if (!Physics.CheckSphere(mazeTransform.position + newPos, 0.1f))
+                        if (!Physics.CheckSphere(mazeTransform.position + newPos, 0.1f, layerMask))
                         {
                             Transform newWall = Instantiate(wallPrefab, mazeTransform);
                             newWall.localPosition = newPos;
-                            Transform newLight = Instantiate(lightPrefab, newWall);
+                            newWall.localEulerAngles = newAngle;
                         }
                     }
                 }
 
-                if (i == width - 1)
+                if (cell.HasFlag(WallState.RIGHT))
                 {
-                    if (cell.HasFlag(WallState.RIGHT))
+                    Vector3 newPos = position + new Vector3(0.5f, 0.5f, 0);
+                    Vector3 newAngle = new Vector3(0, 90, 0);
+                    wallPosList.Add(newPos);
+                    wallAngleList.Add(newAngle);
+
+                    if (i == width - 1)
                     {
-                        Vector3 newPos = position + new Vector3(0.5f, 0.5f, 0);
-                        if (!Physics.CheckSphere(mazeTransform.position + newPos, 0.1f))
+                        if (!Physics.CheckSphere(mazeTransform.position + newPos, 0.1f, layerMask))
                         {
                             Transform newWall = Instantiate(wallPrefab, mazeTransform);
                             newWall.localPosition = newPos;
-                            newWall.eulerAngles = new Vector3(0, 90, 0);
-                            Transform newLight = Instantiate(lightPrefab, newWall);
+                            newWall.localEulerAngles = newAngle;
                         }
                     }
+                }
+
+                if (wallPosList.Count != 0 && (i + j) % 3 == 0)
+                {
+                    Transform newLight = Instantiate(lightPrefab, mazeTransform);
+                    int index = rng.Next(wallPosList.Count);
+                    newLight.localPosition = wallPosList[index] + new Vector3(0, 0, -0.05f);
+                    newLight.localEulerAngles = wallAngleList[index];
                 }
             }
 
