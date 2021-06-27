@@ -22,7 +22,7 @@ public struct Neighbour
     public WallState SharedWall;
 }
 
-public static class RBMazeGenerator
+public static class RBMazeMapper
 {
 
     static WallState GetOppositeWall(WallState wall)
@@ -129,7 +129,7 @@ public static class RBMazeGenerator
         return list;
     }
 
-    public static WallState[,] Generate(System.Random rng, int width, int height)
+    public static WallState[,] CreateMap(System.Random rng, int width, int height)
     {
         WallState[,] maze = new WallState[width, height];
         WallState initial = WallState.RIGHT | WallState.LEFT | WallState.UP | WallState.DOWN;

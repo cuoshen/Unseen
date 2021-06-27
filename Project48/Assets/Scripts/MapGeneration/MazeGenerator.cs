@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class MazeRenderer : MonoBehaviour
+public class MazeGenerator : MonoBehaviour
 {
     int width = 10;
     int height = 10;
@@ -17,28 +17,35 @@ public class MazeRenderer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine("DrawLevel");
+        StartCoroutine("GenerateLevel");
     }
 
-    IEnumerator DrawLevel()
+    IEnumerator GenerateLevel()
     {
         Vector3 lastEndPos = new Vector3(0, 0, 0);
         System.Random rng = new System.Random(/*seed*/);
 
         for (int i = 0; i < level; i++)
         {
-            WallState[,] maze = RBMazeGenerator.Generate(rng, width, height);
+            WallState[,] maze = RBMazeMapper.CreateMap(rng, width, height);
 
             Vector2Int startPos = new Vector2Int(rng.Next(width), 0);
             Vector2Int endPos = new Vector2Int(rng.Next(width), height - 1);
 
-            DrawRBMaze(lastEndPos, startPos, endPos, maze);
+            GenerateRBMaze(lastEndPos, startPos, endPos, maze);
             lastEndPos += new Vector3(endPos.x - startPos.x, 0, endPos.y - startPos.y + 1);
             yield return null; // Physics.CheckSphere cannot detect colliders generated in the same tick
         }
     }
 
-    void DrawRBMaze(Vector3 lastEndPos, Vector2Int startPos, Vector2Int endPos, WallState[,] maze)
+    /// <summary>
+    /// Generate an individual rectangular RB maze, its entrance connected to the exit of the previous maze
+    /// </summary>
+    /// <param name="lastEndPos"></param> Global position of the exit of previous maze
+    /// <param name="startPos"></param> Local position of the entrance of current maze
+    /// <param name="endPos"></param> Local position of  the exit of current maze
+    /// <param name="maze"></param> Matrix representing current maze
+    void GenerateRBMaze(Vector3 lastEndPos, Vector2Int startPos, Vector2Int endPos, WallState[,] maze)
     {
         GameObject mazeGO = new GameObject("RB Maze");
         Transform mazeTransform = mazeGO.transform;
@@ -59,20 +66,20 @@ public class MazeRenderer : MonoBehaviour
                 if (cell.HasFlag(WallState.UP) && new Vector2Int(i,j) != endPos)
                 {
                     Vector3 newPos = position + new Vector3(0, 0.5f, 0.5f);
-                    if(!Physics.CheckSphere(mazeTransform.position + newPos, 0.4f))
+                    if(!Physics.CheckSphere(mazeTransform.position + newPos, 0.1f))
                     {
                         Transform newWall = Instantiate(wallPrefab, mazeTransform);
-                        newWall.position = mazeTransform.position + newPos;
+                        newWall.localPosition = newPos;
                     }
                 }
 
                 if (cell.HasFlag(WallState.LEFT))
                 {
                     Vector3 newPos = position + new Vector3(-0.5f, 0.5f, 0);
-                    if (!Physics.CheckSphere(mazeTransform.position + newPos, 0.4f))
+                    if (!Physics.CheckSphere(mazeTransform.position + newPos, 0.1f))
                     {
                         Transform newWall = Instantiate(wallPrefab, mazeTransform);
-                        newWall.position = mazeTransform.position + newPos;
+                        newWall.localPosition = newPos;
                         newWall.eulerAngles = new Vector3(0, 90, 0);
                     }
                 }
@@ -82,10 +89,10 @@ public class MazeRenderer : MonoBehaviour
                     if (cell.HasFlag(WallState.DOWN) && new Vector2Int(i, j) != startPos)
                     {
                         Vector3 newPos = position + new Vector3(0, 0.5f, -0.5f);
-                        if (!Physics.CheckSphere(mazeTransform.position + newPos, 0.4f))
+                        if (!Physics.CheckSphere(mazeTransform.position + newPos, 0.1f))
                         {
                             Transform newWall = Instantiate(wallPrefab, mazeTransform);
-                            newWall.position = mazeTransform.position + newPos;
+                            newWall.localPosition = newPos;
                         }
                     }
                 }
@@ -95,10 +102,10 @@ public class MazeRenderer : MonoBehaviour
                     if (cell.HasFlag(WallState.RIGHT))
                     {
                         Vector3 newPos = position + new Vector3(0.5f, 0.5f, 0);
-                        if (!Physics.CheckSphere(mazeTransform.position + newPos, 0.4f))
+                        if (!Physics.CheckSphere(mazeTransform.position + newPos, 0.1f))
                         {
                             Transform newWall = Instantiate(wallPrefab, mazeTransform);
-                            newWall.position = mazeTransform.position + newPos;
+                            newWall.localPosition = newPos;
                             newWall.eulerAngles = new Vector3(0, 90, 0);
                         }
                     }
