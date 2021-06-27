@@ -13,6 +13,8 @@ public class MazeGenerator : MonoBehaviour
     Transform wallPrefab = null;
     [SerializeField]
     Transform floorPrefab = null;
+    [SerializeField]
+    Transform lightPrefab = null;
 
     // Start is called before the first frame update
     void Start()
@@ -70,6 +72,7 @@ public class MazeGenerator : MonoBehaviour
                     {
                         Transform newWall = Instantiate(wallPrefab, mazeTransform);
                         newWall.localPosition = newPos;
+                        Transform newLight = Instantiate(lightPrefab, newWall);
                     }
                 }
 
@@ -81,6 +84,7 @@ public class MazeGenerator : MonoBehaviour
                         Transform newWall = Instantiate(wallPrefab, mazeTransform);
                         newWall.localPosition = newPos;
                         newWall.eulerAngles = new Vector3(0, 90, 0);
+                        Transform newLight = Instantiate(lightPrefab, newWall);
                     }
                 }
 
@@ -93,6 +97,7 @@ public class MazeGenerator : MonoBehaviour
                         {
                             Transform newWall = Instantiate(wallPrefab, mazeTransform);
                             newWall.localPosition = newPos;
+                            Transform newLight = Instantiate(lightPrefab, newWall);
                         }
                     }
                 }
@@ -107,6 +112,7 @@ public class MazeGenerator : MonoBehaviour
                             Transform newWall = Instantiate(wallPrefab, mazeTransform);
                             newWall.localPosition = newPos;
                             newWall.eulerAngles = new Vector3(0, 90, 0);
+                            Transform newLight = Instantiate(lightPrefab, newWall);
                         }
                     }
                 }
