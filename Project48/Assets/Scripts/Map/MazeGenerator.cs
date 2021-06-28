@@ -4,10 +4,24 @@ using UnityEngine;
 
 public class MazeGenerator : MonoBehaviour
 {
+    protected static MazeGenerator s_Instance;
+    public static MazeGenerator Instance
+    {
+        get
+        {
+            if (s_Instance != null)
+                return s_Instance;
+            s_Instance = FindObjectOfType<MazeGenerator>();
+
+            return s_Instance;
+        }
+    }
+
     System.Random rng;
     int width = 10;
     int height = 10;
-    int level = 3;
+    int level = 0;
+    GameObject player;
 
     [SerializeField]
     Transform wallPrefab = null;
@@ -22,11 +36,22 @@ public class MazeGenerator : MonoBehaviour
     [SerializeField]
     Transform connectorPrefab = null;
 
-    // Start is called before the first frame update
+    void Awake()
+    {
+        if (Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        s_Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
     void Start()
     {
+        player = GameObject.FindWithTag("Player");
         rng = new System.Random(/*seed*/);
-        GenerateLevel();
+        NextLevel();
     }
 
     void GenerateLevel()
@@ -148,5 +173,17 @@ public class MazeGenerator : MonoBehaviour
 
         }
 
+    }
+
+    public void NextLevel()
+    {
+        level++;
+        if (transform.childCount != 0)
+        {
+            foreach (Transform child in transform)
+                Destroy(child.gameObject);
+        }
+        player.transform.position = new Vector3(0, 0, 0);
+        GenerateLevel();
     }
 }
