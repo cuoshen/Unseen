@@ -87,7 +87,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5995dc45925deea44b186a0db2df2a03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trigger_radius: 6
+  trigger_radius: 2
   min_intensity: 0
   max_intensity: 5
   color: {r: 0.9811321, g: 0.8455435, b: 0.4757565, a: 1}

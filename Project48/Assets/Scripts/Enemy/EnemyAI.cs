@@ -16,13 +16,11 @@ public class EnemyAI : MonoBehaviour
 {
     private GameObject player;
     public EnemyState state = EnemyState.IDLE;
-    private float distance;
-    private float EncounterDis = 10f;
-    private float attackDis = 2f;
-    float speed = 4.8f;
 
-    private int stunnedCounter = 0;
-    public bool isAttacked = false;
+    public float EncounterDis;
+    public float attackDis;
+    public float speed;
+
     private Animator animator;
     private CharacterController cc;
 
@@ -37,7 +35,7 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        distance = Vector3.Distance(player.transform.position, transform.position);
+        float distance = Vector3.Distance(player.transform.position, transform.position);
         if ( EncounterDis <= distance)
         {
             state = EnemyState.IDLE;
