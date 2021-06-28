@@ -24,17 +24,19 @@ public class MazeGenerator : MonoBehaviour
     GameObject player;
 
     [SerializeField]
-    Transform wallPrefab = null;
+    Transform wallPrefab;
     [SerializeField]
-    Transform floorPrefab = null;
+    Transform floorPrefab;
     [SerializeField]
-    Transform lightPrefab = null;
+    Transform lightPrefab;
     [SerializeField]
-    Transform startPrefab = null;
+    Transform startPrefab;
     [SerializeField]
-    Transform endPrefab = null;
+    Transform endPrefab;
     [SerializeField]
-    Transform connectorPrefab = null;
+    Transform connectorPrefab;
+    [SerializeField]
+    Transform kiwiPrefab;
 
     void Awake()
     {
@@ -168,6 +170,12 @@ public class MazeGenerator : MonoBehaviour
                     newLight.localPosition = wallPosList[index] + new Vector3(0, 0, -0.05f);
                     newLight.localEulerAngles = wallAngleList[index];
                     // Debug.Log(newLight.localPosition + ": " + cell);
+                }
+
+                if (wallPosList.Count == 3)
+                {
+                    Transform newKiwi = Instantiate(kiwiPrefab, mazeTransform);
+                    newKiwi.localPosition = position;
                 }
             }
 
