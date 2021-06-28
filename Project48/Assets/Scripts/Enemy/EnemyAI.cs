@@ -16,13 +16,11 @@ public class EnemyAI : MonoBehaviour
 {
     private GameObject player;
     public EnemyState state = EnemyState.IDLE;
-    private float distance;
-    private float EncounterDis = 2f;
-    private float attackDis = 0.4f;
-    float speed = 1.5f;
 
-    private int stunnedCounter = 0;
-    public bool isAttacked = false;
+    public float EncounterDis;
+    public float attackDis;
+    public float speed;
+
     private Animator animator;
     private CharacterController cc;
     private Rigidbody rb;
@@ -36,26 +34,13 @@ public class EnemyAI : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    void CheckGround()
-    {
-        if (!rb.isKinematic && transform.position.y <= 0)
-        {
-            rb.isKinematic = true;
-        }
-        else if (transform.position.y > 0.1)
-        {
-            rb.isKinematic = false;
-        } 
-
-    }
-
     // Update is called once per frame
     void Update()
     {
         CheckGround();
         if (rb.isKinematic)
         {
-            distance = Vector3.Distance(player.transform.position, transform.position);
+            float distance = Vector3.Distance(player.transform.position, transform.position);
             if (EncounterDis <= distance)
             {
                 state = EnemyState.IDLE;
@@ -88,8 +73,19 @@ public class EnemyAI : MonoBehaviour
                     break;
             }
         }
-        
-        
+    }
+
+    void CheckGround()
+    {
+        if (!rb.isKinematic && transform.position.y <= 0)
+        {
+            rb.isKinematic = true;
+        }
+        else if (transform.position.y > 0.1)
+        {
+            rb.isKinematic = false;
+        }
+
     }
 }
 

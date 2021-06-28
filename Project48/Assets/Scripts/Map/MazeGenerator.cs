@@ -18,8 +18,8 @@ public class MazeGenerator : MonoBehaviour
     }
 
     System.Random rng;
-    int width = 10;
-    int height = 10;
+    int initWidth = 5;
+    int initHeight = 5;
     int level = 0;
     GameObject player;
 
@@ -56,7 +56,7 @@ public class MazeGenerator : MonoBehaviour
         NextLevel();
     }
 
-    void GenerateLevel()
+    void GenerateLevel(int width, int height)
     {
         Vector3 lastEndPos = new Vector3(0, 0, 0);
 
@@ -91,13 +91,19 @@ public class MazeGenerator : MonoBehaviour
     /// <param name="maze"> Matrix representing current maze</param>
     void GenerateRBMaze(Vector3 lastEndPos, Vector2Int startPos, Vector2Int endPos, WallState[,] maze)
     {
+        int width = maze.GetLength(0);
+        int height = maze.GetLength(1);
+
         GameObject mazeGO = new GameObject("RB Maze");
         Transform mazeTransform = mazeGO.transform;
         mazeTransform.SetParent(transform);
         mazeTransform.localPosition = new Vector3(width / 2 - startPos.x, 0, height / 2 - startPos.y) + lastEndPos;
 
         Transform floor = Instantiate(floorPrefab, mazeTransform);
-        floor.localPosition = new Vector3(-0.5f, 0, -0.5f);
+        if (width % 2 == 0)
+            floor.localPosition += new Vector3(-0.5f, 0, 0);
+        if (height % 2 == 0)
+            floor.localPosition += new Vector3(0, 0, -0.5f);
         floor.localScale = new Vector3(width*0.1f, 1, height*0.1f);
 
         for (int i = 0; i < width; i++)
@@ -178,9 +184,7 @@ public class MazeGenerator : MonoBehaviour
                     newKiwi.localPosition = position;
                 }
             }
-
         }
-
     }
 
     IEnumerator NextLevelCoroutine()
@@ -191,7 +195,11 @@ public class MazeGenerator : MonoBehaviour
             foreach (Transform child in transform)
                 Destroy(child.gameObject);
         }
-        GenerateLevel();
+
+        int width = rng.Next(initWidth + level, initWidth + 2 + 2 * level);
+        int height = rng.Next(initHeight + level, initHeight + 2 + 2 * level);
+
+        GenerateLevel(width, height);
         yield return null;
         player.transform.position = new Vector3(0, 0, 0);
     }
