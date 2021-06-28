@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class LevelEnd : MonoBehaviour
 {
-    void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.tag == "Player")
+        print("rua");
+        if (other.gameObject.tag == "Player")
         {
             MazeGenerator.Instance.NextLevel();
         }

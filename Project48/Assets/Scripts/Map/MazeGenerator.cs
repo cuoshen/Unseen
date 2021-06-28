@@ -167,7 +167,7 @@ public class MazeGenerator : MonoBehaviour
                     int index = rng.Next(wallPosList.Count);
                     newLight.localPosition = wallPosList[index] + new Vector3(0, 0, -0.05f);
                     newLight.localEulerAngles = wallAngleList[index];
-                    Debug.Log(newLight.localPosition + ": " + cell);
+                    // Debug.Log(newLight.localPosition + ": " + cell);
                 }
             }
 
@@ -175,7 +175,7 @@ public class MazeGenerator : MonoBehaviour
 
     }
 
-    public void NextLevel()
+    IEnumerator NextLevelCoroutine()
     {
         level++;
         if (transform.childCount != 0)
@@ -183,7 +183,13 @@ public class MazeGenerator : MonoBehaviour
             foreach (Transform child in transform)
                 Destroy(child.gameObject);
         }
-        player.transform.position = new Vector3(0, 0, 0);
         GenerateLevel();
+        yield return null;
+        player.transform.position = new Vector3(0, 0, 0);
+    }
+
+    public void NextLevel()
+    {
+        StartCoroutine("NextLevelCoroutine");
     }
 }

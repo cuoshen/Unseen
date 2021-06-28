@@ -62,6 +62,14 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.2, z: 0}
+--- !u!81 &508060471
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2353130631441330147}
+  m_Enabled: 1
 --- !u!82 &1425647528
 AudioSource:
   m_ObjectHideFlags: 0
@@ -172,7 +180,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character: {fileID: 0}
   WinCon: {fileID: 0}
-  speed: 0.5
+  speed: 2
   gravity: 9.81
   angularSpeed: 15
 --- !u!114 &1425647527
@@ -201,14 +209,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: eb8662436145ad549a1a2b5610272f3f, type: 3}
   - {fileID: 8300000, guid: b339177238834f842974d02099ba4ea0, type: 3}
   - {fileID: 8300000, guid: c45bc4a4cb404ff4daece3beb460c622, type: 3}
---- !u!81 &508060471
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2353130631441330147}
-  m_Enabled: 1
 --- !u!1001 &3199409539437531826
 PrefabInstance:
   m_ObjectHideFlags: 0
