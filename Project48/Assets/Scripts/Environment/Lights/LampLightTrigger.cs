@@ -20,11 +20,12 @@ public class LampLightTrigger : MonoBehaviour
     // Color of children <lamp sphere>
     public Color color;
 
-    public AnimationCurve on_curve, off_curve;
+    public AnimationCurve on_curve, on_curve_enemy, off_curve;
     private float on_time_elapsed;
     private float off_time_elapsed;
 
     private bool triggered;
+    public bool is_enemy;
 
     // Start is called before the first frame update
     void Start()
@@ -46,24 +47,38 @@ public class LampLightTrigger : MonoBehaviour
         material = GetComponent<MeshRenderer>().materials[0];
         material.SetColor("_EmissionColor", color * light.intensity / 10);
 
-        on_curve.postWrapMode = WrapMode.Clamp;
-        off_curve.postWrapMode = WrapMode.Clamp;
-    }
+            on_curve.postWrapMode = WrapMode.Clamp;
+            on_curve_enemy.postWrapMode = WrapMode.Clamp;
+            off_curve.postWrapMode = WrapMode.Clamp;
+        }
 
     private void Update()
     {
+        
         // control light acording to triggered condition
         if (triggered)
         {
             on_time_elapsed += Time.deltaTime;
-            light.intensity = min_intensity + on_curve.Evaluate(on_time_elapsed) * max_intensity;
+            AnimationCurve curve = on_curve;
+            if (is_enemy)
+            {
+                curve = on_curve_enemy;
+                if (on_time_elapsed >= 1.0)
+                {
+                    on_time_elapsed = 0;
+                }
+                
+            }                
+            light.intensity = min_intensity + curve.Evaluate(on_time_elapsed) * max_intensity;
         }
         else
         {
             off_time_elapsed += Time.deltaTime;
             light.intensity = min_intensity + off_curve.Evaluate(off_time_elapsed) * max_intensity;
         }
-            
+        color.a = light.intensity;
+        material.color = color;
+        
         GetComponent<MeshRenderer>().materials[0].SetColor("_EmissionColor", color * light.intensity / 10);
     }
 
@@ -77,7 +92,13 @@ public class LampLightTrigger : MonoBehaviour
     // object exit
     private void OnTriggerExit(Collider other)
     {
+        if (other.tag == "Enemy")
+        {
+            is_enemy = false;
+        } 
         on_time_elapsed = 0;
         triggered = false;
+
     }
+    
 }

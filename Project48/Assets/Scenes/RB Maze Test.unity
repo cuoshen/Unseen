@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731704, g: 0.13414727, b: 0.121078536, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -148,7 +148,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 49188671459786526, guid: ad7fb8a425c57ce48805ae23aeca3714, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.8
+      value: 1.6500003
       objectReference: {fileID: 0}
     - target: {fileID: 49188671459786526, guid: ad7fb8a425c57ce48805ae23aeca3714, type: 3}
       propertyPath: m_LocalPosition.z
@@ -184,6 +184,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad7fb8a425c57ce48805ae23aeca3714, type: 3}
+--- !u!4 &637830326 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3164956843992085849, guid: 6bfb0de2cc626054bb150c8492e26f18, type: 3}
+  m_PrefabInstance: {fileID: 1289259652}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &675319862
 GameObject:
   m_ObjectHideFlags: 3
@@ -285,7 +290,7 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 0}
+  m_LookAt: {fileID: 637830326}
   m_Follow: {fileID: 1202159181}
   m_Lens:
     FieldOfView: 60
@@ -310,7 +315,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 873891114}
   m_LocalRotation: {x: 0.3420201, y: 0, z: 0, w: 0.9396927}
-  m_LocalPosition: {x: 0, y: 1.8, z: -1.68}
+  m_LocalPosition: {x: 0, y: 1.6500003, z: -1.68}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 675319863}
@@ -329,6 +334,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1202159181, guid: 6bfb0de2cc626054bb150c8492e26f18, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.8500004
+      objectReference: {fileID: 0}
     - target: {fileID: 2353130631441330147, guid: 6bfb0de2cc626054bb150c8492e26f18, type: 3}
       propertyPath: m_Name
       value: Player

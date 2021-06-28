@@ -123,44 +123,13 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &2704120
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2704121}
-  m_Layer: 0
-  m_Name: Vantage Point (Missing Prefab)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2704121
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2704120}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 924368858}
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &256422367
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh48082
+  m_Name: pb_Mesh23948
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -350,6 +319,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &889555368 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3164956843992085849, guid: 6bfb0de2cc626054bb150c8492e26f18, type: 3}
+  m_PrefabInstance: {fileID: 1135819636}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &924368857
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -407,36 +381,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d527d6f0426b6e4c8de0221f82e131d, type: 3}
---- !u!4 &924368858
+--- !u!4 &924368858 stripped
 Transform:
-  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 2706095487826887279, guid: 8d527d6f0426b6e4c8de0221f82e131d, type: 3}
   m_PrefabInstance: {fileID: 924368857}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1050522982}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2704121}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1050522982
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 924368858}
-  m_Layer: 0
-  m_Name: Missing Prefab (Dummy)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &1127541526
 GameObject:
   m_ObjectHideFlags: 0
@@ -450,6 +399,7 @@ GameObject:
   - component: {fileID: 1127541529}
   - component: {fileID: 1127541528}
   - component: {fileID: 1127541527}
+  - component: {fileID: 1127541532}
   m_Layer: 0
   m_Name: Arch
   m_TagString: Untagged
@@ -498,7 +448,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c49ec95b91988694ab5568112b0c4084, type: 2}
+  - {fileID: 2100000, guid: 62b4d9ef0aff4eb4eb0a9155efaa0a9c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4230,6 +4180,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: -150}
+--- !u!114 &1127541532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1127541526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5112318b4430cbd4ab8c82a655961b8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 889555368}
 --- !u!1001 &1135819636
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4247,7 +4210,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3164956843992085849, guid: 6bfb0de2cc626054bb150c8492e26f18, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3164956843992085849, guid: 6bfb0de2cc626054bb150c8492e26f18, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4401,7 +4364,7 @@ Transform:
   m_LocalScale: {x: 2, y: 1, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1429510454
 PrefabInstance:
@@ -4483,10 +4446,10 @@ PrefabInstance:
     - target: {fileID: 49188671459786524, guid: ad7fb8a425c57ce48805ae23aeca3714, type: 3}
       propertyPath: VantagePoint
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 924368858}
     - target: {fileID: 49188671459786526, guid: ad7fb8a425c57ce48805ae23aeca3714, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 49188671459786526, guid: ad7fb8a425c57ce48805ae23aeca3714, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4621,7 +4584,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 14.558, y: 0, z: 0}
 --- !u!1001 &1842227741
 PrefabInstance:
@@ -4714,7 +4677,7 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.18604118
     - serializedVersion: 3
-      time: 0.031962737
+      time: 0.04860626
       value: 0.60271454
       inSlope: 0
       outSlope: 0
@@ -4723,7 +4686,7 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.033356477
+      time: 0.05
       value: 0
       inSlope: 0
       outSlope: 0
@@ -4732,7 +4695,7 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.11075112
+      time: 0.13987252
       value: 0.73990846
       inSlope: 1.1558
       outSlope: 1.1558
@@ -4741,8 +4704,8 @@ MonoBehaviour:
       inWeight: 0.86751413
       outWeight: 0.4531274
     - serializedVersion: 3
-      time: 0.14449069
-      value: 0.0027770996
+      time: 0.20274112
+      value: -0.001953125
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -4750,8 +4713,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.21569979
-      value: 1.0047264
+      time: 0.27395022
+      value: 1
       inSlope: -0.0193691
       outSlope: -0.0193691
       tangentMode: 0
@@ -4759,8 +4722,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.25927845
     - serializedVersion: 3
-      time: 0.4686895
-      value: 0.4148907
+      time: 0.6517492
+      value: 0.41016048
       inSlope: 0.0060350536
       outSlope: 0.0060350536
       tangentMode: 0
@@ -4768,7 +4731,7 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.7072937
+      time: 0.99852294
       value: 0.99999666
       inSlope: 0
       outSlope: 0
@@ -4792,26 +4755,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.004765697
-      value: 1.0005213
-      inSlope: 0.007102531
-      outSlope: 0.007102531
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.11579483
-    - serializedVersion: 3
-      time: 2.4548664
-      value: 0.9992917
-      inSlope: -0.0242419
-      outSlope: -0.0242419
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 1
-    - serializedVersion: 3
-      time: 2.464916
-      value: 0.0035763774
+      time: 1
+      value: 0.0029640198
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -4933,7 +4878,7 @@ Transform:
   - {fileID: 8670761335922803131}
   - {fileID: 2438656853140993546}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &843214209993131546
 GameObject:
