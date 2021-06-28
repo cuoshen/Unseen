@@ -19,15 +19,17 @@ public class MazeGenerator : MonoBehaviour
     Transform startPrefab = null;
     [SerializeField]
     Transform endPrefab = null;
+    [SerializeField]
+    Transform connectorPrefab = null;
 
     // Start is called before the first frame update
     void Start()
     {
         rng = new System.Random(/*seed*/);
-        StartCoroutine("GenerateLevel");
+        GenerateLevel();
     }
 
-    IEnumerator GenerateLevel()
+    void GenerateLevel()
     {
         Vector3 lastEndPos = new Vector3(0, 0, 0);
 
@@ -43,7 +45,10 @@ public class MazeGenerator : MonoBehaviour
 
             GenerateRBMaze(lastEndPos, startPos, endPos, maze);
             lastEndPos += new Vector3(endPos.x - startPos.x, 0, endPos.y - startPos.y + 1);
-            yield return null; // Physics.CheckSphere cannot detect colliders generated in the same tick
+
+            Transform connector = Instantiate(connectorPrefab, transform);
+            connector.localPosition = lastEndPos;
+            lastEndPos += new Vector3(0, 0, 1);
         }
 
         Transform end = Instantiate(endPrefab, transform);
@@ -76,7 +81,6 @@ public class MazeGenerator : MonoBehaviour
                 List<Vector3> wallPosList = new List<Vector3>();
                 List<Vector3> wallAngleList = new List<Vector3>();
                 Vector3 position = new Vector3(-width / 2 + i, 0, -height / 2 + j);
-                int layerMask = 1 << 6;
 
                 if (cell.HasFlag(WallState.UP) && new Vector2Int(i,j) != endPos)
                 {
@@ -85,12 +89,9 @@ public class MazeGenerator : MonoBehaviour
                     wallPosList.Add(newPos);
                     wallAngleList.Add(newAngle);
 
-                    if (!Physics.CheckSphere(mazeTransform.position + newPos, 0.1f, layerMask))
-                    {
-                        Transform newWall = Instantiate(wallPrefab, mazeTransform);
-                        newWall.localPosition = newPos;
-                        newWall.localEulerAngles = newAngle;
-                    }
+                    Transform newWall = Instantiate(wallPrefab, mazeTransform);
+                    newWall.localPosition = newPos;
+                    newWall.localEulerAngles = newAngle;
                 }
 
                 if (cell.HasFlag(WallState.LEFT))
@@ -100,12 +101,9 @@ public class MazeGenerator : MonoBehaviour
                     wallPosList.Add(newPos);
                     wallAngleList.Add(newAngle);
 
-                    if (!Physics.CheckSphere(mazeTransform.position + newPos, 0.1f, layerMask))
-                    {
-                        Transform newWall = Instantiate(wallPrefab, mazeTransform);
-                        newWall.localPosition = newPos;
-                        newWall.localEulerAngles = newAngle;
-                    }
+                    Transform newWall = Instantiate(wallPrefab, mazeTransform);
+                    newWall.localPosition = newPos;
+                    newWall.localEulerAngles = newAngle;
                 }
 
                 if (cell.HasFlag(WallState.DOWN) && new Vector2Int(i, j) != startPos)
@@ -117,12 +115,9 @@ public class MazeGenerator : MonoBehaviour
 
                     if (j == 0)
                     {
-                        if (!Physics.CheckSphere(mazeTransform.position + newPos, 0.1f, layerMask))
-                        {
-                            Transform newWall = Instantiate(wallPrefab, mazeTransform);
-                            newWall.localPosition = newPos;
-                            newWall.localEulerAngles = newAngle;
-                        }
+                        Transform newWall = Instantiate(wallPrefab, mazeTransform);
+                        newWall.localPosition = newPos;
+                        newWall.localEulerAngles = newAngle;
                     }
                 }
 
@@ -135,12 +130,9 @@ public class MazeGenerator : MonoBehaviour
 
                     if (i == width - 1)
                     {
-                        if (!Physics.CheckSphere(mazeTransform.position + newPos, 0.1f, layerMask))
-                        {
-                            Transform newWall = Instantiate(wallPrefab, mazeTransform);
-                            newWall.localPosition = newPos;
-                            newWall.localEulerAngles = newAngle;
-                        }
+                        Transform newWall = Instantiate(wallPrefab, mazeTransform);
+                        newWall.localPosition = newPos;
+                        newWall.localEulerAngles = newAngle;
                     }
                 }
 
@@ -150,6 +142,7 @@ public class MazeGenerator : MonoBehaviour
                     int index = rng.Next(wallPosList.Count);
                     newLight.localPosition = wallPosList[index] + new Vector3(0, 0, -0.05f);
                     newLight.localEulerAngles = wallAngleList[index];
+                    Debug.Log(newLight.localPosition + ": " + cell);
                 }
             }
 

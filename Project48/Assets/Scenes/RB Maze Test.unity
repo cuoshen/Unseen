@@ -413,6 +413,7 @@ MonoBehaviour:
   lightPrefab: {fileID: 5674479914053777869, guid: b1c730f215eff1641885309e004770cf, type: 3}
   startPrefab: {fileID: 4459196779015730797, guid: cf6767f6c193e954b811cd2de006a999, type: 3}
   endPrefab: {fileID: 6708590964914837869, guid: e462882065328ca4fa37c5e134cf0e3e, type: 3}
+  connectorPrefab: {fileID: 8302508908966622360, guid: 1f826802e2addfe48a37974c0e7e78d9, type: 3}
 --- !u!4 &2068360654
 Transform:
   m_ObjectHideFlags: 0
