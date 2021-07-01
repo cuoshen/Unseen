@@ -22,8 +22,7 @@ public class EnemyAI : MonoBehaviour
     private float attackDis = 0.4f;
     float speed = 1f;
 
-    private int stunnedCounter = 0;
-    public bool isAttacked = false;
+
     private Animator animator;
     private CharacterController cc;
     private Rigidbody rb;
@@ -35,19 +34,6 @@ public class EnemyAI : MonoBehaviour
         animator = gameObject.GetComponent<Animator>();
         cc = GetComponent<CharacterController>();
         rb = GetComponent<Rigidbody>();
-    }
-
-    void CheckGround()
-    {
-        if (!rb.isKinematic && transform.position.y <= 0)
-        {
-            rb.isKinematic = true;
-        }
-        else if (transform.position.y > 0.1)
-        {
-            rb.isKinematic = false;
-        } 
-
     }
 
     // Update is called once per frame
@@ -91,8 +77,19 @@ public class EnemyAI : MonoBehaviour
                     break;
             }
         }
-        
-        
+    }
+
+    void CheckGround()
+    {
+        if (!rb.isKinematic && transform.position.y <= 0)
+        {
+            rb.isKinematic = true;
+        }
+        else if (transform.position.y > 0.1)
+        {
+            rb.isKinematic = false;
+        }
+
     }
 }
 
