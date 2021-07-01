@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7428597285103237340}
   - component: {fileID: 9222457403784183722}
   - component: {fileID: 7630829275657056311}
+  - component: {fileID: 5849846992667634730}
   m_Layer: 3
   m_Name: Cube Wall
   m_TagString: Obstacle

@@ -18,9 +18,9 @@ public class EnemyAI : MonoBehaviour
     private GameObject player;
     public EnemyState state = EnemyState.IDLE;
     private float distance;
-    private float EncounterDis = 2f;
-    private float attackDis = 0.4f;
-    float speed = 1f;
+    public float EncounterDis;
+    public float attackDis;
+    public float speed;
 
 
     private Animator animator;
