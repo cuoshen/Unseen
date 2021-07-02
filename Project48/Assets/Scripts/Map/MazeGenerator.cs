@@ -84,7 +84,7 @@ public class MazeGenerator : MonoBehaviour
             {
                 int width = rng.Next(initWidth - 2, initWidth);
                 int height = rng.Next(initHeight - 2, initHeight);
-                GenerateSparseMaze(width, height);
+                GenerateColumnarMaze(width, height);
             }
         }
 
@@ -322,14 +322,14 @@ public class MazeGenerator : MonoBehaviour
         }
     }
 
-    void GenerateSparseMaze(int width, int height)
+    void GenerateColumnarMaze(int width, int height)
     {
         // Generate random start and end positions
         Vector2Int startPos = new Vector2Int(rng.Next(width * 4), 0);
         Vector2Int endPos = new Vector2Int(rng.Next(width) * 4, height * 4 - 1);
 
         Transform mazeTransform = GenerateBaseMaze(startPos, endPos, width * 4, height * 4);
-        ColumnSize[,] maze = SparseMazeMapper.CreateMap(rng, width, height);
+        ColumnSize[,] maze = ColumnarMazeMapper.CreateMap(rng, width, height);
 
         for (int i = 0; i < width; i++)
         {

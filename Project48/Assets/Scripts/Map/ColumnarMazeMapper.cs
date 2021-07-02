@@ -8,7 +8,7 @@ public enum ColumnSize
     _2x2
 }
 
-public static class SparseMazeMapper
+public static class ColumnarMazeMapper
 {
     public static ColumnSize[,] CreateMap(System.Random rng, int width, int height)
     {
