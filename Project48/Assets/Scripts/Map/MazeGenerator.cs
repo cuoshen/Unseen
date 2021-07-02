@@ -286,8 +286,9 @@ public class MazeGenerator : MonoBehaviour
                     // Debug.Log(newLight.localPosition + ": " + cell);
                 }
 
+                Vector2Int disFromStart = new Vector2Int(i, j) - startPos;
                 //Generate Enemies
-                if (wallPosList.Count == 3)
+                if (wallPosList.Count == 3 && disFromStart.magnitude > 3)
                 {
                     Transform newKiwi = Instantiate(kiwiPrefab, mazeTransform);
                     newKiwi.localPosition = position;
