@@ -17,17 +17,30 @@ public class MazeGenerator : MonoBehaviour
         }
     }
 
-    System.Random rng;
     Vector3 lastEndPos;
     GameObject player;
     int level = 0;
 
     [SerializeField]
-    int initWidth;
+    Vector2Int initMapSize;
+
     [SerializeField]
-    int initHeight;
+    float columnarMazeChance;
+    [SerializeField]
+    float _2x2ColumnChance;
+
+    [SerializeField]
+    int initChance;
+    [SerializeField]
+    int birthLimit;
+    [SerializeField]
+    int deathLimit;
+    [SerializeField]
+    int epoch;
+
     [SerializeField]
     float minKiwiSpawnDistance;
+
     [SerializeField]
     Transform wallPrefab;
     [SerializeField]
@@ -46,6 +59,8 @@ public class MazeGenerator : MonoBehaviour
     Transform _1x1ColPrefab;
     [SerializeField]
     Transform _2x2ColPrefab;
+    [SerializeField]
+    Transform cubePrefab;
 
     void Awake()
     {
@@ -61,7 +76,6 @@ public class MazeGenerator : MonoBehaviour
     void Start()
     {
         player = GameObject.FindWithTag("Player");
-        rng = new System.Random(/*seed*/);
         NextLevel();
     }
 
@@ -74,17 +88,17 @@ public class MazeGenerator : MonoBehaviour
 
         for (int i = 0; i < level; i++)
         {
-            if (rng.Next(5) > 1)
+            //Vector2Int mapSize = (initMapSize + new Vector2Int(Random.Range(-2, 0), Random.Range(-2, 0))) * 4;
+            //GenerateCellularMaze(mapSize);
+            if (Random.Range(0f, 1f) < columnarMazeChance)
             {
-                int width = rng.Next(initWidth + level, initWidth + 2 + 2 * level);
-                int height = rng.Next(initHeight + level, initHeight + 2 + 2 * level);
-                GenerateRBMaze(width, height);
+                Vector2Int mapSize = initMapSize + new Vector2Int(Random.Range(-2, 0), Random.Range(-2, 0));
+                GenerateColumnarMaze(mapSize);
             }
             else
             {
-                int width = rng.Next(initWidth - 2, initWidth);
-                int height = rng.Next(initHeight - 2, initHeight);
-                GenerateColumnarMaze(width, height);
+                Vector2Int mapSize = initMapSize + new Vector2Int(Random.Range(level, 2 + 2 * level), Random.Range(level, 2 + 2 * level));
+                GenerateRBMaze(mapSize);
             }
         }
 
@@ -122,32 +136,33 @@ public class MazeGenerator : MonoBehaviour
     /// <param name="lastEndPos"> Global position of the exit of previous maze</param>
     /// <param name="startPos"> Local position of the entrance of current maze</param>
     /// <param name="endPos"> Local position of  the exit of current maze</param>
-    /// <param name="width"> Width of maze
-    /// <param name="height"> Height of maze
-    Transform GenerateBaseMaze(Vector2Int startPos, Vector2Int endPos, int width, int height)
+    /// <param name="mapSize"> Size of maze
+    Transform GenerateBaseMaze(Vector2Int mapSize, out Vector2Int startPos, out Vector2Int endPos)
     {
+        startPos = new Vector2Int(Random.Range(0, mapSize.x), 0);
+        endPos = new Vector2Int(Random.Range(0, mapSize.x), mapSize.y - 1);
 
         // Generate empty parent object
         GameObject mazeGO = new GameObject("Maze Room");
         Transform mazeTransform = mazeGO.transform;
         mazeTransform.SetParent(transform);
-        mazeTransform.localPosition = new Vector3(width / 2 - startPos.x, 0, height / 2 - startPos.y) + lastEndPos;
+        mazeTransform.localPosition = new Vector3(mapSize.x / 2 - startPos.x, 0, mapSize.y / 2 - startPos.y) + lastEndPos;
 
         // Generate floor
         Transform floor = Instantiate(floorPrefab, mazeTransform);
-        if (width % 2 == 0)
+        if (mapSize.x % 2 == 0)
             floor.localPosition += new Vector3(-0.5f, 0, 0);
-        if (height % 2 == 0)
+        if (mapSize.y % 2 == 0)
             floor.localPosition += new Vector3(0, 0, -0.5f);
-        floor.localScale = new Vector3(width * 0.1f, 1, height * 0.1f);
+        floor.localScale = new Vector3(mapSize.x * 0.1f, 1, mapSize.y * 0.1f);
 
         // Generate walls with openings at startPos and endPos
         // UP
-        for (int i = 0; i < width; i++)
+        for (int i = 0; i < mapSize.x; i++)
         {
             if (i != endPos.x)
             {
-                Vector3 position = new Vector3(-width / 2 + i, 0, -height / 2 + height - 1 + 0.5f);
+                Vector3 position = new Vector3(-mapSize.x / 2 + i, 0, -mapSize.y / 2 + mapSize.y - 1 + 0.5f);
                 Vector3 angle = new Vector3(0, 0, 0);
 
                 Transform newWall = Instantiate(wallPrefab, mazeTransform);
@@ -157,9 +172,9 @@ public class MazeGenerator : MonoBehaviour
         }
 
         // LEFT
-        for (int j = 0; j < height; j++)
+        for (int j = 0; j < mapSize.y; j++)
         {
-            Vector3 position = new Vector3(-width / 2 - 0.5f, 0, -height / 2 + j);
+            Vector3 position = new Vector3(-mapSize.x / 2 - 0.5f, 0, -mapSize.y / 2 + j);
             Vector3 angle = new Vector3(0, -90, 0);
 
             Transform newWall = Instantiate(wallPrefab, mazeTransform);
@@ -168,11 +183,11 @@ public class MazeGenerator : MonoBehaviour
         }
 
         // DOWN
-        for (int i = 0; i < width; i++)
+        for (int i = 0; i < mapSize.x; i++)
         {
             if (i != startPos.x)
             {
-                Vector3 position = new Vector3(-width / 2 + i, 0, -height / 2 - 0.5f);
+                Vector3 position = new Vector3(-mapSize.x / 2 + i, 0, -mapSize.y / 2 - 0.5f);
                 Vector3 angle = new Vector3(0, 180, 0);
 
                 Transform newWall = Instantiate(wallPrefab, mazeTransform);
@@ -182,9 +197,9 @@ public class MazeGenerator : MonoBehaviour
         }
 
         // RIGHT
-        for (int j = 0; j < height; j++)
+        for (int j = 0; j < mapSize.y; j++)
         {
-            Vector3 position = new Vector3(-width / 2 + width - 1 + 0.5f, 0, -height / 2 + j);
+            Vector3 position = new Vector3(-mapSize.x / 2 + mapSize.x - 1 + 0.5f, 0, -mapSize.y / 2 + j);
             Vector3 angle = new Vector3(0, 90, 0);
 
             Transform newWall = Instantiate(wallPrefab, mazeTransform);
@@ -202,25 +217,19 @@ public class MazeGenerator : MonoBehaviour
         return mazeTransform;
     }
 
-    /// <summary>
-    /// Generate an individual rectangular RB maze
-    /// </summary>
-    void GenerateRBMaze(int width, int height)
+    void GenerateRBMaze(Vector2Int mapSize)
     {
-        // Generate random start and end positions
-        Vector2Int startPos = new Vector2Int(rng.Next(width), 0);
-        Vector2Int endPos = new Vector2Int(rng.Next(width), height - 1);
-
-        Transform mazeTransform = GenerateBaseMaze(startPos, endPos, width, height);
-        WallState[,] maze = RBMazeMapper.CreateMap(rng, width, height);
+        Vector2Int startPos, endPos;
+        Transform mazeTransform = GenerateBaseMaze(mapSize, out startPos, out endPos);
+        WallState[,] maze = RBMazeMapper.CreateMap(mapSize);
         List<Transform> kiwis = new List<Transform>();
 
-        for (int i = 0; i < width; i++)
+        for (int i = 0; i < mapSize.x; i++)
         {
-            for (int j = 0; j < height; j++)
+            for (int j = 0; j < mapSize.y; j++)
             {
                 WallState cell = maze[i, j];
-                Vector3 position = new Vector3(-width / 2 + i, 0, -height / 2 + j);
+                Vector3 position = new Vector3(-mapSize.x / 2 + i, 0, -mapSize.y / 2 + j);
                 List<Vector3> wallPosList = new List<Vector3>();
                 List<Vector3> wallAngleList = new List<Vector3>();
 
@@ -231,7 +240,7 @@ public class MazeGenerator : MonoBehaviour
                     wallPosList.Add(newPos);
                     wallAngleList.Add(newAngle);
 
-                    if (j != height - 1)
+                    if (j != mapSize.y - 1)
                     {
                         Transform newWall = Instantiate(wallPrefab, mazeTransform);
                         newWall.localPosition = newPos;
@@ -276,7 +285,7 @@ public class MazeGenerator : MonoBehaviour
                     wallPosList.Add(newPos);
                     wallAngleList.Add(newAngle);
 
-                    if (i != width - 1)
+                    if (i != mapSize.x - 1)
                     {
                         Transform newWall = Instantiate(wallPrefab, mazeTransform);
                         newWall.localPosition = newPos;
@@ -288,10 +297,9 @@ public class MazeGenerator : MonoBehaviour
                 if (wallPosList.Count != 0 && (i + j) % 3 == 0 && new Vector2Int(i, j) != startPos && new Vector2Int(i, j) != endPos)
                 {
                     Transform newLight = Instantiate(lightPrefab, mazeTransform);
-                    int index = rng.Next(wallPosList.Count);
+                    int index = Random.Range(0, wallPosList.Count);
                     newLight.localPosition = wallPosList[index] + new Vector3(0, 0.5f, -0.05f);
                     newLight.localEulerAngles = wallAngleList[index];
-                    // Debug.Log(newLight.localPosition + ": " + cell);
                 }
 
                 Vector2Int disFromStart = new Vector2Int(i, j) - startPos;
@@ -322,33 +330,49 @@ public class MazeGenerator : MonoBehaviour
         }
     }
 
-    void GenerateColumnarMaze(int width, int height)
+    void GenerateColumnarMaze(Vector2Int mapSize)
     {
-        // Generate random start and end positions
-        Vector2Int startPos = new Vector2Int(rng.Next(width * 4), 0);
-        Vector2Int endPos = new Vector2Int(rng.Next(width) * 4, height * 4 - 1);
+        Transform mazeTransform = GenerateBaseMaze(mapSize * 4, out _, out _);
+        ColumnSize[,] maze = ColumnarMazeMapper.CreateMap(mapSize, _2x2ColumnChance);
 
-        Transform mazeTransform = GenerateBaseMaze(startPos, endPos, width * 4, height * 4);
-        ColumnSize[,] maze = ColumnarMazeMapper.CreateMap(rng, width, height);
-
-        for (int i = 0; i < width; i++)
+        for (int i = 0; i < mapSize.x; i++)
         {
-            for (int j = 0; j < height; j++)
+            for (int j = 0; j < mapSize.y; j++)
             {
                 ColumnSize col = maze[i, j];
-                Vector3 position = new Vector3(-width * 2 + 1.5f + i * 4, 0, -height * 2 + 1.5f + j * 4);
+                Vector3 position = new Vector3(-mapSize.x * 2 + 1.5f + i * 4, 0, -mapSize.y * 2 + 1.5f + j * 4);
 
                 if (col == ColumnSize._1x1)
                 {
                     Transform newWall = Instantiate(_1x1ColPrefab, mazeTransform);
-                    Vector3 offset = new Vector3((float)rng.NextDouble(-1.5, 1.5), 0, (float)rng.NextDouble(-1.5, 1.5));
+                    Vector3 offset = new Vector3(Random.Range(-1.5f, 1.5f), 0, Random.Range(-1.5f, 1.5f));
                     newWall.localPosition = position + offset;
                 }
                 else if (col == ColumnSize._2x2)
                 {
                     Transform newWall = Instantiate(_2x2ColPrefab, mazeTransform);
-                    Vector3 offset = new Vector3((float)rng.NextDouble(-0.5, 0.5), 0, (float)rng.NextDouble(-0.5, 0.5));
+                    Vector3 offset = new Vector3(Random.Range(-0.5f, 0.5f), 0, Random.Range(-0.5f, 0.5f));
                     newWall.localPosition = position + offset;
+                }
+            }
+        }
+    }
+
+    void GenerateCellularMaze(Vector2Int mapSize)
+    {
+        Transform mazeTransform = GenerateBaseMaze(mapSize, out _, out _);
+        int[] setting = new int[] { initChance, birthLimit, deathLimit };
+        int[,] maze = CellularMazeMapper.CreateMap(mapSize, setting, epoch);
+
+        for (int i = 0; i < mapSize.x; i++)
+        {
+            for (int j = 0; j < mapSize.y; j++)
+            {
+                if (maze[i, j] == 1)
+                {
+                    Transform newCube = Instantiate(cubePrefab, mazeTransform);
+                    Vector3 position = new Vector3(-mapSize.x / 2 + i, 0, -mapSize.y / 2 + j);
+                    newCube.localPosition = position;
                 }
             }
         }

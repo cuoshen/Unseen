@@ -10,21 +10,21 @@ public enum ColumnSize
 
 public static class ColumnarMazeMapper
 {
-    public static ColumnSize[,] CreateMap(System.Random rng, int width, int height)
+    public static ColumnSize[,] CreateMap(Vector2Int mapSize, float _2x2ColumnChance)
     {
-        ColumnSize[,] maze = new ColumnSize[width, height];
+        ColumnSize[,] maze = new ColumnSize[mapSize.x, mapSize.y];
 
-        for (int i = 0; i < width; i++)
+        for (int i = 0; i < mapSize.x; i++)
         {
-            for (int j = 0; j < height; j++)
+            for (int j = 0; j < mapSize.y; j++)
             {
-                if (rng.Next(5) > 1)
+                if (Random.Range(0f, 1f) < _2x2ColumnChance)
                 {
-                    maze[i, j] = ColumnSize._1x1;
+                    maze[i, j] = ColumnSize._2x2;
                 }
                 else
                 {
-                    maze[i, j] = ColumnSize._2x2;
+                    maze[i, j] = ColumnSize._1x1;
                 }
             }
         }
