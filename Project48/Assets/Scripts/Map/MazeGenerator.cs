@@ -108,7 +108,7 @@ public class MazeGenerator : MonoBehaviour
 
     IEnumerator NextLevelCoroutine()
     {
-        player.transform.position = new Vector3(0, 0.1f, -0.3f);
+        player.transform.position = new Vector3(0, 0.5f, -0.3f);
         yield return null;
 
         level++;
@@ -120,7 +120,7 @@ public class MazeGenerator : MonoBehaviour
         GenerateLevel();
 
         yield return null;
-        player.transform.position = new Vector3(0, 0.1f, -0.3f);
+        player.transform.position = new Vector3(0, 0.5f, -0.3f);
     }
 
     public void NextLevel()
