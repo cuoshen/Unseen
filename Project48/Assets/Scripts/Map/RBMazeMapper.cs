@@ -37,12 +37,12 @@ public static class RBMazeMapper
         }
     }
 
-    static WallState[,] ApplyRecursiveBacktracker(System.Random rng, WallState[,] maze)
+    static WallState[,] ApplyRecursiveBacktracker(WallState[,] maze)
     {
         int width = maze.GetLength(0);
         int height = maze.GetLength(1);
         Stack<Vector2Int> posStack = new Stack<Vector2Int>();
-        Vector2Int initPos = new Vector2Int(rng.Next(width), rng.Next(height));
+        Vector2Int initPos = new Vector2Int(UnityEngine.Random.Range(0, width), UnityEngine.Random.Range(0, height));
         Vector2Int position = initPos;
 
         maze[position.x, position.y] |= WallState.VISITED;  // 1000 1111
@@ -57,7 +57,7 @@ public static class RBMazeMapper
             {
                 posStack.Push(current);
 
-                int randIndex = rng.Next(0, neighbours.Count);
+                int randIndex = UnityEngine.Random.Range(0, neighbours.Count);
                 Neighbour randomNeighbour = neighbours[randIndex];
 
                 Vector2Int nPos = randomNeighbour.Position;
@@ -129,18 +129,18 @@ public static class RBMazeMapper
         return list;
     }
 
-    public static WallState[,] CreateMap(System.Random rng, int width, int height)
+    public static WallState[,] CreateMap(Vector2Int mapSize)
     {
-        WallState[,] maze = new WallState[width, height];
+        WallState[,] maze = new WallState[mapSize.x, mapSize.y];
         WallState initial = WallState.RIGHT | WallState.LEFT | WallState.UP | WallState.DOWN;
-        for (int i = 0; i < width; i++)
+        for (int i = 0; i < mapSize.x; i++)
         {
-            for (int j = 0; j < height; j++)
+            for (int j = 0; j < mapSize.y; j++)
             {
                 maze[i, j] = initial;  // 1111
             }
         }
         
-        return ApplyRecursiveBacktracker(rng, maze);
+        return ApplyRecursiveBacktracker(maze);
     }
 }

@@ -184,11 +184,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad7fb8a425c57ce48805ae23aeca3714, type: 3}
---- !u!4 &637830326 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3164956843992085849, guid: 6bfb0de2cc626054bb150c8492e26f18, type: 3}
-  m_PrefabInstance: {fileID: 1289259652}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &675319862
 GameObject:
   m_ObjectHideFlags: 3
@@ -290,8 +285,8 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 637830326}
-  m_Follow: {fileID: 1202159181}
+  m_LookAt: {fileID: 0}
+  m_Follow: {fileID: 1628950933}
   m_Lens:
     FieldOfView: 60
     OrthographicSize: 5
@@ -322,12 +317,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 40, y: 0, z: 0}
---- !u!4 &1202159181 stripped
+--- !u!4 &1628950933 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1202159181, guid: 6bfb0de2cc626054bb150c8492e26f18, type: 3}
-  m_PrefabInstance: {fileID: 1289259652}
+  m_PrefabInstance: {fileID: 2067245019}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &1289259652
+--- !u!1001 &2067245019
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -413,6 +408,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6a0c0ea909a1d945982872f9c2aaa2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initMapSize: {x: 5, y: 5}
+  columnarMazeChance: 0.25
+  _2x2ColumnChance: 0.25
+  initChance: 25
+  birthLimit: 3
+  deathLimit: 2
+  epoch: 6
+  minKiwiSpawnDistance: 3
   wallPrefab: {fileID: 7599237671437475100, guid: 74e6de8e5b70c384ea5644d7429ceb19, type: 3}
   floorPrefab: {fileID: 634900085634603167, guid: c2536af29a86e154f82a0b8789b78493, type: 3}
   lightPrefab: {fileID: 5674479914053777869, guid: b1c730f215eff1641885309e004770cf, type: 3}
@@ -420,6 +423,9 @@ MonoBehaviour:
   endPrefab: {fileID: 6708590964914837869, guid: e462882065328ca4fa37c5e134cf0e3e, type: 3}
   connectorPrefab: {fileID: 8302508908966622360, guid: 1f826802e2addfe48a37974c0e7e78d9, type: 3}
   kiwiPrefab: {fileID: 4899903623646807888, guid: 9660bc8bd0e56834c9f69a94ae7277a1, type: 3}
+  _1x1ColPrefab: {fileID: 979798171851015552, guid: c9545e546b427e548b5df0f0e7c9d61a, type: 3}
+  _2x2ColPrefab: {fileID: 4063682100341033637, guid: 7aee28ec8ea5eb2458dd6c9cc8a1ebf4, type: 3}
+  cubePrefab: {fileID: 682825700343721999, guid: f7b4b8bf940f362408db1732ccf36fa2, type: 3}
 --- !u!4 &2068360654
 Transform:
   m_ObjectHideFlags: 0

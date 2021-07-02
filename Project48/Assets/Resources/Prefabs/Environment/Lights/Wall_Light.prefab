@@ -87,7 +87,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5995dc45925deea44b186a0db2df2a03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trigger_radius: 1.5
+  trigger_radius: 2
   min_intensity: 0
   max_intensity: 5
   color: {r: 0.9622642, g: 0.84297895, b: 0.5492168, a: 1}
@@ -323,8 +323,44 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 1
-      value: 0.0029640198
+      time: 0.0041295364
+      value: 0.9999069
+      inSlope: -0.0005312628
+      outSlope: -0.0005312628
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.19671586
+    - serializedVersion: 3
+      time: 1.9469814
+      value: 0.99828386
+      inSlope: -0.0047013136
+      outSlope: -0.0047013136
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 1
+    - serializedVersion: 3
+      time: 1.9655335
+      value: 0.018559307
+      inSlope: -1.1463841
+      outSlope: -1.1463841
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1.9873886
+      value: 0.2199699
+      inSlope: -0.975668
+      outSlope: -0.975668
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 1
+    - serializedVersion: 3
+      time: 1.9996899
+      value: 0.00014593638
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -334,7 +370,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  is_enemy: 0
 --- !u!1 &8655341394545499133
 GameObject:
   m_ObjectHideFlags: 0
