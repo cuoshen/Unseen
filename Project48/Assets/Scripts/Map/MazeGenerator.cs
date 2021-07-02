@@ -358,11 +358,11 @@ public class MazeGenerator : MonoBehaviour
         }
     }
 
-    void GenerateCellularMaze(Vector2Int mapSize)
+    void GenerateCAMaze(Vector2Int mapSize)
     {
         Transform mazeTransform = GenerateBaseMaze(mapSize, out _, out _);
         int[] setting = new int[] { initChance, birthLimit, deathLimit };
-        int[,] maze = CellularMazeMapper.CreateMap(mapSize, setting, epoch);
+        int[,] maze = CAMazeMapper.CreateMap(mapSize, setting, epoch);
 
         for (int i = 0; i < mapSize.x; i++)
         {

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class CellularMazeMapper
+public static class CAMazeMapper
 {
 	/// <param name="setting"> setting by [initChance, birthLimit, deathLimit] </param>
 	public static int[,] CellularRun(int[,] oldMap, Vector2Int mapSize, int[] setting)
