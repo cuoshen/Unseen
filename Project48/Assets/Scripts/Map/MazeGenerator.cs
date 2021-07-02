@@ -80,8 +80,8 @@ public class MazeGenerator : MonoBehaviour
             }
             else
             {
-                int width = rng.Next(initWidth - 2 + level, initWidth + level);
-                int height = rng.Next(initHeight - 2 + level, initHeight + level);
+                int width = rng.Next(initWidth - 2, initWidth);
+                int height = rng.Next(initHeight - 2, initHeight);
                 GenerateSparseMaze(width, height);
             }
         }
@@ -92,14 +92,17 @@ public class MazeGenerator : MonoBehaviour
 
     IEnumerator NextLevelCoroutine()
     {
+        player.transform.position = new Vector3(0, 0.1f, 0);
+        yield return null;
+
         level++;
         if (transform.childCount != 0)
         {
             foreach (Transform child in transform)
                 Destroy(child.gameObject);
         }
-
         GenerateLevel();
+
         yield return null;
         player.transform.position = new Vector3(0, 0.1f, 0);
     }
@@ -208,6 +211,7 @@ public class MazeGenerator : MonoBehaviour
 
         Transform mazeTransform = GenerateBaseMaze(startPos, endPos, width, height);
         WallState[,] maze = RBMazeMapper.CreateMap(rng, width, height);
+        List<Transform> kiwis = new List<Transform>();
 
         for (int i = 0; i < width; i++)
         {
@@ -293,8 +297,24 @@ public class MazeGenerator : MonoBehaviour
                 //Generate Enemies
                 if (wallPosList.Count == 3 && disFromStart.magnitude > 4 && disFromEnd.magnitude > 4)
                 {
-                    Transform newKiwi = Instantiate(kiwiPrefab, mazeTransform);
-                    newKiwi.localPosition = position;
+                    bool TooClose = false;
+                    if(kiwis != null)
+                    {
+                        foreach(Transform kiwi in kiwis)
+                        {
+                            Vector3 disFromEnemy = kiwi.position - position;
+                            if(disFromEnemy.magnitude < 4)
+                            {
+                                TooClose = true;
+                            }
+                        }
+                    }
+                    if (!TooClose)
+                    {
+                        Transform newKiwi = Instantiate(kiwiPrefab, mazeTransform);
+                        newKiwi.localPosition = position;
+                        kiwis.Add(newKiwi);
+                    }
                 }
             }
         }
