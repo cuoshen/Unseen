@@ -79,7 +79,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 2
-  EncounterDis: 2
+  EncounterDis: 1.5
   attackDis: 0.5
   speed: 1.2
 --- !u!1001 &4932933766548250811
