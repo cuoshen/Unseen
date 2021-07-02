@@ -18,12 +18,14 @@ public class MazeGenerator : MonoBehaviour
     }
 
     System.Random rng;
-    int initWidth = 5;
-    int initHeight = 5;
-    int level = 0;
     Vector3 lastEndPos;
     GameObject player;
+    int level = 0;
 
+    [SerializeField]
+    int initWidth;
+    [SerializeField]
+    int initHeight;
     [SerializeField]
     Transform wallPrefab;
     [SerializeField]
@@ -287,8 +289,9 @@ public class MazeGenerator : MonoBehaviour
                 }
 
                 Vector2Int disFromStart = new Vector2Int(i, j) - startPos;
+                Vector2Int disFromEnd = new Vector2Int(i, j) - endPos;
                 //Generate Enemies
-                if (wallPosList.Count == 3 && disFromStart.magnitude > 3)
+                if (wallPosList.Count == 3 && disFromStart.magnitude > 4 && disFromEnd.magnitude > 4)
                 {
                     Transform newKiwi = Instantiate(kiwiPrefab, mazeTransform);
                     newKiwi.localPosition = position;
