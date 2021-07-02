@@ -27,6 +27,8 @@ public class MazeGenerator : MonoBehaviour
     [SerializeField]
     int initHeight;
     [SerializeField]
+    float minKiwiSpawnDistance;
+    [SerializeField]
     Transform wallPrefab;
     [SerializeField]
     Transform floorPrefab;
@@ -92,7 +94,7 @@ public class MazeGenerator : MonoBehaviour
 
     IEnumerator NextLevelCoroutine()
     {
-        player.transform.position = new Vector3(0, 0.1f, 0);
+        player.transform.position = new Vector3(0, 0.1f, -0.3f);
         yield return null;
 
         level++;
@@ -104,7 +106,7 @@ public class MazeGenerator : MonoBehaviour
         GenerateLevel();
 
         yield return null;
-        player.transform.position = new Vector3(0, 0.1f, 0);
+        player.transform.position = new Vector3(0, 0.1f, -0.3f);
     }
 
     public void NextLevel()
@@ -295,7 +297,7 @@ public class MazeGenerator : MonoBehaviour
                 Vector2Int disFromStart = new Vector2Int(i, j) - startPos;
                 Vector2Int disFromEnd = new Vector2Int(i, j) - endPos;
                 //Generate Enemies
-                if (wallPosList.Count == 3 && disFromStart.magnitude > 4 && disFromEnd.magnitude > 4)
+                if (wallPosList.Count == 3 && disFromStart.magnitude > minKiwiSpawnDistance && disFromEnd.magnitude > minKiwiSpawnDistance)
                 {
                     bool TooClose = false;
                     if(kiwis != null)
@@ -303,7 +305,7 @@ public class MazeGenerator : MonoBehaviour
                         foreach(Transform kiwi in kiwis)
                         {
                             Vector3 disFromEnemy = kiwi.position - position;
-                            if(disFromEnemy.magnitude < 4)
+                            if(disFromEnemy.magnitude < minKiwiSpawnDistance)
                             {
                                 TooClose = true;
                             }
