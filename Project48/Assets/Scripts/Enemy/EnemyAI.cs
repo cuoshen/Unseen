@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Legacy;
 
+
 public enum EnemyState
 {
     ATTACK,
@@ -16,10 +17,11 @@ public class EnemyAI : MonoBehaviour
 {
     private GameObject player;
     public EnemyState state = EnemyState.IDLE;
-
+    private float distance;
     public float EncounterDis;
     public float attackDis;
     public float speed;
+
 
     private Animator animator;
     private CharacterController cc;
@@ -40,8 +42,10 @@ public class EnemyAI : MonoBehaviour
         CheckGround();
         if (rb.isKinematic)
         {
-            float distance = Vector3.Distance(player.transform.position, transform.position);
-            if (EncounterDis <= distance)
+            distance = Vector3.Distance(player.transform.position, transform.position);
+            RaycastHit hit;
+            LayerMask maze_layer = 1 << LayerMask.NameToLayer("Maze");
+            if (EncounterDis <= distance || Physics.Linecast(transform.position, player.transform.position, out hit, maze_layer)) // not within encounter distance or blocked
             {
                 state = EnemyState.IDLE;
             }

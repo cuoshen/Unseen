@@ -25,7 +25,7 @@ public class LampLightTrigger : MonoBehaviour
     private float off_time_elapsed;
 
     private bool triggered;
-    public bool is_enemy;
+    private bool is_enemy;
 
     // Start is called before the first frame update
     void Start()
@@ -47,10 +47,13 @@ public class LampLightTrigger : MonoBehaviour
         material = GetComponent<MeshRenderer>().materials[0];
         material.SetColor("_EmissionColor", color * light.intensity / 10);
 
-            on_curve.postWrapMode = WrapMode.Clamp;
-            on_curve_enemy.postWrapMode = WrapMode.Clamp;
-            off_curve.postWrapMode = WrapMode.Clamp;
-        }
+        on_curve.postWrapMode = WrapMode.Clamp;
+        on_curve_enemy.postWrapMode = WrapMode.Clamp;
+        off_curve.postWrapMode = WrapMode.Clamp;
+        triggered = false;
+        is_enemy = false;
+
+    }
 
     private void Update()
     {
@@ -85,8 +88,31 @@ public class LampLightTrigger : MonoBehaviour
     // object enter
     private void OnTriggerEnter(Collider other)
     {
-        off_time_elapsed = 0;
-        triggered = true;
+        
+        
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        float distance = Vector3.Distance(other.transform.position, transform.position);
+        RaycastHit hit;
+        LayerMask maze_layer = 1 << LayerMask.NameToLayer("Maze");
+        if (!Physics.Linecast(transform.position, other.transform.position, out hit, maze_layer)) {
+
+            if (other.tag == "Player")
+            {
+                off_time_elapsed = 0;
+                triggered = true;
+            }
+
+            if (triggered && other.tag == "Enemy")
+            {
+                is_enemy = true;
+            }
+
+        }
+
+       
     }
 
     // object exit
@@ -95,10 +121,10 @@ public class LampLightTrigger : MonoBehaviour
         if (other.tag == "Enemy")
         {
             is_enemy = false;
-        } 
+        }
         on_time_elapsed = 0;
         triggered = false;
 
+
     }
-    
 }
