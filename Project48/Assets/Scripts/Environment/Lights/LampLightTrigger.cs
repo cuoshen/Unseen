@@ -20,7 +20,7 @@ public class LampLightTrigger : MonoBehaviour
     // Color of children <lamp sphere>
     public Color color;
 
-    public AnimationCurve on_curve, on_curve_enemy, off_curve;
+    public AnimationCurve on_curve, on_curve_enemy, off_curve, off_curve_enemy;
     private float on_time_elapsed;
     private float off_time_elapsed;
 
@@ -45,11 +45,13 @@ public class LampLightTrigger : MonoBehaviour
         }
 
         material = GetComponent<MeshRenderer>().materials[0];
-        material.SetColor("_EmissionColor", color * light.intensity / 10);
+        material.SetColor("_EmissionColor", color * light.intensity);
 
         on_curve.postWrapMode = WrapMode.Clamp;
         on_curve_enemy.postWrapMode = WrapMode.Clamp;
         off_curve.postWrapMode = WrapMode.Clamp;
+        off_curve_enemy.postWrapMode = WrapMode.Clamp;
+
         triggered = false;
         is_enemy = false;
 
@@ -79,10 +81,8 @@ public class LampLightTrigger : MonoBehaviour
             off_time_elapsed += Time.deltaTime;
             light.intensity = min_intensity + off_curve.Evaluate(off_time_elapsed) * max_intensity;
         }
-        color.a = light.intensity;
-        material.color = color;
-        
-        GetComponent<MeshRenderer>().materials[0].SetColor("_EmissionColor", color * light.intensity / 10);
+
+        material.SetColor("_EmissionColor", color * light.intensity);
     }
 
     // object enter
@@ -97,8 +97,8 @@ public class LampLightTrigger : MonoBehaviour
         float distance = Vector3.Distance(other.transform.position, transform.position);
         RaycastHit hit;
         LayerMask maze_layer = 1 << LayerMask.NameToLayer("Maze");
-        if (!Physics.Linecast(transform.position, other.transform.position, out hit, maze_layer)) {
-
+        if (!Physics.Linecast(transform.position, other.transform.position, out hit, maze_layer))
+        {
             if (other.tag == "Player")
             {
                 off_time_elapsed = 0;
@@ -111,8 +111,24 @@ public class LampLightTrigger : MonoBehaviour
             }
 
         }
+        else if (Physics.Linecast(transform.position, other.transform.position, out hit, maze_layer))
+        {
+            if (other.tag == "Player")
+            {
+                triggered = false;
+                on_time_elapsed = 0;
+            }
+            if (other.tag == "Enemy")
+            {
+                is_enemy = false;
+                on_time_elapsed = 0;
+                triggered = false;
+            }
 
-       
+
+        }
+
+
     }
 
     // object exit
