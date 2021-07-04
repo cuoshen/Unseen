@@ -97,7 +97,8 @@ public class LampLightTrigger : MonoBehaviour
         float distance = Vector3.Distance(other.transform.position, transform.position);
         RaycastHit hit;
         LayerMask maze_layer = 1 << LayerMask.NameToLayer("Maze");
-        if (!Physics.Linecast(transform.position, other.transform.position, out hit, maze_layer)) {
+        if (!Physics.Linecast(transform.position, other.transform.position, out hit, maze_layer))
+        {
 
             if (other.tag == "Player")
             {
@@ -111,8 +112,22 @@ public class LampLightTrigger : MonoBehaviour
             }
 
         }
+        else if (Physics.Linecast(transform.position, other.transform.position, out hit, maze_layer))
+        {
+            if (other.tag == "Player")
+            {
+                triggered = false;
+                on_time_elapsed = 0;
+            }
+            if (other.tag == "Enemy")
+            {
+                is_enemy = false;
+                on_time_elapsed = 0;
+                triggered = false;
+            }
+            
 
-       
+        }
     }
 
     // object exit
