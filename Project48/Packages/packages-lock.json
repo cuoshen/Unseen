@@ -155,15 +155,14 @@
       }
     },
     "net.peeweek.gameplay-ingredients": {
-      "version": "2020.2.9",
+      "version": "file:D:/GitHub/#Unity Packages/net.peeweek.gameplay-ingredients",
       "depth": 0,
-      "source": "registry",
+      "source": "local",
       "dependencies": {
         "com.unity.cinemachine": "2.6.3",
         "com.unity.timeline": "1.4.5",
         "com.dbrizov.naughtyattributes": "2.0.8"
-      },
-      "url": "https://package.openupm.com"
+      }
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",
