@@ -221,7 +221,7 @@ public class MazeGenerator : MonoBehaviour
     {
         Vector2Int startPos, endPos;
         Transform mazeTransform = GenerateBaseMaze(mapSize, out startPos, out endPos);
-        Directions[,] maze = RBMazeMapper.CreateMap(mapSize);
+        Directions[,] maze = Algorithms.RecursiveBacktracker(mapSize);
         List<Transform> kiwis = new List<Transform>();
 
         for (int i = 0; i < mapSize.x; i++)
@@ -333,7 +333,7 @@ public class MazeGenerator : MonoBehaviour
     void GenerateColumnarMaze(Vector2Int mapSize)
     {
         Transform mazeTransform = GenerateBaseMaze(mapSize * 4, out _, out _);
-        ColumnSize[,] maze = ColumnarMazeMapper.CreateMap(mapSize, _2x2ColumnChance);
+        ColumnSize[,] maze = Algorithms.Columnar(mapSize, _2x2ColumnChance);
 
         for (int i = 0; i < mapSize.x; i++)
         {
@@ -362,7 +362,7 @@ public class MazeGenerator : MonoBehaviour
     {
         Transform mazeTransform = GenerateBaseMaze(mapSize, out _, out _);
         int[] setting = new int[] { initChance, birthLimit, deathLimit };
-        int[,] maze = CAMazeMapper.CreateMap(mapSize, setting, epoch);
+        int[,] maze = Algorithms.Cellular(mapSize, setting, epoch);
 
         for (int i = 0; i < mapSize.x; i++)
         {
