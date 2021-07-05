@@ -3,67 +3,68 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+/// <summary>
+/// <br>Stores directions in the form of flags.</br>
+/// <br>LEFT: 1, RIGHT: 2, UP: 4, DOWN: 8</br>
+/// </summary>
 [Flags]
-public enum WallState
+public enum Directions
 {
-    // 0000 -> NO WALLS
-    // 1111 -> LEFT,RIGHT,UP,DOWN
-    LEFT = 1, // 0001
-    RIGHT = 2, // 0010
-    UP = 4, // 0100
-    DOWN = 8, // 1000
-
-    VISITED = 128, // 1000 0000
+    NONE  = 0b0000,
+    LEFT  = 0b0001,
+    RIGHT = 0b0010,
+    UP    = 0b0100,
+    DOWN  = 0b1000,
+    ALL   = 0b1111,
 }
 
 public struct Neighbour
 {
     public Vector2Int Position;
-    public WallState SharedWall;
+    public Directions SharedWall;
 }
 
 public static class RBMazeMapper
 {
 
-    static WallState GetOppositeWall(WallState wall)
+    static Directions GetOpposite(Directions dir)
     {
-        switch (wall)
+        return dir switch
         {
-            case WallState.RIGHT: return WallState.LEFT;
-            case WallState.LEFT: return WallState.RIGHT;
-            case WallState.UP: return WallState.DOWN;
-            case WallState.DOWN: return WallState.UP;
-            default: return WallState.LEFT;
-        }
+            Directions.NONE => Directions.ALL,
+            Directions.LEFT => Directions.RIGHT,
+            Directions.RIGHT => Directions.LEFT,
+            Directions.UP => Directions.DOWN,
+            Directions.DOWN => Directions.UP,
+            Directions.ALL => Directions.NONE,
+            _ => Directions.ALL,
+        };
     }
 
-    static WallState[,] ApplyRecursiveBacktracker(WallState[,] maze)
+    static Directions[,] ApplyRecursiveBacktracker(Directions[,] maze)
     {
         int width = maze.GetLength(0);
         int height = maze.GetLength(1);
+
         Stack<Vector2Int> posStack = new Stack<Vector2Int>();
         Vector2Int initPos = new Vector2Int(UnityEngine.Random.Range(0, width), UnityEngine.Random.Range(0, height));
-        Vector2Int position = initPos;
-
-        maze[position.x, position.y] |= WallState.VISITED;  // 1000 1111
-        posStack.Push(position);
+        posStack.Push(initPos);
 
         while (posStack.Count > 0)
         {
-            Vector2Int current = posStack.Pop();
-            List<Neighbour> neighbours = GetUnvisitedNeighbours(current, maze);
+            Vector2Int currentPos = posStack.Pop();
+            List<Neighbour> neighbours = GetUnvisitedNeighbours(currentPos, maze);
 
             if (neighbours.Count > 0)
             {
-                posStack.Push(current);
+                posStack.Push(currentPos);
 
                 int randIndex = UnityEngine.Random.Range(0, neighbours.Count);
                 Neighbour randomNeighbour = neighbours[randIndex];
 
                 Vector2Int nPos = randomNeighbour.Position;
-                maze[current.x, current.y] &= ~randomNeighbour.SharedWall;
-                maze[nPos.x, nPos.y] &= ~GetOppositeWall(randomNeighbour.SharedWall);
-                maze[nPos.x, nPos.y] |= WallState.VISITED;
+                maze[currentPos.x, currentPos.y] &= ~randomNeighbour.SharedWall;
+                maze[nPos.x, nPos.y] &= ~GetOpposite(randomNeighbour.SharedWall);
 
                 posStack.Push(nPos);
             }
@@ -72,56 +73,59 @@ public static class RBMazeMapper
         return maze;
     }
 
-    static List<Neighbour> GetUnvisitedNeighbours(Vector2Int p, WallState[,] maze)
+    /// <summary>
+    /// Return neighbours that have walls on all four sides
+    /// </summary>
+    static List<Neighbour> GetUnvisitedNeighbours(Vector2Int position, Directions[,] maze)
     {
         int width = maze.GetLength(0);
         int height = maze.GetLength(1);
         List<Neighbour> list = new List<Neighbour>();
 
-        if (p.x > 0) // LEFT
+        if (position.x > 0) // LEFT
         {
-            if (!maze[p.x - 1, p.y].HasFlag(WallState.VISITED))
+            if (maze[position.x - 1, position.y].Equals(Directions.ALL))
             {
                 list.Add(new Neighbour
                 {
-                    Position = new Vector2Int(p.x - 1, p.y),
-                    SharedWall = WallState.LEFT
+                    Position = new Vector2Int(position.x - 1, position.y),
+                    SharedWall = Directions.LEFT
                 });
             }
         }
 
-        if (p.x < width - 1) // RIGHT
+        if (position.x < width - 1) // RIGHT
         {
-            if (!maze[p.x + 1, p.y].HasFlag(WallState.VISITED))
+            if (maze[position.x + 1, position.y].Equals(Directions.ALL))
             {
                 list.Add(new Neighbour
                 {
-                    Position = new Vector2Int(p.x + 1, p.y),
-                    SharedWall = WallState.RIGHT
+                    Position = new Vector2Int(position.x + 1, position.y),
+                    SharedWall = Directions.RIGHT
                 });
             }
         }
 
-        if (p.y > 0) // DOWN
+        if (position.y > 0) // DOWN
         {
-            if (!maze[p.x, p.y - 1].HasFlag(WallState.VISITED))
+            if (maze[position.x, position.y - 1].Equals(Directions.ALL))
             {
                 list.Add(new Neighbour
                 {
-                    Position = new Vector2Int(p.x, p.y - 1),
-                    SharedWall = WallState.DOWN
+                    Position = new Vector2Int(position.x, position.y - 1),
+                    SharedWall = Directions.DOWN
                 });
             }
         }
 
-        if (p.y < height - 1) // UP
+        if (position.y < height - 1) // UP
         {
-            if (!maze[p.x, p.y + 1].HasFlag(WallState.VISITED))
+            if (maze[position.x, position.y + 1].Equals(Directions.ALL))
             {
                 list.Add(new Neighbour
                 {
-                    Position = new Vector2Int(p.x, p.y + 1),
-                    SharedWall = WallState.UP
+                    Position = new Vector2Int(position.x, position.y + 1),
+                    SharedWall = Directions.UP
                 });
             }
         }
@@ -129,15 +133,14 @@ public static class RBMazeMapper
         return list;
     }
 
-    public static WallState[,] CreateMap(Vector2Int mapSize)
+    public static Directions[,] CreateMap(Vector2Int mapSize)
     {
-        WallState[,] maze = new WallState[mapSize.x, mapSize.y];
-        WallState initial = WallState.RIGHT | WallState.LEFT | WallState.UP | WallState.DOWN;
+        Directions[,] maze = new Directions[mapSize.x, mapSize.y];
         for (int i = 0; i < mapSize.x; i++)
         {
             for (int j = 0; j < mapSize.y; j++)
             {
-                maze[i, j] = initial;  // 1111
+                maze[i, j] = Directions.ALL;
             }
         }
         

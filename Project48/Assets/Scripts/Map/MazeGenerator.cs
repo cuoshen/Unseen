@@ -221,19 +221,19 @@ public class MazeGenerator : MonoBehaviour
     {
         Vector2Int startPos, endPos;
         Transform mazeTransform = GenerateBaseMaze(mapSize, out startPos, out endPos);
-        WallState[,] maze = RBMazeMapper.CreateMap(mapSize);
+        Directions[,] maze = RBMazeMapper.CreateMap(mapSize);
         List<Transform> kiwis = new List<Transform>();
 
         for (int i = 0; i < mapSize.x; i++)
         {
             for (int j = 0; j < mapSize.y; j++)
             {
-                WallState cell = maze[i, j];
+                Directions cell = maze[i, j];
                 Vector3 position = new Vector3(-mapSize.x / 2 + i, 0, -mapSize.y / 2 + j);
                 List<Vector3> wallPosList = new List<Vector3>();
                 List<Vector3> wallAngleList = new List<Vector3>();
 
-                if (cell.HasFlag(WallState.UP))
+                if (cell.HasFlag(Directions.UP))
                 {
                     Vector3 newPos = position + new Vector3(0, 0, 0.5f);
                     Vector3 newAngle = new Vector3(0, 0, 0);
@@ -248,7 +248,7 @@ public class MazeGenerator : MonoBehaviour
                     }
                 }
 
-                if (cell.HasFlag(WallState.LEFT))
+                if (cell.HasFlag(Directions.LEFT))
                 {
                     Vector3 newPos = position + new Vector3(-0.5f, 0, 0);
                     Vector3 newAngle = new Vector3(0, -90, 0);
@@ -263,7 +263,7 @@ public class MazeGenerator : MonoBehaviour
                     }
                 }
 
-                if (cell.HasFlag(WallState.DOWN))
+                if (cell.HasFlag(Directions.DOWN))
                 {
                     Vector3 newPos = position + new Vector3(0, 0, -0.5f);
                     Vector3 newAngle = new Vector3(0, 180, 0);
@@ -278,7 +278,7 @@ public class MazeGenerator : MonoBehaviour
                     }
                 }
 
-                if (cell.HasFlag(WallState.RIGHT))
+                if (cell.HasFlag(Directions.RIGHT))
                 {
                     Vector3 newPos = position + new Vector3(0.5f, 0, 0);
                     Vector3 newAngle = new Vector3(0, 90, 0);
