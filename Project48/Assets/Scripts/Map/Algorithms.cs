@@ -74,12 +74,12 @@ public enum Direction8
 public static class Algorithms
 {
 	#region Utility
-	public static readonly Dictionary<Vector2Int, Direction4> Offset4 = new Dictionary<Vector2Int, Direction4>()
+	public static readonly Dictionary<Direction4, Vector2Int> Offset4 = new Dictionary<Direction4, Vector2Int>()
 	{ 
-		{new Vector2Int(-1, 0), Direction4.LEFT},
-		{new Vector2Int(1,0), Direction4.RIGHT},
-		{new Vector2Int( 0,-1), Direction4.DOWN},
-		{new Vector2Int( 0, 1), Direction4.UP}
+		{Direction4.LEFT, new Vector2Int(-1, 0)},
+		{Direction4.RIGHT, new Vector2Int(1,0)},
+		{Direction4.DOWN, new Vector2Int( 0,-1)},
+		{Direction4.UP, new Vector2Int( 0, 1)}
 	};
 
 	public static readonly List<Vector2Int> Offset8 = new List<Vector2Int>
@@ -115,58 +115,8 @@ public static class Algorithms
 
 	public static List<DirectionalTile> GetNeighbours4(Vector2Int coord, Vector2Int mapSize)
     {
-		return Offset4.Select(d => new DirectionalTile( new Vector2Int(coord.x + d.Key.x, coord.y + d.Key.y), d.Value))
+		return Offset4.Select(d => new DirectionalTile( new Vector2Int(coord.x + d.Value.x, coord.y + d.Value.y), d.Key))
 		.Where(d => IsInMapRange(d.Position, mapSize)).ToList();
-	}
-
-	public static void FloodFill(Vector2Int coord, int[,] map, ref Region region)
-    {
-		Vector2Int mapSize = new Vector2Int(map.GetLength(0), map.GetLength(1));
-		int tile = map[coord.x, coord.y];
-		foreach (DirectionalTile p in GetNeighbours4(coord, mapSize))
-		{
-			bool IsNewTile = false;
-			if (map[p.Position.x, p.Position.y] == tile && !region.Area.Contains(p.Position))
-			{
-				region.Area.Add(p.Position);
-				IsNewTile = true;
-			}
-			if (map[p.Position.x, p.Position.y] != tile && !region.Outline.Contains(p))
-            {
-				region.Outline.Add(p);
-			}
-
-            if (IsNewTile)
-			{
-				FloodFill(p.Position, map, ref region);
-			}
-		}
-	}
-
-	 public static List<Region> GetRegions(int tile, int[,] map)
-    {
-		List<Region> regions = new List<Region>();
-		Vector2Int mapSize = new Vector2Int(map.GetLength(0), map.GetLength(1));
-
-		Region region;
-		Vector2Int coord;
-
-		//examine each cell in the map
-		for (int i = 0; i < mapSize.x; i++)
-			for (int j = 0; j < mapSize.y; j++)
-            {
-				coord = new Vector2Int(i, j);
-				//if the coord is of correct value, and coord doesn't occur in the list of regions
-				if (map[i,j] == tile && regions.Count(s => s.Area.Contains(coord)) == 0)
-                {
-					region = new Region(new List<Vector2Int>(), new List<DirectionalTile>());
-
-					//launch the recursive
-					FloodFill(coord, map, ref region);
-					regions.Add(region);
-                }
-            }
-		return regions;
 	}
 	#endregion
 
@@ -286,10 +236,165 @@ public static class Algorithms
 			}
 		return heights;
 	}
-    #endregion
+	#endregion
 
-    #region Corridors
+	#region Regions & Corridors
 
+	public static void FloodFill(Vector2Int coord, int[,] map, ref Region region)
+	{
+		Vector2Int mapSize = new Vector2Int(map.GetLength(0), map.GetLength(1));
+		int tile = map[coord.x, coord.y];
+		foreach (DirectionalTile p in GetNeighbours4(coord, mapSize))
+		{
+			bool IsNewTile = false;
+			if (map[p.Position.x, p.Position.y] == tile && !region.Area.Contains(p.Position))
+			{
+				region.Area.Add(p.Position);
+				IsNewTile = true;
+			}
+
+			// Outline from a different direction at the same location is discarded
+			if (map[p.Position.x, p.Position.y] != tile && region.Outline.Count(s => s.Position == p.Position) == 0)
+			{
+				region.Outline.Add(p);
+			}
+
+			if (IsNewTile)
+			{
+				FloodFill(p.Position, map, ref region);
+			}
+		}
+	}
+
+	/// <param name="type"> Get all regions for this type of tiles </param>
+	public static List<Region> GetRegions(int type, int[,] map)
+	{
+		Vector2Int mapSize = new Vector2Int(map.GetLength(0), map.GetLength(1));
+		List<Region> regions = new List<Region>();
+
+		Region region;
+		Vector2Int coord;
+
+		//examine each cell in the map
+		for (int i = 0; i < mapSize.x; i++)
+			for (int j = 0; j < mapSize.y; j++)
+			{
+				coord = new Vector2Int(i, j);
+				//if the coord is of correct value, and coord doesn't occur in the list of regions
+				if (map[i, j] == type && regions.Count(s => s.Area.Contains(coord)) == 0)
+				{
+					region = new Region(new List<Vector2Int>(), new List<DirectionalTile>());
+
+					//launch the recursive
+					FloodFill(coord, map, ref region);
+					regions.Add(region);
+				}
+			}
+		return regions;
+	}
+
+	/// <summary>
+	/// Attempts a corridor. This function does not change the values of the map.
+	/// </summary>
+	/// <param name="type"> Connect this type of tiles with corridors </param>
+	public static List<DirectionalTile> CorridorAttempt(int type, DirectionalTile start, int[,] map, int minSegmentLength, int maxSegmentLength, int maxTurns)
+	{
+		Vector2Int mapSize = new Vector2Int(map.GetLength(0), map.GetLength(1));
+		List<DirectionalTile> corridor = new List<DirectionalTile>();
+		int turns = maxTurns;
+
+		DirectionalTile current = start;
+		corridor.Add(current);
+
+		while (turns >= 0)
+        {
+			turns--;
+			int segmentLength = UnityEngine.Random.Range(minSegmentLength, maxSegmentLength);
+			while (segmentLength > 0)
+            {
+				segmentLength--;
+				current.Position += Offset4[current.Direction];
+				if (IsInMapRange(mapSize, current.Position))
+                {
+					corridor.Add(current);
+					if (map[current.Position.x, current.Position.y] == type)
+                    {
+						return corridor;
+                    }
+                }
+                else
+                {
+					return null;
+                }
+            }
+
+			// make a random turn
+			if (turns > 1)
+			{
+				List<Direction4> dirs = new List<Direction4>() { Direction4.LEFT, Direction4.RIGHT, Direction4.DOWN, Direction4.UP };
+				dirs.Remove(current.Direction);
+				dirs.Remove(GetOpposite(current.Direction));
+				int randIndex = UnityEngine.Random.Range(0, dirs.Count);
+				current.Direction = dirs[randIndex];
+            }
+        }
+		return null;
+    }
+
+	public static int[,] ConnectRegions(int type, int[,] map, int minSegmentLength, int maxSegmentLength, int maxTurns, int epoch)
+    {
+		List<Region> unconnectedRegions = GetRegions(type, map);
+		List<Region> connectedRegions = new List<Region>();
+
+		int counter = 0;
+
+		if (unconnectedRegions.Count > 0)
+		{
+			// start off a a random region
+			int randIndex = UnityEngine.Random.Range(0, unconnectedRegions.Count);
+			Region region = unconnectedRegions[randIndex];
+			unconnectedRegions.Remove(region);
+			connectedRegions.Add(region);
+
+			while (unconnectedRegions.Count > 0 && counter < epoch)
+			{
+				// start off a random point on the outline of a random region
+				randIndex = UnityEngine.Random.Range(0, connectedRegions.Count);
+				region = connectedRegions[randIndex];
+				randIndex = UnityEngine.Random.Range(0, region.Outline.Count);
+				DirectionalTile start = region.Outline[randIndex];
+
+				List<DirectionalTile> corridor = CorridorAttempt(type, start, map, minSegmentLength, maxSegmentLength, maxTurns);
+
+				if (corridor != null)
+                {
+					Debug.Log("Non-null corridor found");
+					for (int i = 0; i < unconnectedRegions.Count; i++)
+                    {
+                        if (unconnectedRegions[i].Area.Contains(corridor.Last().Position))
+						{
+							Debug.Log("Valid corridor found");
+
+							foreach (DirectionalTile tile in corridor)
+                            {
+								map[tile.Position.x, tile.Position.y] = type;
+                            }
+
+							connectedRegions.Add(unconnectedRegions[i]);
+							unconnectedRegions.RemoveAt(i);
+
+							break;
+                        }
+                    }
+                }
+
+				counter++;
+			}
+		}
+		Debug.Log("type not found or exceeded epoch");
+		Debug.Log("counter: " + counter);
+		return map;
+    }
     #endregion
 
     #region Cellular Automata
