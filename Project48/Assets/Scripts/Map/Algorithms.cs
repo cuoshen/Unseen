@@ -314,7 +314,7 @@ public static class Algorithms
             {
 				segmentLength--;
 				current.Position += Offset4[current.Direction];
-				if (IsInMapRange(mapSize, current.Position))
+				if (IsInMapRange(current.Position, mapSize))
                 {
 					corridor.Add(current);
 					if (map[current.Position.x, current.Position.y] == type)
@@ -337,7 +337,8 @@ public static class Algorithms
 				int randIndex = UnityEngine.Random.Range(0, dirs.Count);
 				current.Direction = dirs[randIndex];
             }
-        }
+		}
+		
 		return null;
     }
 
@@ -368,13 +369,10 @@ public static class Algorithms
 
 				if (corridor != null)
                 {
-					Debug.Log("Non-null corridor found");
 					for (int i = 0; i < unconnectedRegions.Count; i++)
                     {
                         if (unconnectedRegions[i].Area.Contains(corridor.Last().Position))
 						{
-							Debug.Log("Valid corridor found");
-
 							foreach (DirectionalTile tile in corridor)
                             {
 								map[tile.Position.x, tile.Position.y] = type;
@@ -391,8 +389,7 @@ public static class Algorithms
 				counter++;
 			}
 		}
-		Debug.Log("type not found or exceeded epoch");
-		Debug.Log("counter: " + counter);
+		
 		return map;
     }
     #endregion

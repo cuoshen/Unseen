@@ -228,7 +228,7 @@ public class MazeGenerator : MonoBehaviour
                 setting[x,y] = new int[] { initChance, birthLimit, deathLimit };
             }
         int[,] maze = Algorithms.Cellular(mapSize, setting, epoch);
-        maze = Algorithms.ConnectRegions(1, maze, 2, 8, 20, 10000);
+        maze = Algorithms.ConnectRegions(0, maze, 2, 8, 20, 10000);
 
         //List<Region> regions = Algorithms.GetRegions(1, maze);
         //Debug.Log("Current Map: ");
