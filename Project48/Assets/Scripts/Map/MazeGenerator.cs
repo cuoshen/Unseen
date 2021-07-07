@@ -224,7 +224,7 @@ public class MazeGenerator : MonoBehaviour
         for (int x = 0; x < mapSize.x; x++)
             for (int y = 0; y < mapSize.y; y++)
             {
-                setting[x,y] = new int[] { 25, 3, 2 };
+                setting[x,y] = new int[] { initChance, birthLimit, deathLimit };
             }
         int[,] maze = Algorithms.Cellular(mapSize, setting, epoch);
 
