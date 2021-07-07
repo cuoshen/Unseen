@@ -75,7 +75,7 @@ public class MazeGenerator : MonoBehaviour
 
     void Start()
     {
-        Random.InitState(33);
+        // Random.InitState(33);
         player = GameObject.FindWithTag("Player");
         NextLevel();
     }
@@ -229,17 +229,6 @@ public class MazeGenerator : MonoBehaviour
             }
         int[,] maze = Algorithms.Cellular(mapSize, setting, epoch);
         maze = Algorithms.ConnectRegions(0, maze, 2, 8, 20, 10000);
-
-        //List<Region> regions = Algorithms.GetRegions(1, maze);
-        //Debug.Log("Current Map: ");
-        //Debug.Log(regions.Count);
-        //Debug.Log(regions[regions.Count - 1].Area.Count);
-        //Debug.Log(regions[regions.Count - 1].Outline.Count);
-        //foreach (DirectionalTile tile in regions[regions.Count - 1].Outline)
-        //{
-        //    Debug.Log(new Vector3(-mapSize.x / 4 + tile.Position.x / 2f - 0.25f, 0, -mapSize.y / 4 + tile.Position.y / 2f - 0.25f));
-        //    Debug.Log(tile.Direction);
-        //}
 
         Vector2Int tunnelFronStart = startPos * 2;
         while (Algorithms.IsInMapRange(tunnelFronStart, mapSize) && maze[tunnelFronStart.x, tunnelFronStart.y] == 1 && maze[tunnelFronStart.x + 1, tunnelFronStart.y] == 1)

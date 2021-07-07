@@ -238,8 +238,7 @@ public static class Algorithms
 	}
 	#endregion
 
-	#region Regions & Corridors
-
+	#region Regions & Connectors
 	public static void FloodFill(Vector2Int coord, int[,] map, ref Region region)
 	{
 		Vector2Int mapSize = new Vector2Int(map.GetLength(0), map.GetLength(1));
@@ -266,6 +265,9 @@ public static class Algorithms
 		}
 	}
 
+	/// <summary>
+	/// Find all regions for a specific type of tiles.
+	/// </summary>
 	/// <param name="type"> Get all regions for this type of tiles </param>
 	public static List<Region> GetRegions(int type, int[,] map)
 	{
@@ -280,9 +282,10 @@ public static class Algorithms
 			for (int j = 0; j < mapSize.y; j++)
 			{
 				coord = new Vector2Int(i, j);
-				//if the coord is of correct value, and coord doesn't occur in the list of regions
+
 				if (map[i, j] == type && regions.Count(s => s.Area.Contains(coord)) == 0)
 				{
+					//if the coord is of correct value, and coord doesn't occur in the list of regions, then it is a new region
 					region = new Region(new List<Vector2Int>(), new List<DirectionalTile>());
 
 					//launch the recursive
@@ -294,10 +297,10 @@ public static class Algorithms
 	}
 
 	/// <summary>
-	/// Attempts a corridor. This function does not change the values of the map.
+	/// Attempts a connector. This function does not change the values of the map.
 	/// </summary>
-	/// <param name="type"> Connect this type of tiles with corridors </param>
-	public static List<DirectionalTile> CorridorAttempt(int type, DirectionalTile start, int[,] map, int minSegmentLength, int maxSegmentLength, int maxTurns)
+	/// <param name="type"> Finish if this type of tiles is reached </param>
+	static List<DirectionalTile> ConnectorAttempt(int type, DirectionalTile start, int[,] map, int minSegmentLength, int maxSegmentLength, int maxTurns)
 	{
 		Vector2Int mapSize = new Vector2Int(map.GetLength(0), map.GetLength(1));
 		List<DirectionalTile> corridor = new List<DirectionalTile>();
@@ -310,13 +313,18 @@ public static class Algorithms
         {
 			turns--;
 			int segmentLength = UnityEngine.Random.Range(minSegmentLength, maxSegmentLength);
+
 			while (segmentLength > 0)
             {
+				// move forward in current direction
 				segmentLength--;
 				current.Position += Offset4[current.Direction];
+
 				if (IsInMapRange(current.Position, mapSize))
                 {
 					corridor.Add(current);
+
+					// finish if a tile of the desired type is reached
 					if (map[current.Position.x, current.Position.y] == type)
                     {
 						return corridor;
@@ -328,9 +336,9 @@ public static class Algorithms
                 }
             }
 
-			// make a random turn
 			if (turns > 1)
 			{
+				// make a random turn
 				List<Direction4> dirs = new List<Direction4>() { Direction4.LEFT, Direction4.RIGHT, Direction4.DOWN, Direction4.UP };
 				dirs.Remove(current.Direction);
 				dirs.Remove(GetOpposite(current.Direction));
@@ -342,6 +350,10 @@ public static class Algorithms
 		return null;
     }
 
+	/// <summary>
+	/// Connect all regions for a specific type of tiles.
+	/// </summary>
+	/// <param name="type"> Connect all regions for this type of tiles </param>
 	public static int[,] ConnectRegions(int type, int[,] map, int minSegmentLength, int maxSegmentLength, int maxTurns, int epoch)
     {
 		List<Region> unconnectedRegions = GetRegions(type, map);
@@ -365,15 +377,17 @@ public static class Algorithms
 				randIndex = UnityEngine.Random.Range(0, region.Outline.Count);
 				DirectionalTile start = region.Outline[randIndex];
 
-				List<DirectionalTile> corridor = CorridorAttempt(type, start, map, minSegmentLength, maxSegmentLength, maxTurns);
+				List<DirectionalTile> connector = ConnectorAttempt(type, start, map, minSegmentLength, maxSegmentLength, maxTurns);
 
-				if (corridor != null)
+				if (connector != null)
                 {
+					// check if connector leads to another region
 					for (int i = 0; i < unconnectedRegions.Count; i++)
                     {
-                        if (unconnectedRegions[i].Area.Contains(corridor.Last().Position))
+                        if (unconnectedRegions[i].Area.Contains(connector.Last().Position))
 						{
-							foreach (DirectionalTile tile in corridor)
+							// draw connector onto map
+							foreach (DirectionalTile tile in connector)
                             {
 								map[tile.Position.x, tile.Position.y] = type;
                             }
@@ -462,7 +476,6 @@ public static class Algorithms
 	#endregion
 
 	#region Recursive Backtracker
-
 	/// <summary>
 	/// Return neighbours that have walls on all four sides
 	/// </summary>
