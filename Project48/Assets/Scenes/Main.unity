@@ -385,7 +385,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initMapSize: {x: 5, y: 5}
-  caveChance: 1
+  caveChance: 0
   _2x2ColumnChance: 0.25
   initChance: 25
   birthLimit: 3
