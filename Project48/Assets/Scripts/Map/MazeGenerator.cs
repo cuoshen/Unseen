@@ -228,6 +228,13 @@ public class MazeGenerator : MonoBehaviour
             }
         int[,] maze = Algorithms.Cellular(mapSize, setting, epoch);
 
+        List<Region> regions = Algorithms.GetRegions(1, maze);
+
+        Debug.Log(mapSize);
+        Debug.Log(regions.Count);
+        Debug.Log(regions[0].Area.Count);
+        Debug.Log(regions[0].Outline.Count);
+
         Vector2Int tunnelFronStart = startPos * 2;
         while (Algorithms.IsInMapRange(tunnelFronStart, mapSize) && maze[tunnelFronStart.x, tunnelFronStart.y] == 1 && maze[tunnelFronStart.x + 1, tunnelFronStart.y] == 1)
         {

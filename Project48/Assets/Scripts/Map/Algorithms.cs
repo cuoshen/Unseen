@@ -123,9 +123,9 @@ public static class Algorithms
     {
 		Vector2Int mapSize = new Vector2Int(map.GetLength(0), map.GetLength(1));
 		int tile = map[coord.x, coord.y];
-		bool IsNewTile = false;
 		foreach (DirectionalTile p in GetNeighbours4(coord, mapSize))
 		{
+			bool IsNewTile = false;
 			if (map[p.Position.x, p.Position.y] == tile && !region.Area.Contains(p.Position))
 			{
 				region.Area.Add(p.Position);
@@ -134,7 +134,6 @@ public static class Algorithms
 			if (map[p.Position.x, p.Position.y] != tile && !region.Outline.Contains(p))
             {
 				region.Outline.Add(p);
-				IsNewTile = true;
 			}
 
             if (IsNewTile)
