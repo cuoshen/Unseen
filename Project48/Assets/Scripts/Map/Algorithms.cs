@@ -476,7 +476,6 @@ public static class Algorithms
 	#endregion
 
 	#region Recursive Backtracker
-
 	/// <summary>
 	/// Return neighbours that have walls on all four sides
 	/// </summary>
