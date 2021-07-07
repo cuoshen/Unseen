@@ -385,7 +385,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initMapSize: {x: 5, y: 5}
-  columnarMazeChance: 0.25
+  caveChance: 1
   _2x2ColumnChance: 0.25
   initChance: 25
   birthLimit: 3
@@ -401,7 +401,7 @@ MonoBehaviour:
   kiwiPrefab: {fileID: 4899903623646807888, guid: 9660bc8bd0e56834c9f69a94ae7277a1, type: 3}
   _1x1ColPrefab: {fileID: 979798171851015552, guid: c9545e546b427e548b5df0f0e7c9d61a, type: 3}
   _2x2ColPrefab: {fileID: 4063682100341033637, guid: 7aee28ec8ea5eb2458dd6c9cc8a1ebf4, type: 3}
-  cubePrefab: {fileID: 682825700343721999, guid: f7b4b8bf940f362408db1732ccf36fa2, type: 3}
+  caveWallPrefab: {fileID: 4404619412615659412, guid: f7b4b8bf940f362408db1732ccf36fa2, type: 3}
 --- !u!4 &2068360654
 Transform:
   m_ObjectHideFlags: 0
