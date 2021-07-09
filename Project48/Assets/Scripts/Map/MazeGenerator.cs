@@ -337,8 +337,8 @@ public class MazeGenerator : MonoBehaviour
                 {
                     Transform newLight = Instantiate(lightPrefab, mazeTransform);
                     int index = Random.Range(0, wallPosList.Count);
-                    newLight.localPosition = wallPosList[index] + new Vector3(0, 0.5f, -0.05f);
                     newLight.localEulerAngles = wallAngleList[index];
+                    newLight.localPosition = wallPosList[index] + new Vector3(0, 0.5f, 0);
                 }
 
                 Vector2Int disFromStart = new Vector2Int(i, j) - startPos;
