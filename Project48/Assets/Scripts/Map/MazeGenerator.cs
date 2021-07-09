@@ -228,7 +228,7 @@ public class MazeGenerator : MonoBehaviour
                 setting[x,y] = new int[] { initChance, birthLimit, deathLimit };
             }
         int[,] maze = Algorithms.Cellular(mapSize, setting, epoch);
-        maze = Algorithms.ConnectRegions(0, maze, 2, 8, 20, 10000);
+        maze = Algorithms.ConnectRegions(0, maze, 2, 8, 15, 20, 10000, false);
 
         Vector2Int tunnelFronStart = startPos * 2;
         while (Algorithms.IsInMapRange(tunnelFronStart, mapSize) && maze[tunnelFronStart.x, tunnelFronStart.y] == 1 && maze[tunnelFronStart.x + 1, tunnelFronStart.y] == 1)
@@ -333,7 +333,7 @@ public class MazeGenerator : MonoBehaviour
                 }
 
                 // Generate light
-                if (wallPosList.Count != 0 && (i + j) % 3 == 0 && new Vector2Int(i, j) != startPos && new Vector2Int(i, j) != endPos)
+                if (wallPosList.Count != 0 && new Vector2Int(i, j) != startPos && new Vector2Int(i, j) != endPos)
                 {
                     Transform newLight = Instantiate(lightPrefab, mazeTransform);
                     int index = Random.Range(0, wallPosList.Count);

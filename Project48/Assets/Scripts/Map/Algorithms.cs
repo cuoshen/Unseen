@@ -299,12 +299,12 @@ public static class Algorithms
 	/// <summary>
 	/// Attempts a connector. This function does not change the values of the map.
 	/// </summary>
-	/// <param name="type"> Finish if this type of tiles is reached </param>
-	static List<DirectionalTile> ConnectorAttempt(int type, DirectionalTile start, int[,] map, int minSegmentLength, int maxSegmentLength, int maxTurns)
+	/// <param name="type"> Connect regions of this type of tiles </param>
+	static List<DirectionalTile> ConnectorAttempt(int type, DirectionalTile start, int[,] map, int minSegmentLength, int maxSegmentLength, int minTurnLimit, int maxTurnLimit, out bool isDeadEnd)
 	{
 		Vector2Int mapSize = new Vector2Int(map.GetLength(0), map.GetLength(1));
 		List<DirectionalTile> corridor = new List<DirectionalTile>();
-		int turns = maxTurns;
+		int turns = UnityEngine.Random.Range(minTurnLimit, maxTurnLimit);
 
 		DirectionalTile current = start;
 		corridor.Add(current);
@@ -326,15 +326,17 @@ public static class Algorithms
 
 					// finish if a tile of the desired type is reached
 					if (map[current.Position.x, current.Position.y] == type)
-                    {
+					{
+						isDeadEnd = false;
 						return corridor;
-                    }
-                }
+					}
+				}
                 else
-                {
+				{
+					isDeadEnd = true;
 					return null;
-                }
-            }
+				}
+			}
 
 			if (turns > 1)
 			{
@@ -346,20 +348,19 @@ public static class Algorithms
 				current.Direction = dirs[randIndex];
             }
 		}
-		
-		return null;
+
+		isDeadEnd = true;
+		return corridor;
     }
 
 	/// <summary>
 	/// Connect all regions for a specific type of tiles.
 	/// </summary>
 	/// <param name="type"> Connect all regions for this type of tiles </param>
-	public static int[,] ConnectRegions(int type, int[,] map, int minSegmentLength, int maxSegmentLength, int maxTurns, int epoch)
+	public static int[,] ConnectRegions(int type, int[,] map, int minSegmentLength, int maxSegmentLength, int minTurnLimit, int maxTurnLimit, int epoch, bool AllowLoops)
     {
 		List<Region> unconnectedRegions = GetRegions(type, map);
 		List<Region> connectedRegions = new List<Region>();
-
-		int counter = 0;
 
 		if (unconnectedRegions.Count > 0)
 		{
@@ -369,7 +370,9 @@ public static class Algorithms
 			unconnectedRegions.Remove(region);
 			connectedRegions.Add(region);
 
-			while (unconnectedRegions.Count > 0 && counter < epoch)
+			int counter = 0;
+
+			while (unconnectedRegions.Count > 0 && counter++ < epoch)
 			{
 				// start off a random point on the outline of a random region
 				randIndex = UnityEngine.Random.Range(0, connectedRegions.Count);
@@ -377,9 +380,10 @@ public static class Algorithms
 				randIndex = UnityEngine.Random.Range(0, region.Outline.Count);
 				DirectionalTile start = region.Outline[randIndex];
 
-				List<DirectionalTile> connector = ConnectorAttempt(type, start, map, minSegmentLength, maxSegmentLength, maxTurns);
+				bool isDeadEnd;
+				List<DirectionalTile> connector = ConnectorAttempt(type, start, map, minSegmentLength, maxSegmentLength, minTurnLimit, maxTurnLimit, out isDeadEnd);
 
-				if (connector != null)
+				if (connector != null && !isDeadEnd)
                 {
 					// check if connector leads to another region
 					for (int i = 0; i < unconnectedRegions.Count; i++)
@@ -388,19 +392,23 @@ public static class Algorithms
 						{
 							// draw connector onto map
 							foreach (DirectionalTile tile in connector)
-                            {
 								map[tile.Position.x, tile.Position.y] = type;
-                            }
 
+							// update connected and unconnected regions
 							connectedRegions.Add(unconnectedRegions[i]);
 							unconnectedRegions.RemoveAt(i);
 
 							break;
                         }
                     }
-                }
 
-				counter++;
+                    if (AllowLoops)
+                    {
+						// draw connector onto map
+						foreach (DirectionalTile tile in connector)
+							map[tile.Position.x, tile.Position.y] = type;
+					}
+                }
 			}
 		}
 		
@@ -543,22 +551,30 @@ public static class Algorithms
 	#region Columnar
 	public static int[,] Columnar(Vector2Int mapSize, float _2x2ColumnChance)
 	{
-		int[,] maze = new int[mapSize.x, mapSize.y];
+		int[,] map = new int[mapSize.x, mapSize.y];
 
 		for (int i = 0; i < mapSize.x; i++)
 			for (int j = 0; j < mapSize.y; j++)
 			{
 				if (UnityEngine.Random.Range(0f, 1f) < _2x2ColumnChance)
 				{
-					maze[i, j] = 2;
+					map[i, j] = 2;
 				}
 				else
 				{
-					maze[i, j] = 1;
+					map[i, j] = 1;
 				}
 			}
 
-		return maze;
+		return map;
 	}
-	#endregion
+    #endregion
+
+    #region Sequential Rooms
+	public static int[,] SequentialRooms(Vector2Int mapSize, int minSegmentLength, int maxSegmentLength, int minTurnLimit, int maxTurnLimit, int epoch)
+	{
+		int[,] map = new int[mapSize.x, mapSize.y];
+		return map;
+	}
+    #endregion
 }
