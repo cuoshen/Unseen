@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 7599237671437475100}
   - component: {fileID: 7023651536873411917}
   - component: {fileID: 7428597285103237340}
+  - component: {fileID: 2121226376257195223}
   - component: {fileID: 9222457403784183722}
-  - component: {fileID: 7630829275657056311}
   - component: {fileID: 5849846992667634730}
   m_Layer: 6
   m_Name: Wall
@@ -162,30 +162,30 @@ MonoBehaviour:
   - m_Vertices: 0b0000000e00000012000000
   m_SharedTextures: []
   m_Positions:
-  - {x: -0.5, y: 0, z: 0.05}
-  - {x: 0.5, y: 0, z: 0.05}
-  - {x: -0.5, y: 1, z: 0.05}
-  - {x: 0.5, y: 1, z: 0.05}
-  - {x: 0.5, y: 0, z: 0.05}
-  - {x: 0.5, y: 0, z: -0.05}
-  - {x: 0.5, y: 1, z: 0.05}
-  - {x: 0.5, y: 1, z: -0.05}
-  - {x: 0.5, y: 0, z: -0.05}
-  - {x: -0.5, y: 0, z: -0.05}
-  - {x: 0.5, y: 1, z: -0.05}
-  - {x: -0.5, y: 1, z: -0.05}
-  - {x: -0.5, y: 0, z: -0.05}
-  - {x: -0.5, y: 0, z: 0.05}
-  - {x: -0.5, y: 1, z: -0.05}
-  - {x: -0.5, y: 1, z: 0.05}
-  - {x: -0.5, y: 1, z: 0.05}
-  - {x: 0.5, y: 1, z: 0.05}
-  - {x: -0.5, y: 1, z: -0.05}
-  - {x: 0.5, y: 1, z: -0.05}
-  - {x: -0.5, y: 0, z: -0.05}
-  - {x: 0.5, y: 0, z: -0.05}
-  - {x: -0.5, y: 0, z: 0.05}
-  - {x: 0.5, y: 0, z: 0.05}
+  - {x: -0.5, y: -0.05, z: 0.05}
+  - {x: 0.5, y: -0.05, z: 0.05}
+  - {x: -0.5, y: 0.95, z: 0.05}
+  - {x: 0.5, y: 0.95, z: 0.05}
+  - {x: 0.5, y: -0.05, z: 0.05}
+  - {x: 0.5, y: -0.05, z: -0.05}
+  - {x: 0.5, y: 0.95, z: 0.05}
+  - {x: 0.5, y: 0.95, z: -0.05}
+  - {x: 0.5, y: -0.05, z: -0.05}
+  - {x: -0.5, y: -0.05, z: -0.05}
+  - {x: 0.5, y: 0.95, z: -0.05}
+  - {x: -0.5, y: 0.95, z: -0.05}
+  - {x: -0.5, y: -0.05, z: -0.05}
+  - {x: -0.5, y: -0.05, z: 0.05}
+  - {x: -0.5, y: 0.95, z: -0.05}
+  - {x: -0.5, y: 0.95, z: 0.05}
+  - {x: -0.5, y: 0.95, z: 0.05}
+  - {x: 0.5, y: 0.95, z: 0.05}
+  - {x: -0.5, y: 0.95, z: -0.05}
+  - {x: 0.5, y: 0.95, z: -0.05}
+  - {x: -0.5, y: -0.05, z: -0.05}
+  - {x: 0.5, y: -0.05, z: -0.05}
+  - {x: -0.5, y: -0.05, z: 0.05}
+  - {x: 0.5, y: -0.05, z: 0.05}
   m_Textures0:
   - {x: 0.5, y: -0.5}
   - {x: -0.5, y: -0.5}
@@ -283,7 +283,7 @@ MeshRenderer:
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 2
+  m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -292,15 +292,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &9222457403784183722
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5169823884515177132}
-  m_Mesh: {fileID: 0}
---- !u!65 &7630829275657056311
+--- !u!65 &2121226376257195223
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -312,7 +304,15 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 0.1}
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Center: {x: 0, y: 0.45, z: 0}
+--- !u!33 &9222457403784183722
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5169823884515177132}
+  m_Mesh: {fileID: 0}
 --- !u!114 &5849846992667634730
 MonoBehaviour:
   m_ObjectHideFlags: 0
