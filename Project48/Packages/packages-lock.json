@@ -1,7 +1,14 @@
 {
   "dependencies": {
+    "com.dbrizov.naughtyattributes": {
+      "version": "2.0.8",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://package.openupm.com"
+    },
     "com.unity.cinemachine": {
-      "version": "2.6.4",
+      "version": "2.6.5",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
@@ -146,6 +153,17 @@
         "com.unity.modules.ui": "1.0.0",
         "com.unity.modules.imgui": "1.0.0"
       }
+    },
+    "net.peeweek.gameplay-ingredients": {
+      "version": "2020.2.9",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.cinemachine": "2.6.3",
+        "com.unity.timeline": "1.4.5",
+        "com.dbrizov.naughtyattributes": "2.0.8"
+      },
+      "url": "https://package.openupm.com"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",
