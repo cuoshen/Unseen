@@ -5,29 +5,26 @@ using UnityEngine;
 public class EnemySounds : MonoBehaviour
 {
     public AudioClip[] clips;
-    private AudioSource audioSource;
+    public AudioSource audioSource;
     // Start is called before the first frame update
     void Awake()
     {
         audioSource = GetComponent<AudioSource>();
     }
 
-    private void m1()
+    private void Idle()
     {
         audioSource.PlayOneShot(clips[0]);
     }
-    private void m2()
+    private void Encounter()
     {
         audioSource.PlayOneShot(clips[1]);
     }
-    private void m3()
+    private void Kick()
     {
-        audioSource.PlayOneShot(clips[2]);
+        audioSource.PlayOneShot(clips[Random.Range(2, 4)]);
     }
-    private void m4()
-    {
-        audioSource.PlayOneShot(clips[3]);
-    }
+   
 
     AudioClip GetRandomClip()
     {
