@@ -48,7 +48,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   m_Intensity: 0
-  m_Range: 1.5
+  m_Range: 4
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -124,8 +124,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trigger_radius: 2
   min_intensity: 0
-  max_intensity: 0.5
-  color: {r: 1, g: 0.9223973, b: 0.56981134, a: 0}
+  max_intensity: 0.02
+  color: {r: 0.5283019, g: 0.44759047, b: 0.2511926, a: 0}
   on_curve:
     serializedVersion: 2
     m_Curve:
