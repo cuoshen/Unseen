@@ -82,7 +82,7 @@ public class LampLightTrigger : MonoBehaviour
             light.intensity = min_intensity + off_curve.Evaluate(off_time_elapsed) * max_intensity;
         }
 
-        material.SetColor("_EmissionColor", color * light.intensity);
+        material.SetColor("_EmissionColor", color * light.intensity / max_intensity);
     }
 
     // object enter
