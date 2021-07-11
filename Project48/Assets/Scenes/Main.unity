@@ -23,7 +23,7 @@ RenderSettings:
   m_AmbientSkyColor: {r: 0, g: 0, b: 0, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 0
+  m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 0}
@@ -182,14 +182,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 464548830}
-  m_LocalRotation: {x: 0.3420201, y: -0, z: -0, w: 0.9396927}
-  m_LocalPosition: {x: 0, y: 1.65, z: -1.68}
+  m_LocalRotation: {x: 0.42261827, y: 0, z: 0, w: 0.9063079}
+  m_LocalPosition: {x: 0, y: 1.62, z: -1.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1418999868}
   m_Father: {fileID: 1609226933}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 40, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 50, y: 0, z: 0}
 --- !u!4 &755563786 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 755563786, guid: 6bfb0de2cc626054bb150c8492e26f18, type: 3}
@@ -240,10 +240,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: 0, y: 0.79999995, z: -1.68}
-  m_XDamping: 1
-  m_YDamping: 1
-  m_ZDamping: 1
+  m_FollowOffset: {x: 0, y: 0.52, z: -0.82}
+  m_XDamping: 1.5
+  m_YDamping: 1.5
+  m_ZDamping: 1.5
   m_AngularDampingMode: 0
   m_PitchDamping: 0
   m_YawDamping: 0
@@ -300,6 +300,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1609226933}
     m_Modifications:
+    - target: {fileID: -5243259962992704119, guid: 6bfb0de2cc626054bb150c8492e26f18, type: 3}
+      propertyPath: speed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 755563786, guid: 6bfb0de2cc626054bb150c8492e26f18, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 755563786, guid: 6bfb0de2cc626054bb150c8492e26f18, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2353130631441330147, guid: 6bfb0de2cc626054bb150c8492e26f18, type: 3}
       propertyPath: m_Name
       value: Player
@@ -385,23 +397,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initMapSize: {x: 5, y: 5}
-  caveChance: 0
-  _2x2ColumnChance: 0.25
-  initChance: 25
-  birthLimit: 3
-  deathLimit: 2
-  epoch: 6
-  minKiwiSpawnDistance: 3
-  wallPrefab: {fileID: 7599237671437475100, guid: 74e6de8e5b70c384ea5644d7429ceb19, type: 3}
-  floorPrefab: {fileID: 634900085634603167, guid: c2536af29a86e154f82a0b8789b78493, type: 3}
-  lightPrefab: {fileID: 7285017026454675818, guid: 947a8c0b200a4ef459a521aafd5746a2, type: 3}
   startPrefab: {fileID: 4459196779015730797, guid: cf6767f6c193e954b811cd2de006a999, type: 3}
   endPrefab: {fileID: 6708590964914837869, guid: e462882065328ca4fa37c5e134cf0e3e, type: 3}
   connectorPrefab: {fileID: 8302508908966622360, guid: 1f826802e2addfe48a37974c0e7e78d9, type: 3}
+  caveChance: 1
+  _2x2ColumnChance: 0.25
+  minKiwiSeparation: 3
   kiwiPrefab: {fileID: 4899903623646807888, guid: 9660bc8bd0e56834c9f69a94ae7277a1, type: 3}
+  corridorWallPrefab: {fileID: 7599237671437475100, guid: 74e6de8e5b70c384ea5644d7429ceb19, type: 3}
+  corridorFloorPrefab: {fileID: 634900085634603167, guid: c2536af29a86e154f82a0b8789b78493, type: 3}
+  corridorLightPrefab: {fileID: 7285017026454675818, guid: 947a8c0b200a4ef459a521aafd5746a2, type: 3}
+  caveCellInitChance: 25
+  caveCellBirthLimit: 3
+  caveCellDdeathLimit: 2
+  cellularPassEpoch: 6
+  minCaveLightSeparation: 3
+  caveWallPrefab: {fileID: 4404619412615659412, guid: f7b4b8bf940f362408db1732ccf36fa2, type: 3}
+  caveLightPrefab: {fileID: 3783455613422746024, guid: 389c471d41cc26e448f0cc2197927276, type: 3}
   _1x1ColPrefab: {fileID: 979798171851015552, guid: c9545e546b427e548b5df0f0e7c9d61a, type: 3}
   _2x2ColPrefab: {fileID: 4063682100341033637, guid: 7aee28ec8ea5eb2458dd6c9cc8a1ebf4, type: 3}
-  caveWallPrefab: {fileID: 4404619412615659412, guid: f7b4b8bf940f362408db1732ccf36fa2, type: 3}
 --- !u!4 &2068360654
 Transform:
   m_ObjectHideFlags: 0

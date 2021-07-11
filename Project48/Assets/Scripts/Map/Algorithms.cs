@@ -82,6 +82,14 @@ public static class Algorithms
 		{Direction4.UP, new Vector2Int( 0, 1)}
 	};
 
+	public static readonly Dictionary<Direction4, Vector3> Angle4 = new Dictionary<Direction4, Vector3>()
+	{
+		{Direction4.LEFT, new Vector3(0, -90, 0)},
+		{Direction4.RIGHT, new Vector3(0, 90, 0)},
+		{Direction4.DOWN, new Vector3(0, 180, 0)},
+		{Direction4.UP, new Vector3(0, 0, 0)}
+	};
+
 	public static readonly List<Vector2Int> Offset8 = new List<Vector2Int>
 	{
 		new Vector2Int(-1, 0),
@@ -108,15 +116,34 @@ public static class Algorithms
 		};
 	}
 
-	public static bool IsInMapRange(Vector2Int coord, Vector2Int mapSize)
+	public static Vector3 Coord2PosXZ(Vector2Int coord)
+    {
+		return new Vector3(coord.x, 0, coord.y);
+    }
+
+	public static bool CheckInMapRange(Vector2Int coord, Vector2Int mapSize)
 	{
 		return coord.x >= 0 && coord.x < mapSize.x && coord.y >= 0 && coord.y < mapSize.y;
+	}
+
+	public static bool CheckMinSeparation(List<Vector3> positions, Vector3 newPosition, float minSeparation)
+    {
+		if (positions != null)
+		{
+			foreach (Vector3 pos in positions)
+			{
+				Vector3 disFromEnemy = pos - newPosition;
+				if (disFromEnemy.magnitude < minSeparation)
+					return false;
+			}
+		}
+		return true;
 	}
 
 	public static List<DirectionalTile> GetNeighbours4(Vector2Int coord, Vector2Int mapSize)
     {
 		return Offset4.Select(d => new DirectionalTile( new Vector2Int(coord.x + d.Value.x, coord.y + d.Value.y), d.Key))
-		.Where(d => IsInMapRange(d.Position, mapSize)).ToList();
+		.Where(d => CheckInMapRange(d.Position, mapSize)).ToList();
 	}
 	#endregion
 
@@ -320,7 +347,7 @@ public static class Algorithms
 				segmentLength--;
 				current.Position += Offset4[current.Direction];
 
-				if (IsInMapRange(current.Position, mapSize))
+				if (CheckInMapRange(current.Position, mapSize))
                 {
 					corridor.Add(current);
 
@@ -445,7 +472,7 @@ public static class Algorithms
 					if (b.x == 0 && b.y == 0) continue;
 
 					// Boundary counts as valid neighbour
-					neighbourCount += IsInMapRange(new Vector2Int(i + b.x, j + b.y), mapSize) ? oldMap[i + b.x, j + b.y] : 1;
+					neighbourCount += CheckInMapRange(new Vector2Int(i + b.x, j + b.y), mapSize) ? oldMap[i + b.x, j + b.y] : 1;
 				}
 
 				if (oldMap[i, j] == 0)
