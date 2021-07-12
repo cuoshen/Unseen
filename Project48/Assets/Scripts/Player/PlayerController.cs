@@ -58,10 +58,8 @@ public class PlayerController : MonoBehaviour
 
     void ResolveVelocity()
     {
-        float horizontalVelocity = new Vector2(characterController.velocity.x, characterController.velocity.z).magnitude;
-        float verticalVelocity = -characterController.velocity.y;
-        animator.SetFloat("Move Speed", horizontalVelocity);
-        animator.SetFloat("Vertical Speed", verticalVelocity);
+        float moveSpeed = new Vector2(characterController.velocity.x, characterController.velocity.z).magnitude;
+        animator.SetFloat("Move Speed", moveSpeed);
     }
 
     void Rotate()

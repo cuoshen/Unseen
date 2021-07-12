@@ -282,7 +282,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  angularSpeed: 10
+  angularSpeed: 15
   gravity: 9.81
 --- !u!1 &1609226932
 GameObject:
@@ -411,7 +411,7 @@ MonoBehaviour:
   startPrefab: {fileID: 4459196779015730797, guid: cf6767f6c193e954b811cd2de006a999, type: 3}
   endPrefab: {fileID: 6708590964914837869, guid: e462882065328ca4fa37c5e134cf0e3e, type: 3}
   connectorPrefab: {fileID: 8302508908966622360, guid: 1f826802e2addfe48a37974c0e7e78d9, type: 3}
-  caveChance: 0.5
+  caveChance: 0
   _2x2ColumnChance: 0.25
   minKiwiSeparation: 3
   kiwiPrefab: {fileID: 4899903623646807888, guid: 9660bc8bd0e56834c9f69a94ae7277a1, type: 3}
