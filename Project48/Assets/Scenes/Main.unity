@@ -264,26 +264,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1507459751 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2353130631441330147, guid: 6bfb0de2cc626054bb150c8492e26f18, type: 3}
-  m_PrefabInstance: {fileID: 1833711852}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1507459752
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1507459751}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f31e1a2431e4f9479141b500cb17209, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 1
-  angularSpeed: 15
-  gravity: 9.81
 --- !u!1 &1609226932
 GameObject:
   m_ObjectHideFlags: 0
@@ -323,10 +303,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1609226933}
     m_Modifications:
-    - target: {fileID: -6286325336804483313, guid: 6bfb0de2cc626054bb150c8492e26f18, type: 3}
-      propertyPath: m_SkinWidth
-      value: 0.002
-      objectReference: {fileID: 0}
     - target: {fileID: 2353130631441330147, guid: 6bfb0de2cc626054bb150c8492e26f18, type: 3}
       propertyPath: m_Name
       value: Player

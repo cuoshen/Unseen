@@ -47,7 +47,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.002
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.24, z: 0}
+  m_Center: {x: 0, y: 0.25, z: 0}
 --- !u!82 &1425647528
 AudioSource:
   m_ObjectHideFlags: 0
