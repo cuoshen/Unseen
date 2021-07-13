@@ -75,11 +75,11 @@ public static class Algorithms
 {
 	#region Utility
 	public static readonly Dictionary<Direction4, Vector2Int> Offset4 = new Dictionary<Direction4, Vector2Int>()
-	{ 
-		{Direction4.LEFT, new Vector2Int(-1, 0)},
-		{Direction4.RIGHT, new Vector2Int(1,0)},
-		{Direction4.DOWN, new Vector2Int( 0,-1)},
-		{Direction4.UP, new Vector2Int( 0, 1)}
+	{
+		{ Direction4.LEFT, new Vector2Int(-1, 0) },
+		{ Direction4.RIGHT, new Vector2Int(1,0) },
+		{ Direction4.DOWN, new Vector2Int( 0,-1) },
+		{ Direction4.UP, new Vector2Int( 0, 1) }
 	};
 
 	public static readonly Dictionary<Direction4, Vector3> Angle4 = new Dictionary<Direction4, Vector3>()
@@ -90,17 +90,31 @@ public static class Algorithms
 		{Direction4.UP, new Vector3(0, 0, 0)}
 	};
 
-	public static readonly List<Vector2Int> Offset8 = new List<Vector2Int>
+	public static readonly Dictionary<Direction8, Vector2Int> Offset8 = new Dictionary<Direction8, Vector2Int>()
 	{
-		new Vector2Int(-1, 0),
-		new Vector2Int( 1, 0),
-		new Vector2Int( 0,-1),
-		new Vector2Int( 0, 1),
-		new Vector2Int(-1,-1),
-		new Vector2Int(-1, 1),
-		new Vector2Int( 1,-1),
-		new Vector2Int( 1, 1)
+		{ Direction8.W, new Vector2Int(-1, 0) },
+		{ Direction8.E, new Vector2Int( 1, 0) },
+		{ Direction8.S, new Vector2Int( 0,-1) },
+		{ Direction8.N, new Vector2Int( 0, 1) },
+		{ Direction8.SW, new Vector2Int(-1,-1) },
+		{ Direction8.SE, new Vector2Int(-1, 1) },
+		{ Direction8.NW, new Vector2Int( 1,-1) },
+		{ Direction8.NE, new Vector2Int( 1, 1) }
 	};
+
+	public static Direction8 Dir4ToClosedDir8(Direction4 dir4)
+    {
+		Direction8 dir8 = (Direction8)dir4;
+		if (dir8.HasFlag(Direction8.S) && dir8.HasFlag(Direction8.W))
+			dir8 |= Direction8.SW;
+		if (dir8.HasFlag(Direction8.S) && dir8.HasFlag(Direction8.E))
+			dir8 |= Direction8.SE;
+		if (dir8.HasFlag(Direction8.N) && dir8.HasFlag(Direction8.W))
+			dir8 |= Direction8.NW;
+		if (dir8.HasFlag(Direction8.N) && dir8.HasFlag(Direction8.E))
+			dir8 |= Direction8.NE;
+		return dir8;
+    }
 
 	public static Direction4 GetOpposite(Direction4 dir)
 	{
@@ -121,9 +135,9 @@ public static class Algorithms
 		return new Vector3(coord.x, 0, coord.y);
     }
 
-	public static bool CheckInMapRange(Vector2Int coord, Vector2Int mapSize)
+	public static bool CheckInMapRange(Vector2Int coord, Vector2Int mapSize, int border = 0)
 	{
-		return coord.x >= 0 && coord.x < mapSize.x && coord.y >= 0 && coord.y < mapSize.y;
+		return coord.x >= border && coord.x < mapSize.x - border && coord.y >= border && coord.y < mapSize.y - border;
 	}
 
 	public static bool CheckMinSeparation(List<Vector3> positions, Vector3 newPosition, float minSeparation)
@@ -384,9 +398,10 @@ public static class Algorithms
 	/// Connect all regions for a specific type of tiles.
 	/// </summary>
 	/// <param name="type"> Connect all regions for this type of tiles </param>
-	public static int[,] ConnectRegions(int type, int[,] map, int minSegmentLength, int maxSegmentLength, int minTurnLimit, int maxTurnLimit, int epoch, bool AllowLoops)
+	public static int[,] ConnectRegions(int type, int[,] map, int minSegmentLength, int maxSegmentLength, int minTurnLimit, int maxTurnLimit, int attempts, bool AllowLoops, List<Region> unconnectedRegions = null)
     {
-		List<Region> unconnectedRegions = GetRegions(type, map);
+		if (unconnectedRegions == null)
+			unconnectedRegions = GetRegions(type, map);
 		List<Region> connectedRegions = new List<Region>();
 
 		if (unconnectedRegions.Count > 0)
@@ -399,7 +414,7 @@ public static class Algorithms
 
 			int counter = 0;
 
-			while (unconnectedRegions.Count > 0 && counter++ < epoch)
+			while (unconnectedRegions.Count > 0 && counter++ < attempts)
 			{
 				// start off a random point on the outline of a random region
 				randIndex = UnityEngine.Random.Range(0, connectedRegions.Count);
@@ -441,7 +456,35 @@ public static class Algorithms
 		
 		return map;
     }
-    #endregion
+
+	public static int[,] OpenDeadEnds(int type, int[,] map)
+	{
+		Vector2Int mapSize = new Vector2Int(map.GetLength(0), map.GetLength(1));
+		//examine each cell in the map
+		for (int i = 0; i < mapSize.x; i++)
+			for (int j = 0; j < mapSize.y; j++)
+			{
+				List<Vector2Int> neighbours = new List<Vector2Int>();
+				foreach(Vector2Int offset in Offset4.Values)
+                {
+					Vector2Int neighbour = new Vector2Int(i, j) + offset;
+					if (CheckInMapRange(neighbour, mapSize, 1) && map[neighbour.x,neighbour.y] != type)
+                    {
+						neighbours.Add(neighbour);
+                    }
+                }
+
+				if (neighbours.Count > 2)
+                {
+					int randIndex = UnityEngine.Random.Range(0, neighbours.Count);
+					Vector2Int randNeighbour = neighbours[randIndex];
+					map[randNeighbour.x, randNeighbour.y] = type;
+				}
+			}
+
+		return map;
+	}
+	#endregion
 
     #region Cellular Automata
     static int[,] InitCellularMap(Vector2Int mapSize, int[,][] setting)
@@ -573,6 +616,101 @@ public static class Algorithms
 
 		return maze;
 	}
+
+	public static int[,] FattenMaze(Direction4[,] maze)
+    {
+		Vector2Int mazeSize = new Vector2Int(maze.GetLength(0), maze.GetLength(1));
+		int[,] map = new int[mazeSize.x * 2 + 1, mazeSize.y * 2 + 1];
+		Vector2Int mapSize = new Vector2Int(map.GetLength(0), map.GetLength(1));
+
+		// write open paths with 1
+		for (int i = 0; i < mazeSize.x; i++)
+			for (int j = 0; j < mazeSize.y; j++)
+			{
+				Vector2Int mapCoord = new Vector2Int(i * 2 + 1, j * 2 + 1);
+				map[mapCoord.x, mapCoord.y] = 1;
+				foreach (Direction4 dir in Enum.GetValues(typeof(Direction4)))
+				{
+					if (Offset4.ContainsKey(dir) && !maze[i, j].HasFlag(dir))
+					{
+						Vector2Int mapNeighbourCoord = mapCoord + Offset4[dir];
+
+						if (CheckInMapRange(mapNeighbourCoord, mapSize))
+						{
+							map[mapNeighbourCoord.x, mapNeighbourCoord.y] = 1;
+						}
+					}
+				}
+			}
+
+		// reverse
+		for (int i = 0; i < mapSize.x; i++)
+			for (int j = 0; j < mapSize.y; j++)
+			{
+				map[i, j] = map[i, j] == 1 ? 0 : 1;
+			}
+		
+		return map;
+	}
+
+	public static int[,] RoomInMaze(int[,] map, int minHalfRoomLength, int maxHalfRoomLength, int attempts, List<Region> existingRooms, out List<Region> allRooms, out List<Region> newRooms)
+	{
+		Vector2Int mapSize = new Vector2Int(map.GetLength(0), map.GetLength(1));
+		allRooms = existingRooms;
+		newRooms = new List<Region>();
+		int counter = 0;
+
+		while (counter++ < attempts)
+		{
+			Vector2Int roomSize = new Vector2Int(UnityEngine.Random.Range(minHalfRoomLength, maxHalfRoomLength),
+				UnityEngine.Random.Range(minHalfRoomLength, maxHalfRoomLength)) * 2 + new Vector2Int(1, 1);
+			Vector2Int maxBLCoord = mapSize - roomSize;
+			Vector2Int bottomLeft = new Vector2Int(UnityEngine.Random.Range(0, maxBLCoord.x),
+				UnityEngine.Random.Range(0, maxBLCoord.y)) / 2 * 2 + new Vector2Int(1, 1);
+			Vector2Int topRight = bottomLeft + roomSize;
+
+			Region newRoom = new Region(new List<Vector2Int>(), new List<DirectionalTile>());
+			bool canPlace = true;
+
+			for (int x = bottomLeft.x - 1; x < topRight.x + 1; x++)
+				for (int y = bottomLeft.y - 1; y < topRight.y + 1; y++)
+				{
+					Vector2Int tile = new Vector2Int(x, y);
+
+					foreach (Region room in allRooms)
+						if (room.Area.Contains(tile))
+						{
+							canPlace = false;
+							break;
+						}
+
+					if (!canPlace)
+						break;
+
+					if (x < bottomLeft.x)
+						newRoom.Outline.Add(new DirectionalTile(tile, Direction4.LEFT));
+					else if (x >= topRight.x)
+						newRoom.Outline.Add(new DirectionalTile(tile, Direction4.RIGHT));
+					else if (y < bottomLeft.y)
+						newRoom.Outline.Add(new DirectionalTile(tile, Direction4.DOWN));
+					else if (y >= topRight.y)
+						newRoom.Outline.Add(new DirectionalTile(tile, Direction4.UP));
+					else
+						newRoom.Area.Add(tile);
+				}
+
+			if (canPlace)
+            {
+				allRooms.Add(newRoom);
+				newRooms.Add(newRoom);
+				foreach (Vector2Int tile in newRoom.Area)
+					map[tile.x, tile.y] = 0;
+				foreach (DirectionalTile dirTile in newRoom.Outline)
+					map[dirTile.Position.x, dirTile.Position.y] = 1;
+			}
+		}
+		return map;
+	}
 	#endregion
 
 	#region Columnar
@@ -593,14 +731,6 @@ public static class Algorithms
 				}
 			}
 
-		return map;
-	}
-    #endregion
-
-    #region Sequential Rooms
-	public static int[,] SequentialRooms(Vector2Int mapSize, int minSegmentLength, int maxSegmentLength, int minTurnLimit, int maxTurnLimit, int epoch)
-	{
-		int[,] map = new int[mapSize.x, mapSize.y];
 		return map;
 	}
     #endregion
