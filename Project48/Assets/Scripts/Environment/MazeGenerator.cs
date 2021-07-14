@@ -58,6 +58,8 @@ public class MazeGenerator : MonoBehaviour
     Transform corridorWallPrefab;
     [SerializeField]
     Transform corridorLightPrefab;
+    [SerializeField]
+    int minCorridorLightSeparation;
     #endregion
     #region Doll Room Generation Parameters
     [Header("Doll Room Generation")]
@@ -75,11 +77,11 @@ public class MazeGenerator : MonoBehaviour
     [SerializeField]
     int cellularPassEpoch;
     [SerializeField]
-    int minCaveLightSeparation;
-    [SerializeField]
     Transform caveWallPrefab;
     [SerializeField]
     Transform caveLightPrefab;
+    [SerializeField]
+    int minCaveLightSeparation;
     #endregion
     #region Columns Generation Parameters
     [Header("Columns Generation")]
@@ -130,7 +132,8 @@ public class MazeGenerator : MonoBehaviour
 
     Vector2Int CaveSize()
     {
-        return new Vector2Int(UnityEngine.Random.Range(3, 5), UnityEngine.Random.Range(3, 5)) * 10;
+        // Parity causes grid offset issues
+        return new Vector2Int(UnityEngine.Random.Range(7, 10), UnityEngine.Random.Range(7, 12)) * 4;
     }
 
     Vector2Int ColumnarSize()
@@ -279,6 +282,27 @@ public class MazeGenerator : MonoBehaviour
         return mapTransform;
     }
 
+    void GenerateLightOnOutlineBySeparation(int[,] map, Transform mapTransform, Transform lightPrefab, int minSeparation, float scale = 1)
+    {
+        Vector2Int mapSize = new Vector2Int(map.GetLength(0), map.GetLength(1));
+
+        List<Region> regions = GetRegions(0, map);
+        List<Vector3> lightPositions = new List<Vector3>();
+        foreach (DirectionalTile outline in regions[0].Outline)
+        {
+            Vector3 position = (new Vector3(-mapSize.x / 2 + outline.Position.x + 0.5f, 0, -mapSize.y / 2 + outline.Position.y + 0.5f)
+                + Coord2PosXZ(Offset4[GetOpposite(outline.Direction)]) * 0.5f) * scale + new Vector3(-0.5f, 0.5f, -0.5f);
+
+            if (CheckMinSeparation(lightPositions, position, minSeparation))
+            {
+                Transform newLight = Instantiate(lightPrefab, mapTransform);
+                newLight.localPosition = position;
+                newLight.localEulerAngles = Angle4[outline.Direction];
+                lightPositions.Add(position);
+            }
+        }
+    }
+
     void GenerateCorridorMaze(Vector2Int mazeSize)
     {
         Direction4[,] maze = RecursiveBacktracker(mazeSize);
@@ -291,11 +315,6 @@ public class MazeGenerator : MonoBehaviour
         Vector2Int mapSize = new Vector2Int(map.GetLength(0), map.GetLength(1));
         Transform mapTransform = GenerateBasic(mapSize, out Vector2Int startCoord, out Vector2Int endCoord, d => d.x % 2 == 1, 2, false);
 
-        foreach (RectRoom newRoom in newRooms)
-        {
-            GenerateDollRoomWithin(mapSize, newRoom, mapTransform);
-        }
-
         for (int i = 0; i < mapSize.x; i++)
             for (int j = 0; j < mapSize.y; j++)
             {
@@ -306,6 +325,14 @@ public class MazeGenerator : MonoBehaviour
                     newCube.localPosition = position;
                 }
             }
+
+        foreach (RectRoom newRoom in newRooms)
+        {
+            GenerateDollRoomWithin(mapSize, newRoom, mapTransform);
+        }
+
+        // Generate lights
+        GenerateLightOnOutlineBySeparation(map, mapTransform, corridorLightPrefab, minCorridorLightSeparation);
     }
 
     void GenerateDollRoomSeparate(Vector2Int mazeSize)
@@ -402,6 +429,7 @@ public class MazeGenerator : MonoBehaviour
 
     void GenerateCave(Vector2Int mapSize)
     {
+        Debug.Log(mapSize);
         Transform mapTransform = GenerateBasic(mapSize / 2, out Vector2Int startPos, out Vector2Int endPos, d => true, 2, false);
         int[,][] setting = new int[mapSize.x, mapSize.y][];
         for (int x = 0; x < mapSize.x; x++)
@@ -436,26 +464,14 @@ public class MazeGenerator : MonoBehaviour
                 if (map[i, j] == 1)
                 {
                     Transform newCube = Instantiate(caveWallPrefab, mapTransform);
-                    Vector3 position = new Vector3(-mapSize.x / 4 + i / 2f - 0.25f, 0, -mapSize.y / 4 + j / 2f - 0.25f);
+                    // scale down by 2 and move by (-0.25, -0.25) to center of grid
+                    Vector3 position = new Vector3((-mapSize.x / 2f + i) / 2f - 0.25f, 0, (-mapSize.y / 2f + j) / 2f - 0.25f);
                     newCube.localPosition = position;
                 }
             }
 
         // Generate lights
-        List<Region> regions = GetRegions(0, map);
-        List<Vector3> lightPositions = new List<Vector3>();
-        foreach (DirectionalTile outline in regions[0].Outline)
-        {
-            Vector3 position = new Vector3(-mapSize.x / 4 + outline.Position.x / 2f - 0.25f, 0.5f, -mapSize.y / 4 + outline.Position.y / 2f - 0.25f)
-                + Coord2PosXZ(Offset4[GetOpposite(outline.Direction)]) * 0.25f;
-            if (CheckMinSeparation(lightPositions, position, minCaveLightSeparation))
-            {
-                Transform newLight = Instantiate(caveLightPrefab, mapTransform);
-                newLight.localPosition = position;
-                newLight.localEulerAngles = Angle4[outline.Direction];
-                lightPositions.Add(position);
-            }
-        }
+        GenerateLightOnOutlineBySeparation(map, mapTransform, caveLightPrefab, minCaveLightSeparation, 0.5f);
     }
 
     void GenerateColumnarMaze(Vector2Int mapSize)

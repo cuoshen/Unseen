@@ -5,7 +5,7 @@ using System;
 using UnityEngine;
 
 /// <summary>
-/// For storing information of neighbours, edges, RB tiles, etc.
+/// Stores information of neighbours, edges, RB tiles, etc.
 /// </summary>
 public struct DirectionalTile
 {
@@ -19,6 +19,9 @@ public struct DirectionalTile
     }
 }
 
+/// <summary>
+/// Stores the tiles in a region and tiles in its outline pointing outwards
+/// </summary>
 public struct Region
 {
 	public List<Vector2Int> Area;
@@ -31,7 +34,9 @@ public struct Region
     }
 }
 
-
+/// <summary>
+/// Stores the location and size of a rectangular room
+/// </summary>
 public struct RectRoom
 {
 	public Vector2Int BottomLeft;

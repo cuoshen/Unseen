@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 0ffaa0b7117ba8c47a9d05ae701d4b4d, type: 2}
+  m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 0}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -156,21 +156,22 @@ MonoBehaviour:
   startPrefab: {fileID: 4459196779015730797, guid: cf6767f6c193e954b811cd2de006a999, type: 3}
   endPrefab: {fileID: 6708590964914837869, guid: e462882065328ca4fa37c5e134cf0e3e, type: 3}
   connectorPrefab: {fileID: 8302508908966622360, guid: 1f826802e2addfe48a37974c0e7e78d9, type: 3}
-  caveChance: 0.3
+  caveChance: 0
   dollChance: 0.1
   _2x2ColumnChance: 0.25
   minKiwiSeparation: 3
   kiwiPrefab: {fileID: 4899903623646807888, guid: 9660bc8bd0e56834c9f69a94ae7277a1, type: 3}
   corridorWallPrefab: {fileID: 8587853897269320152, guid: 7e23e3dc6062f7a48842cef9783005cb, type: 3}
   corridorLightPrefab: {fileID: 7285017026454675818, guid: 947a8c0b200a4ef459a521aafd5746a2, type: 3}
+  minCorridorLightSeparation: 2
   dollWallPrefab: {fileID: 7599237671437475100, guid: 74e6de8e5b70c384ea5644d7429ceb19, type: 3}
   caveCellInitChance: 25
   caveCellBirthLimit: 3
   caveCellDeathLimit: 2
   cellularPassEpoch: 6
-  minCaveLightSeparation: 3
   caveWallPrefab: {fileID: 4404619412615659412, guid: f7b4b8bf940f362408db1732ccf36fa2, type: 3}
   caveLightPrefab: {fileID: 3783455613422746024, guid: 389c471d41cc26e448f0cc2197927276, type: 3}
+  minCaveLightSeparation: 3
   _1x1ColPrefab: {fileID: 979798171851015552, guid: c9545e546b427e548b5df0f0e7c9d61a, type: 3}
   _2x2ColPrefab: {fileID: 4063682100341033637, guid: 7aee28ec8ea5eb2458dd6c9cc8a1ebf4, type: 3}
 --- !u!4 &2068360654
@@ -241,6 +242,14 @@ PrefabInstance:
     - target: {fileID: 8216619653927588065, guid: 715ca0863b2369643906adce458725f7, type: 3}
       propertyPath: m_Name
       value: PlayerWIthCam
+      objectReference: {fileID: 0}
+    - target: {fileID: 8216619654928562613, guid: 715ca0863b2369643906adce458725f7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8216619654928562613, guid: 715ca0863b2369643906adce458725f7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 715ca0863b2369643906adce458725f7, type: 3}
