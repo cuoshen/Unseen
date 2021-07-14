@@ -77,3 +77,6 @@ crashlytics-build.properties
 # put huge assets in this folder to avoid uploading
 /Assets/GitignoreAssets/*
 /Assets/GitignoreAssets.meta
+
+/Assets/AssetStoreOriginals/*
+/Assets/AssetStoreOriginals.meta
