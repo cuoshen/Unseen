@@ -69,3 +69,9 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+.vs/48/v16/.suo
+/UserSettings/EditorUserSettings.asset
+/ProjectSettings/Packages/com.unity.probuilder/Settings.json
+/Assets/GitignoreAssets/*
+/Assets/GitignoreAss
