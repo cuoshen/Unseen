@@ -391,7 +391,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6a0c0ea909a1d945982872f9c2aaa2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initMapSize: {x: 5, y: 5}
   startPrefab: {fileID: 4459196779015730797, guid: cf6767f6c193e954b811cd2de006a999, type: 3}
   endPrefab: {fileID: 6708590964914837869, guid: e462882065328ca4fa37c5e134cf0e3e, type: 3}
   connectorPrefab: {fileID: 8302508908966622360, guid: 1f826802e2addfe48a37974c0e7e78d9, type: 3}
