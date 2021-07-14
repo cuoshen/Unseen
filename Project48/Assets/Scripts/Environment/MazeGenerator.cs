@@ -28,6 +28,8 @@ public class MazeGenerator : MonoBehaviour
     #region General Parameters
     [Header("General")]
     [SerializeField]
+    Transform floorPrefab;
+    [SerializeField]
     Transform startPrefab;
     [SerializeField]
     Transform endPrefab;
@@ -38,6 +40,8 @@ public class MazeGenerator : MonoBehaviour
     [Header("Maze Variation Creation Chance")]
     [SerializeField]
     float caveChance;
+    [SerializeField]
+    float dollChance;
     [SerializeField]
     float _2x2ColumnChance;
     #endregion
@@ -53,9 +57,12 @@ public class MazeGenerator : MonoBehaviour
     [SerializeField]
     Transform corridorWallPrefab;
     [SerializeField]
-    Transform corridorFloorPrefab;
-    [SerializeField]
     Transform corridorLightPrefab;
+    #endregion
+    #region Doll Room Generation Parameters
+    [Header("Doll Room Generation")]
+    [SerializeField]
+    Transform dollWallPrefab;
     #endregion
     #region Cave Generation Parameters
     [Header("Cave Generation")]
@@ -64,7 +71,7 @@ public class MazeGenerator : MonoBehaviour
     [SerializeField]
     int caveCellBirthLimit;
     [SerializeField]
-    int caveCellDdeathLimit;
+    int caveCellDeathLimit;
     [SerializeField]
     int cellularPassEpoch;
     [SerializeField]
@@ -81,9 +88,6 @@ public class MazeGenerator : MonoBehaviour
     [SerializeField]
     Transform _2x2ColPrefab;
     #endregion
-
-    [SerializeField]
-    Transform cubePrefab;
 
     void Awake()
     {
@@ -104,11 +108,6 @@ public class MazeGenerator : MonoBehaviour
     }
 
     #region Parameter Growth Functions
-    void RoomVariantChance()
-    {
-        caveChance = 0.3f;
-    }
-
     int RoomCount()
     {
         return UnityEngine.Random.Range(level / 2, (int)(level / 1.5));
@@ -119,9 +118,14 @@ public class MazeGenerator : MonoBehaviour
         return new Vector2Int(UnityEngine.Random.Range(4 + level / 2, 6 + level), UnityEngine.Random.Range(4 + level / 2, 6 + level));
     }
 
-    int DollRoomAttempts(Vector2Int mazeSize)
+    int DollRoomAttempts_Within(Vector2Int mazeSize)
     {
         return UnityEngine.Random.Range(Math.Min(mazeSize.x, mazeSize.y), Math.Max(mazeSize.x, mazeSize.y)) / 3 - 2;
+    }
+
+    Vector2Int DollRoomSize_Separate()
+    {
+        return new Vector2Int(UnityEngine.Random.Range(2, 5), UnityEngine.Random.Range(2, 5)) * 2;
     }
 
     Vector2Int CaveSize()
@@ -147,6 +151,8 @@ public class MazeGenerator : MonoBehaviour
         {
             if (UnityEngine.Random.Range(0f, 1f) < caveChance)
                 GenerateCave(CaveSize());
+            else if (UnityEngine.Random.Range(0f, 1f) < dollChance)
+                GenerateDollRoomSeparate(DollRoomSize_Separate());
             else
                 GenerateCorridorMaze(CorridorSize());
         }
@@ -202,7 +208,7 @@ public class MazeGenerator : MonoBehaviour
         mapTransform.localPosition = new Vector3(mapSize.x / 2 - startCoord.x, 0, mapSize.y / 2 - startCoord.y) + lastEndPos;
 
         // Generate floor
-        Transform floor = Instantiate(corridorFloorPrefab, mapTransform);
+        Transform floor = Instantiate(floorPrefab, mapTransform);
         if (mapSize.x % 2 == 0)
             floor.localPosition += new Vector3(-0.5f, 0, 0);
         if (mapSize.y % 2 == 0)
@@ -220,7 +226,7 @@ public class MazeGenerator : MonoBehaviour
                     Vector3 position = new Vector3(-mapSize.x / 2 + i, 0, -mapSize.y / 2 + mapSize.y - 1 + 0.5f);
                     Vector3 angle = new Vector3(0, 0, 0);
 
-                    Transform newWall = Instantiate(corridorWallPrefab, mapTransform);
+                    Transform newWall = Instantiate(dollWallPrefab, mapTransform);
                     newWall.localPosition = position;
                     newWall.localEulerAngles = angle;
                 }
@@ -232,7 +238,7 @@ public class MazeGenerator : MonoBehaviour
                 Vector3 position = new Vector3(-mapSize.x / 2 - 0.5f, 0, -mapSize.y / 2 + j);
                 Vector3 angle = new Vector3(0, -90, 0);
 
-                Transform newWall = Instantiate(corridorWallPrefab, mapTransform);
+                Transform newWall = Instantiate(dollWallPrefab, mapTransform);
                 newWall.localPosition = position;
                 newWall.localEulerAngles = angle;
             }
@@ -245,7 +251,7 @@ public class MazeGenerator : MonoBehaviour
                     Vector3 position = new Vector3(-mapSize.x / 2 + i, 0, -mapSize.y / 2 - 0.5f);
                     Vector3 angle = new Vector3(0, 180, 0);
 
-                    Transform newWall = Instantiate(corridorWallPrefab, mapTransform);
+                    Transform newWall = Instantiate(dollWallPrefab, mapTransform);
                     newWall.localPosition = position;
                     newWall.localEulerAngles = angle;
                 }
@@ -257,7 +263,7 @@ public class MazeGenerator : MonoBehaviour
                 Vector3 position = new Vector3(-mapSize.x / 2 + mapSize.x - 1 + 0.5f, 0, -mapSize.y / 2 + j);
                 Vector3 angle = new Vector3(0, 90, 0);
 
-                Transform newWall = Instantiate(corridorWallPrefab, mapTransform);
+                Transform newWall = Instantiate(dollWallPrefab, mapTransform);
                 newWall.localPosition = position;
                 newWall.localEulerAngles = angle;
             }
@@ -278,7 +284,7 @@ public class MazeGenerator : MonoBehaviour
         Direction4[,] maze = RecursiveBacktracker(mazeSize);
         int[,] map = FattenMaze(maze);
 
-        map = RoomInMaze(map, 2, 5, DollRoomAttempts(mazeSize), new List<Region>(), out List<Region> allRooms, out List<RectRoom> newRooms);
+        map = RoomInMaze(map, 2, 5, DollRoomAttempts_Within(mazeSize), new List<Region>(), out List<Region> allRooms, out List<RectRoom> newRooms);
         map = ConnectRegions(0, map, 1, 1, 1, 1);
         map = OpenDeadEnds(0, map);
 
@@ -295,7 +301,7 @@ public class MazeGenerator : MonoBehaviour
             {
                 if (map[i, j] == 1 && new Vector2Int(i, j) != startCoord && new Vector2Int(i, j) != endCoord)
                 {
-                    Transform newCube = Instantiate(cubePrefab, mapTransform);
+                    Transform newCube = Instantiate(corridorWallPrefab, mapTransform);
                     Vector3 position = new Vector3(-mapSize.x / 2 + i, 0, -mapSize.y / 2 + j);
                     newCube.localPosition = position;
                 }
@@ -329,7 +335,7 @@ public class MazeGenerator : MonoBehaviour
 
                             if (CheckInMapRange(new Vector2Int(i, j) + Offset4[dir], mazeSize))
                             {
-                                Transform newWall = Instantiate(corridorWallPrefab, mazeTransform);
+                                Transform newWall = Instantiate(dollWallPrefab, mazeTransform);
                                 newWall.localPosition = newPos;
                                 newWall.localEulerAngles = newAngle;
                             }
@@ -384,7 +390,7 @@ public class MazeGenerator : MonoBehaviour
 
                             if (CheckInMapRange(new Vector2Int(i, j) + Offset4[dir], room.Size))
                             {
-                                Transform newWall = Instantiate(corridorWallPrefab, mazeTransform);
+                                Transform newWall = Instantiate(dollWallPrefab, mazeTransform);
                                 newWall.localPosition = newPos;
                                 newWall.localEulerAngles = newAngle;
                             }
@@ -401,7 +407,7 @@ public class MazeGenerator : MonoBehaviour
         for (int x = 0; x < mapSize.x; x++)
             for (int y = 0; y < mapSize.y; y++)
             {
-                setting[x, y] = new int[] { caveCellInitChance, caveCellBirthLimit, caveCellDdeathLimit };
+                setting[x, y] = new int[] { caveCellInitChance, caveCellBirthLimit, caveCellDeathLimit };
             }
         int[,] map = Cellular(mapSize, setting, cellularPassEpoch);
         map = ConnectRegions(0, map, 2, 8, 5, 10);

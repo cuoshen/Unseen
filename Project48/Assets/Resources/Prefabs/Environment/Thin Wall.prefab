@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7630829275657056311}
   - component: {fileID: 5849846992667634730}
   m_Layer: 6
-  m_Name: Corridor Wall
+  m_Name: Thin Wall
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
