@@ -12,7 +12,7 @@ public class LampLightTrigger : MonoBehaviour
     SphereCollider sphereCollider;
         
 
-    private Material material;
+    public Material material;
 
     public float trigger_radius;
     public float min_intensity;
@@ -44,7 +44,7 @@ public class LampLightTrigger : MonoBehaviour
             sphereCollider.radius = trigger_radius;
         }
 
-        material = GetComponent<MeshRenderer>().materials[0];
+        //material = GetComponent<MeshRenderer>().materials[0];
         material.SetColor("_EmissionColor", color * light.intensity);
 
         on_curve.postWrapMode = WrapMode.Clamp;
@@ -82,17 +82,17 @@ public class LampLightTrigger : MonoBehaviour
             light.intensity = min_intensity + off_curve.Evaluate(off_time_elapsed) * max_intensity;
         }
 
-        material.SetColor("_EmissionColor", color * light.intensity / max_intensity);
+        material.SetColor("_EmissionColor", color * light.intensity / max_intensity * 10);   
     }
 
     // object enter
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         
         
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         float distance = Vector3.Distance(other.transform.position, transform.position);
         RaycastHit hit;
