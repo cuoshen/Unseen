@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System;
 using UnityEngine;
 using static Algorithms;
@@ -318,11 +319,40 @@ public class MazeGenerator : MonoBehaviour
         for (int i = 0; i < mapSize.x; i++)
             for (int j = 0; j < mapSize.y; j++)
             {
+                Vector3 position = new Vector3(-mapSize.x / 2 + i, 0, -mapSize.y / 2 + j);
+
                 if (map[i, j] == 1 && new Vector2Int(i, j) != startCoord && new Vector2Int(i, j) != endCoord)
                 {
                     Transform newCube = Instantiate(corridorWallPrefab, mapTransform);
-                    Vector3 position = new Vector3(-mapSize.x / 2 + i, 0, -mapSize.y / 2 + j);
                     newCube.localPosition = position;
+                }
+
+                // Generate lights
+                Vector2Int coord = new Vector2Int(i, j);
+                // Do not generate light within rooms
+                if (map[i, j] == 0 && new Vector2Int(i, j - 1) != startCoord && new Vector2Int(i, j + 1) != endCoord
+                    && allRooms.Select(d => d.Area).Where(d => d.Contains(coord)).ToList().Count == 0)
+                {
+                    List<Vector3> wallPosList = new List<Vector3>();
+                    List<Vector3> wallAngleList = new List<Vector3>();
+                    foreach (DirectionalTile p in GetNeighbours4(coord, mapSize))
+                    {
+                        if (map[p.Position.x, p.Position.y] != 0)
+                        {
+                            Vector3 newPos = position + Coord2PosXZ(Offset4[p.Direction]) * 0.5f;
+                            Vector3 newAngle = Angle4[p.Direction];
+                            wallPosList.Add(newPos);
+                            wallAngleList.Add(newAngle);
+                        }
+                    }
+
+                    if (wallPosList.Count != 0)
+                    {
+                        Transform newLight = Instantiate(corridorLightPrefab, mapTransform);
+                        int randIndex = UnityEngine.Random.Range(0, wallPosList.Count);
+                        newLight.localPosition = wallPosList[randIndex] + new Vector3(0, 0.5f, 0);
+                        newLight.localEulerAngles = wallAngleList[randIndex];
+                    }
                 }
             }
 
@@ -330,9 +360,6 @@ public class MazeGenerator : MonoBehaviour
         {
             GenerateDollRoomWithin(mapSize, newRoom, mapTransform);
         }
-
-        // Generate lights
-        GenerateLightOnOutlineBySeparation(map, mapTransform, corridorLightPrefab, minCorridorLightSeparation);
     }
 
     void GenerateDollRoomSeparate(Vector2Int mazeSize)
@@ -374,9 +401,9 @@ public class MazeGenerator : MonoBehaviour
                 if (wallPosList.Count != 0 && new Vector2Int(i, j) != startCoord && new Vector2Int(i, j) != endCoord)
                 {
                     Transform newLight = Instantiate(corridorLightPrefab, mazeTransform);
-                    int index = UnityEngine.Random.Range(0, wallPosList.Count);
-                    newLight.localPosition = wallPosList[index] + new Vector3(0, 0.5f, 0);
-                    newLight.localEulerAngles = wallAngleList[index];
+                    int randIndex = UnityEngine.Random.Range(0, wallPosList.Count);
+                    newLight.localPosition = wallPosList[randIndex] + new Vector3(0, 0.5f, 0);
+                    newLight.localEulerAngles = wallAngleList[randIndex];
                 }
 
                 //Generate enemies
