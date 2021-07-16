@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 8587853897269320154}
   - component: {fileID: 8587853897269320133}
   - component: {fileID: 6559193658231725315}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Thick Wall
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

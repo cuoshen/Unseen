@@ -97,7 +97,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 2
+  m_Radius: 4
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!108 &2193107151305637774
 Light:
@@ -173,9 +173,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5995dc45925deea44b186a0db2df2a03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trigger_radius: 2
+  trigger_radius: 4
   min_intensity: 0
-  max_intensity: 0.02
+  max_intensity: 0.05
   color: {r: 0.5283019, g: 0.44759047, b: 0.2511926, a: 0}
   on_curve:
     serializedVersion: 2
