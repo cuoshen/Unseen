@@ -5,7 +5,7 @@ using System;
 using UnityEngine;
 
 /// <summary>
-/// For storing information of neighbours, edges, RB tiles, etc.
+/// Stores information of neighbours, edges, RB tiles, etc.
 /// </summary>
 public struct DirectionalTile
 {
@@ -19,6 +19,9 @@ public struct DirectionalTile
     }
 }
 
+/// <summary>
+/// Stores the tiles in a region and tiles in its outline pointing outwards
+/// </summary>
 public struct Region
 {
 	public List<Vector2Int> Area;
@@ -28,6 +31,21 @@ public struct Region
     {
 		Area = area;
 		Outline = outline;
+    }
+}
+
+/// <summary>
+/// Stores the location and size of a rectangular room
+/// </summary>
+public struct RectRoom
+{
+	public Vector2Int BottomLeft;
+	public Vector2Int Size;
+
+	public RectRoom(Vector2Int bottomleft, Vector2Int size)
+    {
+		BottomLeft = bottomleft;
+		Size = size;
     }
 }
 
@@ -75,11 +93,11 @@ public static class Algorithms
 {
 	#region Utility
 	public static readonly Dictionary<Direction4, Vector2Int> Offset4 = new Dictionary<Direction4, Vector2Int>()
-	{ 
-		{Direction4.LEFT, new Vector2Int(-1, 0)},
-		{Direction4.RIGHT, new Vector2Int(1,0)},
-		{Direction4.DOWN, new Vector2Int( 0,-1)},
-		{Direction4.UP, new Vector2Int( 0, 1)}
+	{
+		{ Direction4.LEFT, new Vector2Int(-1, 0) },
+		{ Direction4.RIGHT, new Vector2Int(1,0) },
+		{ Direction4.DOWN, new Vector2Int( 0,-1) },
+		{ Direction4.UP, new Vector2Int( 0, 1) }
 	};
 
 	public static readonly Dictionary<Direction4, Vector3> Angle4 = new Dictionary<Direction4, Vector3>()
@@ -90,17 +108,31 @@ public static class Algorithms
 		{Direction4.UP, new Vector3(0, 0, 0)}
 	};
 
-	public static readonly List<Vector2Int> Offset8 = new List<Vector2Int>
+	public static readonly Dictionary<Direction8, Vector2Int> Offset8 = new Dictionary<Direction8, Vector2Int>()
 	{
-		new Vector2Int(-1, 0),
-		new Vector2Int( 1, 0),
-		new Vector2Int( 0,-1),
-		new Vector2Int( 0, 1),
-		new Vector2Int(-1,-1),
-		new Vector2Int(-1, 1),
-		new Vector2Int( 1,-1),
-		new Vector2Int( 1, 1)
+		{ Direction8.W, new Vector2Int(-1, 0) },
+		{ Direction8.E, new Vector2Int( 1, 0) },
+		{ Direction8.S, new Vector2Int( 0,-1) },
+		{ Direction8.N, new Vector2Int( 0, 1) },
+		{ Direction8.SW, new Vector2Int(-1,-1) },
+		{ Direction8.SE, new Vector2Int(-1, 1) },
+		{ Direction8.NW, new Vector2Int( 1,-1) },
+		{ Direction8.NE, new Vector2Int( 1, 1) }
 	};
+
+	public static Direction8 Dir4ToClosedDir8(Direction4 dir4)
+    {
+		Direction8 dir8 = (Direction8)dir4;
+		if (dir8.HasFlag(Direction8.S) && dir8.HasFlag(Direction8.W))
+			dir8 |= Direction8.SW;
+		if (dir8.HasFlag(Direction8.S) && dir8.HasFlag(Direction8.E))
+			dir8 |= Direction8.SE;
+		if (dir8.HasFlag(Direction8.N) && dir8.HasFlag(Direction8.W))
+			dir8 |= Direction8.NW;
+		if (dir8.HasFlag(Direction8.N) && dir8.HasFlag(Direction8.E))
+			dir8 |= Direction8.NE;
+		return dir8;
+    }
 
 	public static Direction4 GetOpposite(Direction4 dir)
 	{
@@ -121,9 +153,9 @@ public static class Algorithms
 		return new Vector3(coord.x, 0, coord.y);
     }
 
-	public static bool CheckInMapRange(Vector2Int coord, Vector2Int mapSize)
+	public static bool CheckInMapRange(Vector2Int coord, Vector2Int mapSize, int border = 0)
 	{
-		return coord.x >= 0 && coord.x < mapSize.x && coord.y >= 0 && coord.y < mapSize.y;
+		return coord.x >= border && coord.x < mapSize.x - border && coord.y >= border && coord.y < mapSize.y - border;
 	}
 
 	public static bool CheckMinSeparation(List<Vector3> positions, Vector3 newPosition, float minSeparation)
@@ -148,6 +180,7 @@ public static class Algorithms
 	#endregion
 
 	#region Perlin Noise
+	// Doubled permutation to avoid overflow
 	static readonly int[] p = { 151,160,137,91,90,15,
 		131,13,201,95,96,53,194,233,7,225,140,36,103,30,69,142,8,99,37,240,21,10,23,
 		190, 6,148,247,120,234,75,0,26,197,62,94,252,219,203,117,35,11,32,57,177,33,
@@ -174,7 +207,7 @@ public static class Algorithms
 		251,34,242,193,238,210,144,12,191,179,162,241, 81,51,145,235,249,14,239,107,
 		49,192,214, 31,181,199,106,157,184, 84,204,176,115,121,50,45,127, 4,150,254,
 		138,236,205,93,222,114,67,29,24,72,243,141,128,195,78,66,215,61,156,180
-	};// Doubled permutation to avoid overflow
+	};
 
 	/// <summary>
 	/// 6t^5 - 15t^4 + 10t^3
@@ -251,14 +284,14 @@ public static class Algorithms
 		return (Mathf.Lerp(x0, x1, yDirSig) + 1) / 2;
 	}
 
-	public static float[,] Perlin(Vector2Int mapSize, Vector2Int offset, int smoothness)
+	public static float[,] Perlin(Vector2Int mapSize, Vector2Int offset, int scale)
 	{
 		float[,] heights = new float[mapSize.x, mapSize.y];
 		for (int x = 0; x < mapSize.x; x++)
 			for (int y = 0; y < mapSize.y; y++)
 			{
-				float xCoord = (float)x / mapSize.x * smoothness + offset.x;
-				float yCoord = (float)y / mapSize.y * smoothness + offset.y;
+				float xCoord = (float)x / mapSize.x * scale + offset.x;
+				float yCoord = (float)y / mapSize.y * scale + offset.y;
 				heights[x, y] = PerlinAtTile(xCoord, yCoord);
 			}
 		return heights;
@@ -384,9 +417,10 @@ public static class Algorithms
 	/// Connect all regions for a specific type of tiles.
 	/// </summary>
 	/// <param name="type"> Connect all regions for this type of tiles </param>
-	public static int[,] ConnectRegions(int type, int[,] map, int minSegmentLength, int maxSegmentLength, int minTurnLimit, int maxTurnLimit, int epoch, bool AllowLoops)
+	public static int[,] ConnectRegions(int type, int[,] map, int minSegmentLength, int maxSegmentLength, int minTurnLimit, int maxTurnLimit, List<Region> unconnectedRegions = null)
     {
-		List<Region> unconnectedRegions = GetRegions(type, map);
+		if (unconnectedRegions == null)
+			unconnectedRegions = GetRegions(type, map);
 		List<Region> connectedRegions = new List<Region>();
 
 		if (unconnectedRegions.Count > 0)
@@ -397,20 +431,19 @@ public static class Algorithms
 			unconnectedRegions.Remove(region);
 			connectedRegions.Add(region);
 
+			int attempts = 1000;
 			int counter = 0;
-
-			while (unconnectedRegions.Count > 0 && counter++ < epoch)
+			while (unconnectedRegions.Count > 0 && counter++ < attempts)
 			{
-				// start off a random point on the outline of a random region
+				// start off a random point on the outline of a random connected region
 				randIndex = UnityEngine.Random.Range(0, connectedRegions.Count);
 				region = connectedRegions[randIndex];
 				randIndex = UnityEngine.Random.Range(0, region.Outline.Count);
 				DirectionalTile start = region.Outline[randIndex];
 
-				bool isDeadEnd;
-				List<DirectionalTile> connector = ConnectorAttempt(type, start, map, minSegmentLength, maxSegmentLength, minTurnLimit, maxTurnLimit, out isDeadEnd);
+                List<DirectionalTile> connector = ConnectorAttempt(type, start, map, minSegmentLength, maxSegmentLength, minTurnLimit, maxTurnLimit, out bool isDeadEnd);
 
-				if (connector != null && !isDeadEnd)
+                if (connector != null && !isDeadEnd)
                 {
 					// check if connector leads to another region
 					for (int i = 0; i < unconnectedRegions.Count; i++)
@@ -428,20 +461,45 @@ public static class Algorithms
 							break;
                         }
                     }
-
-                    if (AllowLoops)
-                    {
-						// draw connector onto map
-						foreach (DirectionalTile tile in connector)
-							map[tile.Position.x, tile.Position.y] = type;
-					}
                 }
 			}
 		}
 		
 		return map;
     }
-    #endregion
+
+	/// <summary>
+	/// Open up all tiles neighboured by 3 or more different tiles
+	/// </summary>
+	/// <param name="type"> Open up dead ends of this type of tiles </param>
+	public static int[,] OpenDeadEnds(int type, int[,] map)
+	{
+		Vector2Int mapSize = new Vector2Int(map.GetLength(0), map.GetLength(1));
+		//examine each cell in the map
+		for (int i = 0; i < mapSize.x; i++)
+			for (int j = 0; j < mapSize.y; j++)
+			{
+				List<Vector2Int> neighbours = new List<Vector2Int>();
+				foreach(Vector2Int offset in Offset4.Values)
+                {
+					Vector2Int neighbour = new Vector2Int(i, j) + offset;
+					if (CheckInMapRange(neighbour, mapSize, 1) && map[neighbour.x,neighbour.y] != type)
+                    {
+						neighbours.Add(neighbour);
+                    }
+                }
+
+				if (neighbours.Count > 2)
+                {
+					int randIndex = UnityEngine.Random.Range(0, neighbours.Count);
+					Vector2Int randNeighbour = neighbours[randIndex];
+					map[randNeighbour.x, randNeighbour.y] = type;
+				}
+			}
+
+		return map;
+	}
+	#endregion
 
     #region Cellular Automata
     static int[,] InitCellularMap(Vector2Int mapSize, int[,][] setting)
@@ -495,7 +553,7 @@ public static class Algorithms
 	}
 
 	/// <summary>
-	/// Cellular automata with possibly different settings for each tile.
+	/// CA with possibly different settings for each tile.
 	/// </summary>
 	/// <param name="setting"> [initChance, birthLimit, deathLimit] </param>
 	public static int[,] Cellular(Vector2Int mapSize, int[,][] setting, int epoch)
@@ -543,6 +601,9 @@ public static class Algorithms
 		return maze;
 	}
 
+	/// <summary>
+	/// Generate RB maze where every tile is open and walls exist between tiles
+	/// </summary>
 	public static Direction4[,] RecursiveBacktracker(Vector2Int mapSize)
 	{
 		Direction4[,] maze = InitRBMaze(mapSize);
@@ -573,6 +634,113 @@ public static class Algorithms
 
 		return maze;
 	}
+
+	/// <summary>
+	/// Fatten a maze so that walls now occupies an entire tile
+	/// </summary>
+	public static int[,] FattenMaze(Direction4[,] maze)
+    {
+		Vector2Int mazeSize = new Vector2Int(maze.GetLength(0), maze.GetLength(1));
+		int[,] map = new int[mazeSize.x * 2 + 1, mazeSize.y * 2 + 1];
+		Vector2Int mapSize = new Vector2Int(map.GetLength(0), map.GetLength(1));
+
+		// write open paths with 1
+		for (int i = 0; i < mazeSize.x; i++)
+			for (int j = 0; j < mazeSize.y; j++)
+			{
+				Vector2Int mapCoord = new Vector2Int(i * 2 + 1, j * 2 + 1);
+				map[mapCoord.x, mapCoord.y] = 1;
+				foreach (Direction4 dir in Enum.GetValues(typeof(Direction4)))
+				{
+					if (Offset4.ContainsKey(dir) && !maze[i, j].HasFlag(dir))
+					{
+						Vector2Int mapNeighbourCoord = mapCoord + Offset4[dir];
+
+						if (CheckInMapRange(mapNeighbourCoord, mapSize))
+						{
+							map[mapNeighbourCoord.x, mapNeighbourCoord.y] = 1;
+						}
+					}
+				}
+			}
+
+		// reverse
+		for (int i = 0; i < mapSize.x; i++)
+			for (int j = 0; j < mapSize.y; j++)
+			{
+				map[i, j] = map[i, j] == 1 ? 0 : 1;
+			}
+		
+		return map;
+	}
+
+	/// <summary>
+	/// Insert rooms into a maze. Rooms are always odd-sized on odd coords.
+	/// They are also walled-off and need to be opened up, probably by ConnectRegions and/or OpenDeadEnds.
+	/// </summary>
+	public static int[,] RoomInMaze(int[,] map, int minHalfRoomLength, int maxHalfRoomLength, int attempts, List<Region> existingNonIntersectableRegions, out List<Region> allNIR, out List<RectRoom> newRooms)
+	{
+		Vector2Int mapSize = new Vector2Int(map.GetLength(0), map.GetLength(1));
+		allNIR = existingNonIntersectableRegions;
+		newRooms = new List<RectRoom>();
+		int counter = 0;
+
+		while (counter++ < attempts)
+		{
+			// Pick a random room size. The funny math here does two things:
+			// - It makes sure rooms are odd-sized to line up with maze.
+			// - It avoids creating rooms that are too rectangular: too tall and
+			//   narrow or too wide and flat.
+			// TODO: This isn't very flexible or tunable. Do something better here.
+			Vector2Int roomSize = new Vector2Int(UnityEngine.Random.Range(minHalfRoomLength, maxHalfRoomLength),
+				UnityEngine.Random.Range(minHalfRoomLength, maxHalfRoomLength)) * 2 + new Vector2Int(1, 1);
+			Vector2Int maxBLCoord = mapSize - roomSize;
+			Vector2Int bottomLeft = new Vector2Int(UnityEngine.Random.Range(0, maxBLCoord.x),
+				UnityEngine.Random.Range(0, maxBLCoord.y)) / 2 * 2 + new Vector2Int(1, 1);
+			Vector2Int topRight = bottomLeft + roomSize;
+
+			Region newRegion = new Region(new List<Vector2Int>(), new List<DirectionalTile>());
+			bool canPlace = true;
+
+			for (int x = bottomLeft.x - 1; x < topRight.x + 1; x++)
+				for (int y = bottomLeft.y - 1; y < topRight.y + 1; y++)
+				{
+					Vector2Int tile = new Vector2Int(x, y);
+
+					foreach (Region room in allNIR)
+						if (room.Area.Contains(tile))
+						{
+							canPlace = false;
+							break;
+						}
+
+					if (!canPlace)
+						break;
+
+					if (x < bottomLeft.x)
+						newRegion.Outline.Add(new DirectionalTile(tile, Direction4.LEFT));
+					else if (x >= topRight.x)
+						newRegion.Outline.Add(new DirectionalTile(tile, Direction4.RIGHT));
+					else if (y < bottomLeft.y)
+						newRegion.Outline.Add(new DirectionalTile(tile, Direction4.DOWN));
+					else if (y >= topRight.y)
+						newRegion.Outline.Add(new DirectionalTile(tile, Direction4.UP));
+					else
+						newRegion.Area.Add(tile);
+				}
+
+			if (canPlace)
+            {
+				allNIR.Add(newRegion);
+				newRooms.Add(new RectRoom(bottomLeft, roomSize));
+				foreach (Vector2Int tile in newRegion.Area)
+					map[tile.x, tile.y] = 0;
+				foreach (DirectionalTile dirTile in newRegion.Outline)
+					map[dirTile.Position.x, dirTile.Position.y] = 1;
+			}
+		}
+		return map;
+	}
 	#endregion
 
 	#region Columnar
@@ -593,14 +761,6 @@ public static class Algorithms
 				}
 			}
 
-		return map;
-	}
-    #endregion
-
-    #region Sequential Rooms
-	public static int[,] SequentialRooms(Vector2Int mapSize, int minSegmentLength, int maxSegmentLength, int minTurnLimit, int maxTurnLimit, int epoch)
-	{
-		int[,] map = new int[mapSize.x, mapSize.y];
 		return map;
 	}
     #endregion
