@@ -164,8 +164,7 @@ public static class Algorithms
 		{
 			foreach (Vector3 pos in positions)
 			{
-				Vector3 disFromEnemy = pos - newPosition;
-				if (disFromEnemy.magnitude < minSeparation)
+				if (Vector3.Distance(pos, newPosition) < minSeparation)
 					return false;
 			}
 		}

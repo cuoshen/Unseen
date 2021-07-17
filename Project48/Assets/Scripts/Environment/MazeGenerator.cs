@@ -111,7 +111,7 @@ public class MazeGenerator : MonoBehaviour
     #region Parameter Growth Functions
     int RoomCount()
     {
-        return UnityEngine.Random.Range(level / 2, (int)(level / 1.5));
+        return UnityEngine.Random.Range((int)(level / 1.5), level);
     }
 
     Vector2Int CorridorSize()

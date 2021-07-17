@@ -15,7 +15,6 @@ public class LampLightTrigger : MonoBehaviour
     private Material material;
 
     public float trigger_radius;
-    public float min_intensity;
     public float max_intensity;
     // Color of children <lamp sphere>
     public Color color;
@@ -68,18 +67,18 @@ public class LampLightTrigger : MonoBehaviour
             if (is_enemy)
             {
                 curve = on_curve_enemy;
-                if (on_time_elapsed >= 1.0)
+                if (on_time_elapsed >= 1.0f)
                 {
                     on_time_elapsed = 0;
                 }
                 
             }                
-            light.intensity = min_intensity + curve.Evaluate(on_time_elapsed) * max_intensity;
+            light.intensity = curve.Evaluate(on_time_elapsed) * max_intensity;
         }
         else
         {
             off_time_elapsed += Time.deltaTime;
-            light.intensity = min_intensity + off_curve.Evaluate(off_time_elapsed) * max_intensity;
+            light.intensity = off_curve.Evaluate(off_time_elapsed) * max_intensity;
         }
 
         material.SetColor("_EmissionColor", color * light.intensity / max_intensity);

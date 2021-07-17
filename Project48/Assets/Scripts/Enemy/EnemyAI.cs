@@ -16,11 +16,11 @@ public class EnemyAI : MonoBehaviour
 {
     private GameObject player;
     public EnemyState state = EnemyState.IDLE;
+    
     private float distance;
-    public float EncounterDis;
+    public float encounterDis;
     public float attackDis;
     public float speed;
-
 
     private Animator animator;
     private CharacterController cc;
@@ -42,13 +42,12 @@ public class EnemyAI : MonoBehaviour
         else
         {
             distance = Vector3.Distance(player.transform.position, transform.position);
-            RaycastHit hit;
             LayerMask maze_layer = 1 << LayerMask.NameToLayer("Maze");
-            if (EncounterDis <= distance || Physics.Linecast(transform.position, player.transform.position, out hit, maze_layer)) // not within encounter distance or blocked
+            if (encounterDis <= distance || Physics.Linecast(transform.position, player.transform.position, out RaycastHit hit, maze_layer)) // not within encounter distance or blocked
             {
                 state = EnemyState.IDLE;
             }
-            else if (attackDis <= distance && distance < EncounterDis)
+            else if (attackDis <= distance && distance < encounterDis)
             {
                 state = EnemyState.MOVE;
                 Vector3 diff = player.transform.position - transform.position;
@@ -56,7 +55,7 @@ public class EnemyAI : MonoBehaviour
                 Vector3 direction = new Vector3(diff.x, 0, diff.z);
                 Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
                 transform.rotation = targetRotation;
-                cc.Move(direction * speed * Time.deltaTime);
+                cc.Move(speed * Time.deltaTime * direction);
             }
             else
             {

@@ -148,7 +148,7 @@ MonoBehaviour:
   state: 2
   EncounterDis: 1.5
   attackDis: 0.5
-  speed: 1.2
+  speed: 1
 --- !u!114 &3146788590200104919
 MonoBehaviour:
   m_ObjectHideFlags: 0

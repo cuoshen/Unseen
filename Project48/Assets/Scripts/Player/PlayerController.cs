@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    CharacterController characterController;
+    CharacterController cc;
     Animator animator;
 
     Vector3 movement;
@@ -19,13 +19,13 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
-        characterController = GetComponent<CharacterController>();
+        cc = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
     }
 
     void Update()
     {
-        characterController.Move(movement * speed * Time.deltaTime);
+        cc.Move(Time.deltaTime * speed * movement);
         ResolveVelocity();
         Rotate();
         Gravity();
@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
 
     void ResolveVelocity()
     {
-        float moveSpeed = new Vector2(characterController.velocity.x, characterController.velocity.z).magnitude;
+        float moveSpeed = new Vector2(cc.velocity.x, cc.velocity.z).magnitude;
         animator.SetFloat("Move Speed", moveSpeed);
     }
 
@@ -51,13 +51,13 @@ public class PlayerController : MonoBehaviour
         {
             Quaternion curRotation = transform.rotation;
             Quaternion targetRotation = Quaternion.LookRotation(lookAt);
-            transform.rotation = Quaternion.Slerp(curRotation, targetRotation, angularSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(curRotation, targetRotation, Time.deltaTime * angularSpeed);
         }
     }
 
     void Gravity()
     {
-        if (characterController.isGrounded)
+        if (cc.isGrounded)
             movement.y = -0.05f;
         else
             movement.y -= gravity;
