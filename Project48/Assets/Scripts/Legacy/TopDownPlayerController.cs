@@ -4,7 +4,8 @@ using UnityEngine;
 
 namespace Legacy
 {
-    public enum PlayerState {IDLE, ATTACK, WALK, DEATH };
+    public enum PlayerState {IDLE, ATTACK, WALK, DEATH }
+
     class TopDownPlayerController : MonoBehaviour
     {
         public CharacterController Character;
@@ -17,7 +18,7 @@ namespace Legacy
         private float angularSpeed = 1.0f;
         private PlayerState state;
         private Animator animator;
-        private List<EnemyAI> enemies;
+        private List<EnemyAI_NoAnimator> enemies;
 
         // Start is called before the first frame update
         void Awake()
@@ -29,16 +30,16 @@ namespace Legacy
 
         void CheckAttack()
         {
-            enemies = new List<EnemyAI>();
+            enemies = new List<EnemyAI_NoAnimator>();
             GameObject[] ems = GameObject.FindGameObjectsWithTag("Enemy");
             foreach (GameObject em in ems)
             {
-                enemies.Add((EnemyAI)em.GetComponent(typeof(EnemyAI)));
+                enemies.Add((EnemyAI_NoAnimator)em.GetComponent(typeof(EnemyAI_NoAnimator)));
             }
             
             float disToDie = 2f;
             float distance;
-            foreach (EnemyAI em in enemies)
+            foreach (EnemyAI_NoAnimator em in enemies)
             {
                 distance = Vector3.Distance(transform.position, em.transform.position);
                 if (em.state == EnemyState.ATTACK && distance <= disToDie)

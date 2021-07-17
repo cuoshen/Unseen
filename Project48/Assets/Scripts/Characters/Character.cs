@@ -1,29 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+[RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(Animator))]
+
+public class Character : MonoBehaviour
 {
-    CharacterController cc;
-    Animator animator;
+    protected CharacterController cc;
+    protected Animator animator;
 
-    Vector3 movement;
+    protected Vector3 movement;
 
     [SerializeField]
-    float speed;
+    protected float speed;
     [SerializeField]
-    float angularSpeed;
+    protected float angularSpeed;
     [SerializeField]
-    float gravity;
+    protected float gravity;
 
-    void Awake()
+    protected void Awake()
     {
         cc = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
     }
 
-    void Update()
+    protected void Update()
     {
         cc.Move(Time.deltaTime * speed * movement);
         ResolveVelocity();
@@ -31,20 +33,13 @@ public class PlayerController : MonoBehaviour
         Gravity();
     }
 
-    public void OnMovement(InputAction.CallbackContext context)
-    {
-        Vector2 movementInput = context.ReadValue<Vector2>();
-        movement.x = movementInput.x;
-        movement.z = movementInput.y;
-    }
-
-    void ResolveVelocity()
+    protected void ResolveVelocity()
     {
         float moveSpeed = new Vector2(cc.velocity.x, cc.velocity.z).magnitude;
         animator.SetFloat("Move Speed", moveSpeed);
     }
 
-    void Rotate()
+    protected void Rotate()
     {
         Vector3 lookAt = new Vector3(movement.x, 0, movement.z);
         if (lookAt != Vector3.zero)
@@ -55,7 +50,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Gravity()
+    protected void Gravity()
     {
         if (cc.isGrounded)
             movement.y = -0.05f;
