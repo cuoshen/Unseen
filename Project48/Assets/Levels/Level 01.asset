@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Level 01
   m_EditorClassIdentifier: 
   StartupScenes:
-  - GameLevel
+  - Level 01

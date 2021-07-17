@@ -5,13 +5,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-
-    PlayerInput playerInput;
     CharacterController characterController;
     Animator animator;
 
-    Vector2 curMovementInput;
-    Vector3 curMovement;
+    Vector3 movement;
 
     [SerializeField]
     float speed;
@@ -22,38 +19,23 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
-        playerInput = new PlayerInput();
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
-
-        playerInput.CharacterControls.Move.started += OnMovementInput;
-        playerInput.CharacterControls.Move.canceled += OnMovementInput;
-        playerInput.CharacterControls.Move.performed += OnMovementInput;
-    }
-
-    void OnEnable()
-    {
-        playerInput.CharacterControls.Enable();
-    }
-
-    void OnDisable()
-    {
-        playerInput.CharacterControls.Disable();
     }
 
     void Update()
     {
-        characterController.Move(curMovement * speed * Time.deltaTime);
+        characterController.Move(movement * speed * Time.deltaTime);
+        ResolveVelocity();
         Rotate();
         Gravity();
-        ResolveVelocity();
     }
 
-    void OnMovementInput(InputAction.CallbackContext context)
+    public void OnMovement(InputAction.CallbackContext context)
     {
-        curMovementInput = context.ReadValue<Vector2>();
-        curMovement.x = curMovementInput.x;
-        curMovement.z = curMovementInput.y;
+        Vector2 movementInput = context.ReadValue<Vector2>();
+        movement.x = movementInput.x;
+        movement.z = movementInput.y;
     }
 
     void ResolveVelocity()
@@ -64,7 +46,7 @@ public class PlayerController : MonoBehaviour
 
     void Rotate()
     {
-        Vector3 lookAt = new Vector3(curMovement.x, 0, curMovement.z);
+        Vector3 lookAt = new Vector3(movement.x, 0, movement.z);
         if (lookAt != Vector3.zero)
         {
             Quaternion curRotation = transform.rotation;
@@ -76,8 +58,8 @@ public class PlayerController : MonoBehaviour
     void Gravity()
     {
         if (characterController.isGrounded)
-            curMovement.y = -0.05f;
+            movement.y = -0.05f;
         else
-            curMovement.y -= gravity;
+            movement.y -= gravity;
     }
 }

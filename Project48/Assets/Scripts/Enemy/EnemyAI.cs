@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using Legacy;
 
 
 public enum EnemyState
@@ -25,22 +24,22 @@ public class EnemyAI : MonoBehaviour
 
     private Animator animator;
     private CharacterController cc;
-    private Rigidbody rb;
 
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindWithTag("Player");
         animator = gameObject.GetComponent<Animator>();
         cc = GetComponent<CharacterController>();
-        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        CheckGround();
-        if (rb.isKinematic)
+        if(player == null)
+        {
+            player = GameObject.FindWithTag("Player");
+        }
+        else
         {
             distance = Vector3.Distance(player.transform.position, transform.position);
             RaycastHit hit;
@@ -77,19 +76,6 @@ public class EnemyAI : MonoBehaviour
                     break;
             }
         }
-    }
-
-    void CheckGround()
-    {
-        if (!rb.isKinematic && transform.position.y <= 0)
-        {
-            rb.isKinematic = true;
-        }
-        else if (transform.position.y > 0.1)
-        {
-            rb.isKinematic = false;
-        }
-
     }
 }
 

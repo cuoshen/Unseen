@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static Algorithms;
 
 public delegate bool CoordCriteria(Vector2Int coord);
@@ -23,8 +24,8 @@ public class MazeGenerator : MonoBehaviour
     }
 
     Vector3 lastEndPos;
-    GameObject player;
-    int level = 6;
+    [SerializeField]
+    int level;
 
     #region General Parameters
     [Header("General")]
@@ -100,13 +101,10 @@ public class MazeGenerator : MonoBehaviour
             return;
         }
         s_Instance = this;
-        DontDestroyOnLoad(gameObject);
     }
 
     void Start()
     {
-        //UnityEngine.Random.InitState(33);
-        player = GameObject.FindWithTag("Player");
         NextLevel();
     }
 
@@ -118,7 +116,7 @@ public class MazeGenerator : MonoBehaviour
 
     Vector2Int CorridorSize()
     {
-        return new Vector2Int(UnityEngine.Random.Range(4 + level / 2, 6 + level), UnityEngine.Random.Range(4 + level / 2, 6 + level));
+        return new Vector2Int(UnityEngine.Random.Range(4 + level / 2, 6 + (int)(level / 1.5)), UnityEngine.Random.Range(4 + level / 2, 6 + (int)(level / 1.5)));
     }
 
     int DollRoomAttempts_Within(Vector2Int mazeSize)
@@ -151,7 +149,7 @@ public class MazeGenerator : MonoBehaviour
         Transform start = Instantiate(startPrefab, transform);
         start.localPosition = lastEndPos + new Vector3(0, -0.5f, -1f);
 
-        for (int i = 0; i < RoomCount(); i++)
+        for (int i = 0; i <= RoomCount(); i++)
         {
             if (UnityEngine.Random.Range(0f, 1f) < caveChance)
                 GenerateCave(CaveSize());
@@ -165,26 +163,21 @@ public class MazeGenerator : MonoBehaviour
         end.localPosition = lastEndPos + new Vector3(0, 0.5f, 0);
     }
 
-    IEnumerator NextLevelCoroutine()
+    public void ClearLevel()
     {
-        player.transform.position = new Vector3(0, 0.5f, -0.3f);
-        yield return null;
-
-        level++;
         if (transform.childCount != 0)
         {
             foreach (Transform child in transform)
                 Destroy(child.gameObject);
         }
-        GenerateLevel();
-
-        yield return null;
-        player.transform.position = new Vector3(0, 0.5f, -0.3f);
     }
 
     public void NextLevel()
     {
-        StartCoroutine("NextLevelCoroutine");
+        //UnityEngine.Random.InitState(33);
+        level++;
+        ClearLevel();
+        GenerateLevel();
     }
     #endregion
 

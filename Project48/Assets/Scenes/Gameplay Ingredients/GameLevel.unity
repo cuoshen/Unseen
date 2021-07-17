@@ -1493,8 +1493,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1461980672}
-  - component: {fileID: 1461980671}
   - component: {fileID: 1461980670}
+  - component: {fileID: 1461980673}
   m_Layer: 0
   m_Name: On Key Down (Escape) - Return to Menu
   m_TagString: Untagged
@@ -1522,22 +1522,6 @@ MonoBehaviour:
   UserSaveName: Progress
   SaveProgress: 0
   OnComplete: []
---- !u!114 &1461980671
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1461980669}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 067ff0798d64f3f4cab5a7ddf7057db3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Key: 27
-  OnKeyDown:
-  - {fileID: 1461980670}
-  OnKeyUp: []
 --- !u!4 &1461980672
 Transform:
   m_ObjectHideFlags: 0
@@ -1552,6 +1536,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1461980673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1461980669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97ebdd020f382b24d91e934683a756de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputAction:
+    m_Name: Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 70ffa52c-9eaa-4092-b362-804cd2f148d1
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 0df48ff8-617c-490b-a0cf-8811944b2824
+      m_Path: <Keyboard>/escape
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Input
+      m_Flags: 0
+  onButtonDown:
+  - {fileID: 1461980670}
 --- !u!1 &1468792756
 GameObject:
   m_ObjectHideFlags: 0
