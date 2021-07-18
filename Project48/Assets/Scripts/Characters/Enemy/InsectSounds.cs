@@ -2,25 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FootSteps : MonoBehaviour
+public class InsectSounds : MonoBehaviour
 {
     public AudioClip[] clips;
-    private AudioSource audioSource;
-    // Start is called before the first frame update
+    AudioSource audioSource;
+
     void Awake()
     {
         audioSource = GetComponent<AudioSource>();
     }
 
-    private void Step()
+    void Idle()
     {
-        AudioClip clip = GetRandomClip();
-        audioSource.PlayOneShot(clip);
+        audioSource.PlayOneShot(clips[0]);
     }
-
+    void Encounter()
+    {
+        audioSource.PlayOneShot(clips[1]);
+    }
+    void Kick()
+    {
+        audioSource.PlayOneShot(clips[Random.Range(2, 4)]);
+    }
+   
     AudioClip GetRandomClip()
     {
         return clips[Random.Range(0, clips.Length)];
     }
 }
-

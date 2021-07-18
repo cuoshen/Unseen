@@ -13,7 +13,10 @@ GameObject:
   - component: {fileID: 9067681918429995471}
   - component: {fileID: 1557446233831943356}
   - component: {fileID: 6358984930778884486}
-  - component: {fileID: -654661443893012271}
+  - component: {fileID: 8512642086122431057}
+  - component: {fileID: 3799554070651939964}
+  - component: {fileID: 7299696727445756204}
+  - component: {fileID: 6892034646869866858}
   m_Layer: 6
   m_Name: End
   m_TagString: Untagged
@@ -47,7 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8233d90336aea43098adf6dbabd606a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MeshFormatVersion: 1
+  m_MeshFormatVersion: 2
   m_Faces:
   - m_Indexes: 000000000100000002000000010000000300000002000000
     m_SmoothingGroup: 0
@@ -1088,6 +1091,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
+  m_VersionIndex: 3
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -1103,6 +1107,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -1144,7 +1149,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
 --- !u!65 &6358984930778884486
@@ -1160,7 +1165,15 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 2, z: 1}
   m_Center: {x: 0, y: 0.5, z: 0}
---- !u!114 &-654661443893012271
+--- !u!33 &8512642086122431057
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9067843970510883626}
+  m_Mesh: {fileID: 0}
+--- !u!114 &3799554070651939964
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1169,6 +1182,49 @@ MonoBehaviour:
   m_GameObject: {fileID: 9067843970510883626}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 230dfa822621af64f9745f64560c1c5a, type: 3}
+  m_Script: {fileID: 11500000, guid: 75510bef0e49d8e4ea339b95845f15de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onTriggerEnter:
+  - {fileID: 7299696727445756204}
+  onTriggerExit: []
+  OnlyInteractWithTag: 1
+  Tag: Player
+--- !u!114 &7299696727445756204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9067843970510883626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d6566ceaa073c944b7d03f43819b2a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Full Screen Fade ToBlack 2s (UnscaledGameTime)
+  Fading: 1
+  Duration: 0.5
+  fadeTimingMode: 0
+  OnComplete:
+  - {fileID: 6892034646869866858}
+--- !u!114 &6892034646869866858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9067843970510883626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3aabe1ebc59bfa94499c44333106efec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: 'Game Manager Load : First Level'
+  ShowUI: 1
+  level: 1
+  specifiedLevel: {fileID: 0}
+  UserSaveIndex: 0
+  UserSaveName: Progress
+  SaveProgress: 0
+  OnComplete: []

@@ -7,19 +7,19 @@ namespace Legacy
     [RequireComponent(typeof(AudioSource))]
     class InvisibleEnemyController : MonoBehaviour
     {
-        private AudioSource audio;
+        private AudioSource audioSource;
         public AudioClip[] clips;
 
         private void Awake()
         {
-            audio = gameObject.GetComponent<AudioSource>();
+            audioSource = GetComponent<AudioSource>();
         }
 
         private void Update()
         {
-            if (!audio.isPlaying)
+            if (!audioSource.isPlaying)
             {
-                audio.PlayOneShot(clips[UnityEngine.Random.Range(0, clips.Length)]);
+                audioSource.PlayOneShot(clips[UnityEngine.Random.Range(0, clips.Length)]);
             }
         }
 
