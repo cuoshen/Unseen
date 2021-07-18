@@ -149,6 +149,8 @@ public class MazeGenerator : MonoBehaviour
         Transform start = Instantiate(startPrefab, transform);
         start.localPosition = lastEndPos + new Vector3(0, -0.5f, -1f);
 
+        GenerateConnector();
+
         for (int i = 0; i <= RoomCount(); i++)
         {
             if (UnityEngine.Random.Range(0f, 1f) < caveChance)
@@ -268,12 +270,19 @@ public class MazeGenerator : MonoBehaviour
 
         lastEndPos += new Vector3(endCoord.x - startCoord.x, 0, endCoord.y - startCoord.y + 1);
 
-        // Connector to next maze
+        GenerateConnector();
+
+        return mapTransform;
+    }
+
+    /// <summary>
+    /// Connector to next maze
+    /// </summary>
+    void GenerateConnector()
+    {
         Transform connector = Instantiate(connectorPrefab, transform);
         connector.localPosition = lastEndPos;
         lastEndPos += new Vector3(0, 0, 1);
-
-        return mapTransform;
     }
 
     void GenerateLightOnOutlineBySeparation(int[,] map, Transform mapTransform, Transform lightPrefab, int minSeparation, float scale = 1)

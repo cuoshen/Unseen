@@ -150,7 +150,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a491d6098a56b37408df1e5c64a15376, type: 3}
   - {fileID: 8300000, guid: 5aacc0e0ee4a3c648a2426a5a31e27a9, type: 3}
   - {fileID: 8300000, guid: 56e3e44e635baf14bbc071563b6e219b, type: 3}
-  audioSource: {fileID: 4160106245337604473}
 --- !u!114 &7656918176493510873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,8 +165,8 @@ MonoBehaviour:
   speed: 1
   angularSpeed: 15
   gravity: 9.81
-  encounterDis: 1.5
-  attackDis: 0.3
+  visionRange: 1.5
+  attackRange: 0.3
 --- !u!1001 &4932933766548250811
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -219,6 +218,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6434301378086035483, guid: f996fffd3eddd6249b3779250924bfd7, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3134267836146244807, guid: f996fffd3eddd6249b3779250924bfd7, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2400031699537356565, guid: f996fffd3eddd6249b3779250924bfd7, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f996fffd3eddd6249b3779250924bfd7, type: 3}
       propertyPath: m_Name
       value: kiwi
@@ -226,6 +237,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: f996fffd3eddd6249b3779250924bfd7, type: 3}
       propertyPath: m_TagString
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 5064880245253675553, guid: f996fffd3eddd6249b3779250924bfd7, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f996fffd3eddd6249b3779250924bfd7, type: 3}
