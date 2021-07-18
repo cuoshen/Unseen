@@ -159,7 +159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5995dc45925deea44b186a0db2df2a03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectPlayerRange: 2.5
+  detectPlayerRange: 3
   maxIntensity: 0.1
   lampSphereColor: {r: 0.78431374, g: 0.7176471, b: 0.5568628, a: 0}
   on_curve:
@@ -762,7 +762,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  time_elapsed: 0
 --- !u!1 &7285017026454675821
 GameObject:
   m_ObjectHideFlags: 0

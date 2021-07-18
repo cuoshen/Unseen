@@ -165,7 +165,7 @@ MonoBehaviour:
   speed: 1
   angularSpeed: 15
   gravity: 9.81
-  visionRange: 1.5
+  visionRange: 2
   attackRange: 0.3
 --- !u!1001 &4932933766548250811
 PrefabInstance:
