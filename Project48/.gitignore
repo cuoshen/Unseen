@@ -69,3 +69,14 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+.vs/48/v16/.suo
+/UserSettings/EditorUserSettings.asset
+/ProjectSettings/Packages/com.unity.probuilder/Settings.json
+
+# put huge assets in this folder to avoid uploading
+/Assets/GitignoreAssets/*
+/Assets/GitignoreAssets.meta
+
+/Assets/AssetStoreOriginals/*
+/Assets/AssetStoreOriginals.meta

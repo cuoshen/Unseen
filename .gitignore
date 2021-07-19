@@ -73,3 +73,5 @@ crashlytics-build.properties
 .vs/48/v16/.suo
 Project48/UserSettings/EditorUserSettings.asset
 Project48/ProjectSettings/Packages/com.unity.probuilder/Settings.json
+Project48/Assets/GitignoreAssets/*
+Project48/Assets/GitignoreAssets.meta
