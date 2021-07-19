@@ -26,7 +26,7 @@ public class InsectThing : Character
                 animator.SetTrigger("Attack");
                 Debug.LogAssertion("KIWI");
             }
-            else if(visionRange <= distance || Physics.Linecast(transform.position, player.transform.position, out RaycastHit hit, maze_layer)) // not within encounter distance or blocked
+            else if(visionRange + 1 <= distance || Physics.Linecast(transform.position, player.transform.position, out RaycastHit hit, maze_layer))
             {
                 movement.x = 0;
                 movement.z = 0;

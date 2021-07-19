@@ -83,6 +83,8 @@ public class MazeGenerator : MonoBehaviour
     [SerializeField]
     Transform caveLightPrefab;
     [SerializeField]
+    Transform caveLightTallPrefab;
+    [SerializeField]
     int minCaveLightSeparation;
     #endregion
     #region Columns Generation Parameters
@@ -275,9 +277,6 @@ public class MazeGenerator : MonoBehaviour
         return mapTransform;
     }
 
-    /// <summary>
-    /// Connector to next maze
-    /// </summary>
     void GenerateConnector()
     {
         Transform connector = Instantiate(connectorPrefab, transform);
@@ -285,12 +284,13 @@ public class MazeGenerator : MonoBehaviour
         lastEndPos += new Vector3(0, 0, 1);
     }
 
-    void GenerateLightOnOutlineBySeparation(int[,] map, Transform mapTransform, Transform lightPrefab, int minSeparation, float scale = 1)
+    List<Vector2Int> GenerateLightOnOutlineBySeparation(int[,] map, Transform mapTransform, Transform lightPrefab, int minSeparation, float scale = 1)
     {
         Vector2Int mapSize = new Vector2Int(map.GetLength(0), map.GetLength(1));
 
         List<Region> regions = GetRegions(0, map);
         List<Vector3> lightPositions = new List<Vector3>();
+        List<Vector2Int> lightCoords = new List<Vector2Int>();
         foreach (DirectionalTile outline in regions[0].Outline)
         {
             Vector3 position = (new Vector3(-mapSize.x / 2 + outline.Position.x + 0.5f, 0, -mapSize.y / 2 + outline.Position.y + 0.5f)
@@ -302,8 +302,11 @@ public class MazeGenerator : MonoBehaviour
                 newLight.localPosition = position;
                 newLight.localEulerAngles = Angle4[outline.Direction];
                 lightPositions.Add(position);
+                lightCoords.Add(outline.Position);
             }
         }
+
+        return lightCoords;
     }
 
     void GenerateCorridorMaze(Vector2Int mazeSize)
@@ -522,7 +525,31 @@ public class MazeGenerator : MonoBehaviour
             }
 
         // Generate lights
-        GenerateLightOnOutlineBySeparation(map, mapTransform, caveLightPrefab, minCaveLightSeparation, 0.5f);
+        List<Vector2Int> lightCoords = GenerateLightOnOutlineBySeparation(map, mapTransform, caveLightPrefab, minCaveLightSeparation, 0.5f);
+
+        // Generate additional light if there exists a 9x9 coord space with no light
+        for (int x = 0; x < mapSize.x - 9; x++)
+            for (int y = 0; y < mapSize.y - 9; y++)
+            {
+                bool hasLight = false;
+                for (int i = x; i < x + 9; i++)
+                    for (int j = y; j < y + 9; j++)
+                    {
+                        if (lightCoords.Contains(new Vector2Int(i, j)))
+                        {
+                            hasLight = true;
+                            break;
+                        }
+                    }
+                Vector2Int newLightCoord = new Vector2Int(x + 4, y + 4);
+                if (!hasLight && map[newLightCoord.x,newLightCoord.y] == 0)
+                {
+                    Vector3 position = new Vector3(-mapSize.x / 2 + newLightCoord.x + 0.5f, 0, -mapSize.y / 2 + newLightCoord.y + 0.5f) * 0.5f + new Vector3(-0.5f, 0, -0.5f);
+                    Transform newLight = Instantiate(caveLightTallPrefab, mapTransform);
+                    newLight.localPosition = position;
+                    lightCoords.Add(newLightCoord);
+                }
+            }
     }
 
     void GenerateColumnarMaze(Vector2Int mapSize)

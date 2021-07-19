@@ -405,8 +405,8 @@ MonoBehaviour:
   startPrefab: {fileID: 4459196779015730797, guid: cf6767f6c193e954b811cd2de006a999, type: 3}
   endPrefab: {fileID: 6708590964914837869, guid: e462882065328ca4fa37c5e134cf0e3e, type: 3}
   connectorPrefab: {fileID: 8302508908966622360, guid: 1f826802e2addfe48a37974c0e7e78d9, type: 3}
-  caveChance: 0
-  dollChance: 1
+  caveChance: 1
+  dollChance: 0
   _2x2ColumnChance: 0.25
   minKiwiSeparation: 4
   kiwiPrefab: {fileID: 4899903623646807888, guid: 9660bc8bd0e56834c9f69a94ae7277a1, type: 3}
@@ -420,6 +420,7 @@ MonoBehaviour:
   cellularPassEpoch: 6
   caveWallPrefab: {fileID: 4404619412615659412, guid: f7b4b8bf940f362408db1732ccf36fa2, type: 3}
   caveLightPrefab: {fileID: 3783455613422746024, guid: 389c471d41cc26e448f0cc2197927276, type: 3}
+  caveLightTallPrefab: {fileID: 412061578960827248, guid: 8a3a40900a21f4b46a90a478b04e5eb8, type: 3}
   minCaveLightSeparation: 3
   _1x1ColPrefab: {fileID: 979798171851015552, guid: c9545e546b427e548b5df0f0e7c9d61a, type: 3}
   _2x2ColPrefab: {fileID: 4063682100341033637, guid: 7aee28ec8ea5eb2458dd6c9cc8a1ebf4, type: 3}
