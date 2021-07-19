@@ -13,7 +13,150 @@ GameObject:
   - component: {fileID: 842912704}
   - component: {fileID: 842912703}
   m_Layer: 0
+<<<<<<< Updated upstream:Project48/Assets/Resources/Prefabs/Environment/Lights/Lamp_01_Snaps014 Variant.prefab
   m_Name: Spot Light
+=======
+  m_Name: Lamp_01_Snaps014
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5040207816979870929
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 29190796439425701}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1542978836231252090}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3870828754575737777
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1542978836231252090}
+  - component: {fileID: 6751266583945189046}
+  - component: {fileID: 2391891033793534230}
+  - component: {fileID: 7441179580107041493}
+  m_Layer: 0
+  m_Name: Lamp_01_Snaps014 Variant
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &1542978836231252090
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3870828754575737777}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -0, y: 0.9, z: -0.05}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_Children:
+  - {fileID: 5733551994646299270}
+  - {fileID: 5733551994677264524}
+  - {fileID: 5733551994129347167}
+  m_Father: {fileID: 5040207816979870929}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!33 &6751266583945189046
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3870828754575737777}
+  m_Mesh: {fileID: 4300000, guid: 77c7e25ff0a003d4db176defb32a9f1c, type: 2}
+--- !u!23 &2391891033793534230
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3870828754575737777}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 256eee0f82507ec4e95305ef81e78918, type: 2}
+  - {fileID: 2100000, guid: a198cfbad82cebc4690e63dbf42b8c22, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 2
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 2
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!95 &7441179580107041493
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3870828754575737777}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: c6f54f91deb718540958cfd2c31d0386, type: 3}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &5733551994129347165
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5733551994129347167}
+  - component: {fileID: 5733551994129347166}
+  - component: {fileID: 5733551994129347152}
+  m_Layer: 0
+  m_Name: Spot Light (2)
+>>>>>>> Stashed changes:Project48/Assets/Resources/Prefabs/Environment/Lights/Lamp_01_Snaps014.prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -90,7 +233,11 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
+<<<<<<< Updated upstream:Project48/Assets/Resources/Prefabs/Environment/Lights/Lamp_01_Snaps014 Variant.prefab
   m_BoundingSphereOverride: {x: 1.02e-43, y: -3.637347e+34, z: 4.5904e-41, w: 0}
+=======
+  m_BoundingSphereOverride: {x: 1.02e-43, y: -7.664415e-14, z: 4.5905e-41, w: 0}
+>>>>>>> Stashed changes:Project48/Assets/Resources/Prefabs/Environment/Lights/Lamp_01_Snaps014.prefab
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 2.03
@@ -804,7 +951,11 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
+<<<<<<< Updated upstream:Project48/Assets/Resources/Prefabs/Environment/Lights/Lamp_01_Snaps014 Variant.prefab
   m_BoundingSphereOverride: {x: 1.02e-43, y: -3.637347e+34, z: 4.5904e-41, w: 0}
+=======
+  m_BoundingSphereOverride: {x: 1.02e-43, y: -7.664415e-14, z: 4.5905e-41, w: 0}
+>>>>>>> Stashed changes:Project48/Assets/Resources/Prefabs/Environment/Lights/Lamp_01_Snaps014.prefab
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 2.03
@@ -1518,7 +1669,11 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
+<<<<<<< Updated upstream:Project48/Assets/Resources/Prefabs/Environment/Lights/Lamp_01_Snaps014 Variant.prefab
   m_BoundingSphereOverride: {x: 3.455822e+30, y: 6.7421e+22, z: 1.81473e+25, w: 1.7861595e+25}
+=======
+  m_BoundingSphereOverride: {x: 1.02e-43, y: -7.664415e-14, z: 4.5905e-41, w: 0}
+>>>>>>> Stashed changes:Project48/Assets/Resources/Prefabs/Environment/Lights/Lamp_01_Snaps014.prefab
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 2.03

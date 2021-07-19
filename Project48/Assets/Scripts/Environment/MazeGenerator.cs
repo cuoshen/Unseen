@@ -294,7 +294,7 @@ public class MazeGenerator : MonoBehaviour
         foreach (DirectionalTile outline in regions[0].Outline)
         {
             Vector3 position = (new Vector3(-mapSize.x / 2 + outline.Position.x + 0.5f, 0, -mapSize.y / 2 + outline.Position.y + 0.5f)
-                + Coord2PosXZ(Offset4[GetOpposite(outline.Direction)]) * 0.5f) * scale + new Vector3(-0.5f, 0.5f, -0.5f);
+                + Coord2PosXZ(Offset4[GetOpposite(outline.Direction)]) * 0.5f) * scale + new Vector3(-0.5f, 0, -0.5f);
 
             if (CheckMinSeparation(lightPositions, position, minSeparation))
             {
@@ -362,7 +362,7 @@ public class MazeGenerator : MonoBehaviour
                     {
                         Transform newLight = Instantiate(corridorLightPrefab, mapTransform);
                         int randIndex = UnityEngine.Random.Range(0, wallPosList.Count);
-                        newLight.localPosition = wallPosList[randIndex] + new Vector3(0, 0.5f, 0);
+                        newLight.localPosition = wallPosList[randIndex];
                         newLight.localEulerAngles = wallAngleList[randIndex];
                         lightPositions.Add(position);
                     }
@@ -429,7 +429,7 @@ public class MazeGenerator : MonoBehaviour
                 {
                     Transform newLight = Instantiate(corridorLightPrefab, mazeTransform);
                     int randIndex = UnityEngine.Random.Range(0, wallPosList.Count);
-                    newLight.localPosition = wallPosList[randIndex] + new Vector3(0, 0.5f, 0);
+                    newLight.localPosition = wallPosList[randIndex];
                     newLight.localEulerAngles = wallAngleList[randIndex];
                 }
 
