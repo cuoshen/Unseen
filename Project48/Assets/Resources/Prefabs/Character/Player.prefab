@@ -600,6 +600,8 @@ GameObject:
   - component: {fileID: 824497194}
   - component: {fileID: 1425647527}
   - component: {fileID: 1507459752}
+  - component: {fileID: 5866113910783640382}
+  - component: {fileID: 8591435439807103576}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -844,6 +846,36 @@ MonoBehaviour:
   speed: 1
   angularSpeed: 15
   gravity: 9.81
+--- !u!114 &5866113910783640382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2353130631441330147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d68e1777abe66842b9beb0678f7bdd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onDestroy:
+  - {fileID: 8591435439807103576}
+--- !u!114 &8591435439807103576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2353130631441330147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e0d20f2fb594be42acf7e05001c2932, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Destroy objects
+  ObjectsToDestroy:
+  - {fileID: 0}
+  DestroyInstigator: 0
 --- !u!1 &2433778064623976315
 GameObject:
   m_ObjectHideFlags: 0
