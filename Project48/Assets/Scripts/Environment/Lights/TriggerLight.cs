@@ -71,7 +71,7 @@ public class TriggerLight : MonoBehaviour
 
         time_elapsed += Time.deltaTime;
         lampLight.intensity = curve.Evaluate(time_elapsed) * maxIntensity;
-        material.SetColor("_EmissionColor", lampSphereColor * lampLight.intensity / maxIntensity);
+        //material.SetColor("_EmissionColor", lampSphereColor * lampLight.intensity / maxIntensity);
     }
 
     void DetectObjects()
