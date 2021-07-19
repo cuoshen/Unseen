@@ -199,7 +199,7 @@ public class MazeGenerator : MonoBehaviour
         while (!startEndCriteria(startCoord));
         do
             endCoord = new Vector2Int(UnityEngine.Random.Range(border, mapSize.x - border), mapSize.y - 1);
-        while (!startEndCriteria(endCoord) && Math.Abs(endCoord.x - startCoord.x) < 2);
+        while (!startEndCriteria(endCoord) || Math.Abs(endCoord.x - startCoord.x) < 2);
 
         // Generate empty parent object
         Transform mapTransform = new GameObject("Room").transform;
