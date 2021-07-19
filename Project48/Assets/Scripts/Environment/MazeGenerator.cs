@@ -199,7 +199,7 @@ public class MazeGenerator : MonoBehaviour
         while (!startEndCriteria(startCoord));
         do
             endCoord = new Vector2Int(UnityEngine.Random.Range(border, mapSize.x - border), mapSize.y - 1);
-        while (!startEndCriteria(endCoord));
+        while (!startEndCriteria(endCoord) && Math.Abs(endCoord.x - startCoord.x) < 2);
 
         // Generate empty parent object
         Transform mapTransform = new GameObject("Room").transform;
@@ -318,7 +318,11 @@ public class MazeGenerator : MonoBehaviour
         Vector2Int mapSize = new Vector2Int(map.GetLength(0), map.GetLength(1));
         Transform mapTransform = GenerateBasic(mapSize, out Vector2Int startCoord, out Vector2Int endCoord, d => d.x % 2 == 1, 2, false);
 
-        List<Vector3> lightPositions = new List<Vector3>();
+        Vector2Int s = new Vector2Int(startCoord.x, startCoord.y + 1);
+        Vector2Int e = new Vector2Int(endCoord.x, endCoord.y - 1);
+        List<Vector2Int> pathToEnd = new Astar(Astar.ConvertToBoolArray(map), s, e).Result;
+
+        List <Vector3> lightPositions = new List<Vector3>();
         List<Vector3> kiwiPositions = new List<Vector3>();
 
         for (int i = 0; i < mapSize.x; i++)
@@ -333,10 +337,9 @@ public class MazeGenerator : MonoBehaviour
                     newCube.localPosition = position;
                 }
 
-                // Do not generate light inside walls, at start and end, or within rooms, or too close to other lights
+                // Do not generate light or enemies inside walls, at start and end, or within rooms
                 if (map[i, j] == 0 && new Vector2Int(i, j - 1) != startCoord && new Vector2Int(i, j + 1) != endCoord
-                    && allRooms.Select(d => d.Area).Where(d => d.Contains(coord)).ToList().Count == 0
-                    && CheckMinSeparation(lightPositions, position, minCorridorLightSeparation))
+                    && allRooms.Select(d => d.Area).Where(d => d.Contains(coord)).ToList().Count == 0)
                 {
                     List<Vector3> wallPosList = new List<Vector3>();
                     List<Vector3> wallAngleList = new List<Vector3>();
@@ -351,8 +354,8 @@ public class MazeGenerator : MonoBehaviour
                         }
                     }
 
-                    // Generate lights
-                    if (wallPosList.Count != 0)
+                    // Generate lights, but not too close to other lights
+                    if (wallPosList.Count != 0 && CheckMinSeparation(lightPositions, position, minCorridorLightSeparation))
                     {
                         Transform newLight = Instantiate(corridorLightPrefab, mapTransform);
                         int randIndex = UnityEngine.Random.Range(0, wallPosList.Count);
@@ -361,10 +364,11 @@ public class MazeGenerator : MonoBehaviour
                         lightPositions.Add(position);
                     }
 
-                    //Generate enemies
+                    //Generate enemies, but not too close to other enemies or on the critical path or on lights
                     Vector2Int disFromStart = coord - startCoord;
                     Vector2Int disFromEnd = coord - endCoord;
-                    if (wallPosList.Count < 2 && disFromStart.magnitude > minKiwiSeparation && disFromEnd.magnitude > minKiwiSeparation
+                    if (disFromStart.magnitude > minKiwiSeparation && disFromEnd.magnitude > minKiwiSeparation
+                        && !pathToEnd.Contains(coord) && !lightPositions.Contains(position)
                         && CheckMinSeparation(kiwiPositions, position, minKiwiSeparation))
                     {
                         Transform newKiwi = Instantiate(kiwiPrefab, mapTransform);
