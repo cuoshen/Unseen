@@ -284,7 +284,7 @@ GameObject:
   - component: {fileID: 4237660106662749795}
   - component: {fileID: 4237660106662749792}
   m_Layer: 5
-  m_Name: Default_LevelStreamingManager
+  m_Name: LevelStreamingManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
