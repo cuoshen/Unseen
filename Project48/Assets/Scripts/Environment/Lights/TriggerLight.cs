@@ -34,6 +34,7 @@ public class TriggerLight : MonoBehaviour
         // init gameObject references
         lampLight = GetComponent<Light>();
 
+        // materials[0] is the emission of light
         material = GetComponent<MeshRenderer>().materials[0];
 
         time_elapsed = 2;
