@@ -10,8 +10,6 @@ public class TriggerLight : MonoBehaviour
     float detectPlayerRange;
     [SerializeField]
     float maxIntensity;
-    [SerializeField]
-    Color lampSphereColor;
 
     [SerializeField]
     AnimationCurve on_curve, on_curve_enemy, off_curve, off_curve_enemy;
@@ -34,8 +32,6 @@ public class TriggerLight : MonoBehaviour
 
         // init gameObject references
         lampLight = GetComponent<Light>();
-        lampLight.type = LightType.Point;
-        lampLight.color = lampSphereColor;
 
         material = GetComponent<MeshRenderer>().materials[0];
 
@@ -71,7 +67,7 @@ public class TriggerLight : MonoBehaviour
 
         time_elapsed += Time.deltaTime;
         lampLight.intensity = curve.Evaluate(time_elapsed) * maxIntensity;
-        //material.SetColor("_EmissionColor", lampSphereColor * lampLight.intensity / maxIntensity);
+        material.SetColor("_EmissionColor", lampLight.color * lampLight.intensity / maxIntensity);
     }
 
     void DetectObjects()
@@ -90,7 +86,7 @@ public class TriggerLight : MonoBehaviour
                 is_player = true;
 
             if (collider.tag == "Enemy" && !Physics.Linecast(transform.position, collider.transform.position, out _, maze_layer)
-                && Vector3.Distance(collider.transform.position, transform.position) <= collider.GetComponent<InsectThing>().visionRange)
+                && Vector3.Distance(collider.transform.position, transform.position) <= collider.GetComponent<InsectThing>().visionRange) // GetComponent is costly, change to constant in final build
                 is_enemy = true;
         }
 
