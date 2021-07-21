@@ -97,7 +97,7 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 0.13919187, g: 1, b: 0, a: 1}
   m_Intensity: 0
   m_Range: 3
   m_SpotAngle: 30
@@ -162,7 +162,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detectPlayerRange: 2.5
   maxIntensity: 0.1
-  lampSphereColor: {r: 0, g: 1, b: 0, a: 0}
   on_curve:
     serializedVersion: 2
     m_Curve:
@@ -1269,7 +1268,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7599237671437475100, guid: 74e6de8e5b70c384ea5644d7429ceb19, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.5
+      value: 0.55
       objectReference: {fileID: 0}
     - target: {fileID: 7599237671437475100, guid: 74e6de8e5b70c384ea5644d7429ceb19, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1351,7 +1350,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7599237671437475100, guid: 74e6de8e5b70c384ea5644d7429ceb19, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.5
+      value: -0.55
       objectReference: {fileID: 0}
     - target: {fileID: 7599237671437475100, guid: 74e6de8e5b70c384ea5644d7429ceb19, type: 3}
       propertyPath: m_LocalPosition.y

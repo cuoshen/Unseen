@@ -7,11 +7,11 @@ using UnityEngine;
 public class TriggerLight : MonoBehaviour
 {
     [SerializeField]
+    bool detectPlayerAcrossWall;
+    [SerializeField]
     float detectPlayerRange;
     [SerializeField]
     float maxIntensity;
-    [SerializeField]
-    Color lampSphereColor;
 
     [SerializeField]
     AnimationCurve on_curve, on_curve_enemy, off_curve, off_curve_enemy;
@@ -20,7 +20,6 @@ public class TriggerLight : MonoBehaviour
     Material material;
 
     float time_elapsed;
-
     bool is_on;
     bool is_flicker;
 
@@ -34,8 +33,6 @@ public class TriggerLight : MonoBehaviour
 
         // init gameObject references
         lampLight = GetComponent<Light>();
-        lampLight.type = LightType.Point;
-        lampLight.color = lampSphereColor;
 
         material = GetComponent<MeshRenderer>().materials[0];
 
@@ -71,7 +68,7 @@ public class TriggerLight : MonoBehaviour
 
         time_elapsed += Time.deltaTime;
         lampLight.intensity = curve.Evaluate(time_elapsed) * maxIntensity;
-        //material.SetColor("_EmissionColor", lampSphereColor * lampLight.intensity / maxIntensity);
+        material.SetColor("_EmissionColor", lampLight.color * lampLight.intensity / maxIntensity);
     }
 
     void DetectObjects()
@@ -86,11 +83,11 @@ public class TriggerLight : MonoBehaviour
         // Look for player and enemy
         foreach (Collider collider in allOverlappingColliders)
         {
-            if (collider.tag == "Player" && !Physics.Linecast(transform.position, collider.transform.position, out _, maze_layer))
+            if (collider.tag == "Player" && (detectPlayerAcrossWall || !Physics.Linecast(transform.position, collider.transform.position, out _, maze_layer)))
                 is_player = true;
 
             if (collider.tag == "Enemy" && !Physics.Linecast(transform.position, collider.transform.position, out _, maze_layer)
-                && Vector3.Distance(collider.transform.position, transform.position) <= collider.GetComponent<InsectThing>().visionRange)
+                && Vector3.Distance(collider.transform.position, transform.position) <= collider.GetComponent<InsectThing>().visionRange) // GetComponent is costly, change to constant in final build
                 is_enemy = true;
         }
 

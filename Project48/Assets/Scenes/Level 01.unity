@@ -305,7 +305,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &670111502
 Light:
   m_ObjectHideFlags: 0
@@ -406,7 +406,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1574380398}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
   m_Name: 
@@ -522,6 +522,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2068360654}
   - component: {fileID: 2068360653}
+  - component: {fileID: 2068360655}
   m_Layer: 0
   m_Name: Maze Generator
   m_TagString: Untagged
@@ -546,20 +547,22 @@ MonoBehaviour:
   startPrefab: {fileID: 4459196779015730797, guid: cf6767f6c193e954b811cd2de006a999, type: 3}
   endPrefab: {fileID: 6708590964914837869, guid: e462882065328ca4fa37c5e134cf0e3e, type: 3}
   connectorPrefab: {fileID: 8302508908966622360, guid: 1f826802e2addfe48a37974c0e7e78d9, type: 3}
-  caveChance: 0
+  caveChance: 1
   dollChance: 0
   _2x2ColumnChance: 0.25
   minKiwiSeparation: 4
   kiwiPrefab: {fileID: 4899903623646807888, guid: 9660bc8bd0e56834c9f69a94ae7277a1, type: 3}
   corridorWallPrefab: {fileID: 8587853897269320152, guid: 7e23e3dc6062f7a48842cef9783005cb, type: 3}
-  corridorLightPrefab: {fileID: 5040207816979870929, guid: 72324eb5feb37d64fa1cf3917f3d3313, type: 3}
+  corridorLightPrefab: {fileID: 7285017026454675818, guid: 947a8c0b200a4ef459a521aafd5746a2, type: 3}
   minCorridorLightSeparation: 2
   dollWallPrefab: {fileID: 7599237671437475100, guid: 74e6de8e5b70c384ea5644d7429ceb19, type: 3}
   caveCellInitChance: 25
   caveCellBirthLimit: 3
   caveCellDeathLimit: 2
   cellularPassEpoch: 6
-  caveWallPrefab: {fileID: 4404619412615659412, guid: f7b4b8bf940f362408db1732ccf36fa2, type: 3}
+  caveWallPrefab: {fileID: 4433460659094003551, guid: b67c2ac47f9f96847926d01ed4d792d2, type: 3}
+  caveRoofMeshPrefab: {fileID: 2443116424865806980, guid: 0a8df23ccf200814ab8f1108bb4ebc88, type: 3}
+  caveWallMeshPrefab: {fileID: 1013605822122728790, guid: 59589664d4ebef34d8d062e3ddaf1027, type: 3}
   caveLightPrefab: {fileID: 3783455613422746024, guid: 389c471d41cc26e448f0cc2197927276, type: 3}
   caveLightTallPrefab: {fileID: 412061578960827248, guid: 8a3a40900a21f4b46a90a478b04e5eb8, type: 3}
   minCaveLightSeparation: 3
@@ -579,3 +582,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2068360655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2068360652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fd1c2e4166d04a9a83ca4082dd96614, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walls: {fileID: 0}
+  cave: {fileID: 0}
+  is2D: 0
