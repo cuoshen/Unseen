@@ -159,7 +159,7 @@ public class MazeGenerator : MonoBehaviour
 
         GenerateConnector();
 
-        for (int i = 0; i <= RoomCount(); i++)
+        for (int i = 0; i < RoomCount(); i++)
         {
             if (UnityEngine.Random.Range(0f, 1f) < caveChance)
                 GenerateCave(CaveSize());
@@ -373,7 +373,7 @@ public class MazeGenerator : MonoBehaviour
                         lightPositions.Add(position);
                     }
 
-                    //Generate enemies, but not too close to other enemies or on the critical path or on lights
+                    //Generate insect things, but not too close to other insect things or on the critical path or on lights
                     Vector2Int disFromStart = coord - startCoord;
                     Vector2Int disFromEnd = coord - endCoord;
                     if (disFromStart.magnitude > minKiwiSeparation && disFromEnd.magnitude > minKiwiSeparation
@@ -527,33 +527,36 @@ public class MazeGenerator : MonoBehaviour
         // Generate lights
         List<Vector2Int> lightCoords = GenerateLightOnOutlineBySeparation(map, mapTransform, caveLightPrefab, minCaveLightSeparation, 0.5f);
 
-        // Generate additional light if there exists a 9x9 empty enough coord space with no light
-        for (int x = 0; x < mapSize.x - 9; x++)
-            for (int y = 0; y < mapSize.y - 9; y++)
-            {
-                bool hasLight = false;
-                int emptyTileCount = 0;
-                for (int i = x; i < x + 9; i++)
-                    for (int j = y; j < y + 9; j++)
-                    {
-                        if (lightCoords.Contains(new Vector2Int(i, j)))
-                        {
-                            hasLight = true;
-                            break;
-                        }
-                        if (map[i, j] == 0)
-                            emptyTileCount++;
-                    }
-
-                Vector2Int newLightCoord = new Vector2Int(x + 4, y + 4);
-                if (!hasLight && emptyTileCount >= 40 && map[newLightCoord.x,newLightCoord.y] == 0)
+        // Generate additional light randomly if there exists a 9x9 empty enough coord space with no light
+        for (int k = 0; k < 1000; k++)
+        {
+            int x = UnityEngine.Random.Range(0, mapSize.x - 9);
+            int y = UnityEngine.Random.Range(0, mapSize.y - 9);
+            bool hasLight = false;
+            int emptyTileCount = 0;
+            for (int i = x; i < x + 9; i++)
+                for (int j = y; j < y + 9; j++)
                 {
-                    Vector3 position = new Vector3(-mapSize.x / 2 + newLightCoord.x + 0.5f, 0, -mapSize.y / 2 + newLightCoord.y + 0.5f) * 0.5f + new Vector3(-0.5f, 0, -0.5f);
-                    Transform newLight = Instantiate(caveLightTallPrefab, mapTransform);
-                    newLight.localPosition = position;
-                    lightCoords.Add(newLightCoord);
+                    if (lightCoords.Contains(new Vector2Int(i, j)))
+                    {
+                        hasLight = true;
+                        break;
+                    }
+                    if (map[i, j] == 0)
+                        emptyTileCount++;
                 }
+
+            Vector2Int newLightCoord = new Vector2Int(x + 4, y + 4);
+            if (!hasLight && emptyTileCount >= 60 && map[newLightCoord.x, newLightCoord.y] == 0)
+            {
+                Vector3 position = new Vector3(-mapSize.x / 2 + newLightCoord.x + 0.5f, 0, -mapSize.y / 2 + newLightCoord.y + 0.5f) * 0.5f + new Vector3(-0.5f, 0, -0.5f);
+                Transform newLight = Instantiate(caveLightTallPrefab, mapTransform);
+                newLight.localPosition = position;
+                lightCoords.Add(newLightCoord);
             }
+        }
+
+        // Generate
     }
 
     void GenerateColumnarMaze(Vector2Int mapSize)

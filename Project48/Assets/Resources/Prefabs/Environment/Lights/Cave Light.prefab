@@ -274,9 +274,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5995dc45925deea44b186a0db2df2a03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectPlayerRange: 10
+  detectPlayerAcrossWall: 1
+  detectPlayerRange: 6
   maxIntensity: 0.5
-  lampSphereColor: {r: 0.9433962, g: 0.51227593, b: 0, a: 0}
   on_curve:
     serializedVersion: 2
     m_Curve:

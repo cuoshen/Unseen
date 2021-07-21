@@ -7,6 +7,8 @@ using UnityEngine;
 public class TriggerLight : MonoBehaviour
 {
     [SerializeField]
+    bool detectPlayerAcrossWall;
+    [SerializeField]
     float detectPlayerRange;
     [SerializeField]
     float maxIntensity;
@@ -18,7 +20,6 @@ public class TriggerLight : MonoBehaviour
     Material material;
 
     float time_elapsed;
-
     bool is_on;
     bool is_flicker;
 
@@ -82,7 +83,7 @@ public class TriggerLight : MonoBehaviour
         // Look for player and enemy
         foreach (Collider collider in allOverlappingColliders)
         {
-            if (collider.tag == "Player" && !Physics.Linecast(transform.position, collider.transform.position, out _, maze_layer))
+            if (collider.tag == "Player" && (detectPlayerAcrossWall || !Physics.Linecast(transform.position, collider.transform.position, out _, maze_layer)))
                 is_player = true;
 
             if (collider.tag == "Enemy" && !Physics.Linecast(transform.position, collider.transform.position, out _, maze_layer)
