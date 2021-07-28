@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(Animator))]
 
-public class Character : MonoBehaviour
+public class CCCharacter : MonoBehaviour
 {
     protected CharacterController cc;
     protected Animator animator;

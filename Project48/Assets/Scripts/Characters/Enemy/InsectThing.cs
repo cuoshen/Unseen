@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InsectThing : Character
+public class InsectThing : CCCharacter
 {
     public float visionRange;
     public float attackRange;
