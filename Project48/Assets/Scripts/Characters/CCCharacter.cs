@@ -27,10 +27,9 @@ public class CCCharacter : MonoBehaviour
 
     protected void Update()
     {
-        cc.Move(Time.deltaTime * speed * movement);
+        cc.SimpleMove(speed * movement);
         ResolveVelocity();
         Rotate();
-        Gravity();
     }
 
     protected void ResolveVelocity()
@@ -48,13 +47,5 @@ public class CCCharacter : MonoBehaviour
             Quaternion targetRotation = Quaternion.LookRotation(lookAt);
             transform.rotation = Quaternion.Slerp(curRotation, targetRotation, Time.deltaTime * angularSpeed);
         }
-    }
-
-    protected void Gravity()
-    {
-        if (cc.isGrounded)
-            movement.y = -0.05f;
-        else
-            movement.y -= gravity;
     }
 }
