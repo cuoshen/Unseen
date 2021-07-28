@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LockDoorRotation : MonoBehaviour
+public class Door : MonoBehaviour
 {
     void LateUpdate()
     {
