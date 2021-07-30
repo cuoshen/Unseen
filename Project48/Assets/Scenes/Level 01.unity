@@ -556,8 +556,8 @@ MonoBehaviour:
   corridorWallPrefab: {fileID: 8587853897269320152, guid: 7e23e3dc6062f7a48842cef9783005cb, type: 3}
   corridorLightPrefab: {fileID: 7285017026454675818, guid: 947a8c0b200a4ef459a521aafd5746a2, type: 3}
   minCorridorLightSeparation: 2
-  dollWallPrefab: {fileID: 7599237671437475100, guid: 74e6de8e5b70c384ea5644d7429ceb19, type: 3}
-  doorWallPrefab: {fileID: 5258459713980368692, guid: b00e1cdb01cbd8946ab98ac205e8ec21, type: 3}
+  compWallPrefab: {fileID: 7599237671437475100, guid: 74e6de8e5b70c384ea5644d7429ceb19, type: 3}
+  compDoorPrefab: {fileID: 5258459713980368692, guid: b00e1cdb01cbd8946ab98ac205e8ec21, type: 3}
   caveCellInitChance: 25
   caveCellBirthLimit: 3
   caveCellDeathLimit: 2
