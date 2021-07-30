@@ -75,14 +75,10 @@ public class MazeGenerator : MonoBehaviour
     #endregion
     #region Cave Generation Parameters
     [Header("Cave Generation")]
-    [SerializeField]
-    int caveCellInitChance;
-    [SerializeField]
-    int caveCellBirthLimit;
-    [SerializeField]
-    int caveCellDeathLimit;
-    [SerializeField]
-    int cellularPassEpoch;
+    int caveCellInitChance = 25;
+    int caveCellBirthLimit = 3;
+    int caveCellDeathLimit = 2;
+    int cellularPassEpoch = 6;
     [SerializeField]
     Transform caveWallPrefab;
     [SerializeField]
