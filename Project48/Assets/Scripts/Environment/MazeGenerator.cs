@@ -23,12 +23,12 @@ public class MazeGenerator : MonoBehaviour
         }
     }
 
+    public int level;
+    public int seed; // 88 with caveChance and dollChance both 0 for a Compartments right at the start
+    public bool useSeed;
+
     MeshGenerator meshGenerator;
     Vector3 lastEndPos;
-    [SerializeField]
-    int level;
-    [SerializeField]
-    int seed;
 
     #region General Parameters
     [Header("General")]
@@ -112,6 +112,9 @@ public class MazeGenerator : MonoBehaviour
 
     void Start()
     {
+        if (useSeed)
+            UnityEngine.Random.InitState(seed);
+
         meshGenerator = GetComponent<MeshGenerator>();
         NextLevel();
     }
@@ -184,7 +187,6 @@ public class MazeGenerator : MonoBehaviour
 
     public void NextLevel()
     {
-        UnityEngine.Random.InitState(seed);
         level++;
         ClearLevel();
         GenerateLevel();
