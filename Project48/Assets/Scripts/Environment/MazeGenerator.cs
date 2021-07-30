@@ -488,15 +488,31 @@ public class MazeGenerator : MonoBehaviour
                             Vector3 newPos = position + Coord2PosXZ(Offset4[dir]) * 0.5f;
                             Vector3 newAngle = Angle4[dir];
 
-                            Transform newWall = Instantiate(doorWallPrefab, mazeTransform);
-                            newWall.localPosition = newPos;
-                            newWall.localEulerAngles = newAngle;
-                            Door door = newWall.GetComponentInChildren<Door>();
-
                             if (maze[i, j].HasFlag(dir))
-                                door.Lock();
+                            {
+                                if (UnityEngine.Random.Range(0f, 1f) < 0.5f)
+                                {
+                                    Transform newWall = Instantiate(doorWallPrefab, mazeTransform);
+                                    newWall.localPosition = newPos;
+                                    newWall.localEulerAngles = newAngle;
+                                    Door door = newWall.GetComponentInChildren<Door>();
+                                    door.Lock();
+                                }
+                                else
+                                {
+                                    Transform newWall = Instantiate(dollWallPrefab, mazeTransform);
+                                    newWall.localPosition = newPos;
+                                    newWall.localEulerAngles = newAngle;
+                                }
+                            }
                             else
+                            {
+                                Transform newWall = Instantiate(doorWallPrefab, mazeTransform);
+                                newWall.localPosition = newPos;
+                                newWall.localEulerAngles = newAngle;
+                                Door door = newWall.GetComponentInChildren<Door>();
                                 door.Unlock();
+                            }
                         }
                     }
                 }
