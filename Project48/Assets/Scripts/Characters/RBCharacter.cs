@@ -2,12 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(CharacterController))]
-[RequireComponent(typeof(Animator))]
-
-public class Character : MonoBehaviour
+public class RBCharacter : MonoBehaviour
 {
-    protected CharacterController cc;
+    protected Rigidbody rb;
     protected Animator animator;
 
     protected Vector3 movement;
@@ -21,21 +18,20 @@ public class Character : MonoBehaviour
 
     protected void Awake()
     {
-        cc = GetComponent<CharacterController>();
+        rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
     }
 
-    protected void Update()
+    protected void FixedUpdate()
     {
-        cc.Move(Time.deltaTime * speed * movement);
+        rb.MovePosition(transform.position + Time.deltaTime * speed * movement);
         ResolveVelocity();
         Rotate();
-        Gravity();
     }
 
     protected void ResolveVelocity()
     {
-        float moveSpeed = new Vector2(cc.velocity.x, cc.velocity.z).magnitude;
+        float moveSpeed = new Vector2(movement.x, movement.z).magnitude;
         animator.SetFloat("Move Speed", moveSpeed);
     }
 
@@ -48,13 +44,5 @@ public class Character : MonoBehaviour
             Quaternion targetRotation = Quaternion.LookRotation(lookAt);
             transform.rotation = Quaternion.Slerp(curRotation, targetRotation, Time.deltaTime * angularSpeed);
         }
-    }
-
-    protected void Gravity()
-    {
-        if (cc.isGrounded)
-            movement.y = -0.05f;
-        else
-            movement.y -= gravity;
     }
 }

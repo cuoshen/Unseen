@@ -19,8 +19,11 @@ public class TriggerLight : MonoBehaviour
     Light lampLight;
     Material material;
 
+    [SerializeField]
     float time_elapsed;
+    [SerializeField]
     bool is_on;
+    [SerializeField]
     bool is_flicker;
 
     // Start is called before the first frame update
