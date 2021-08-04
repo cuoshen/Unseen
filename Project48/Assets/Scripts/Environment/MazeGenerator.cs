@@ -23,8 +23,9 @@ public class MazeGenerator : MonoBehaviour
         }
     }
 
+    // Level 6 with seed 88 with caveChance and dollChance both 0 for a Compartments right at the start
     public int level;
-    public int seed; // 88 with caveChance and dollChance both 0 for a Compartments right at the start
+    public int seed;
     public bool useSeed;
 
     MeshGenerator meshGenerator;
@@ -50,12 +51,16 @@ public class MazeGenerator : MonoBehaviour
     [SerializeField]
     float _2x2ColumnChance;
     #endregion
-    #region Kiwi Parameters
-    [Header("Kiwi")]
+    #region Enemy Parameters
+    [Header("Enemy")]
     [SerializeField]
-    float minKiwiSeparation;
+    float minInsectSeparation;
     [SerializeField]
-    Transform kiwiPrefab;
+    Transform insectPrefab;
+    [SerializeField]
+    float minGiantSeparation;
+    [SerializeField]
+    Transform giantPrefab;
     #endregion
     #region Corridor Generation Parameters
     [Header("Corridor Generation")]
@@ -378,12 +383,12 @@ public class MazeGenerator : MonoBehaviour
                     //Generate insect things, but not too close to other insect things, or on the critical path, or on lights, or on the outline of rooms
                     Vector2Int disFromStart = coord - startCoord;
                     Vector2Int disFromEnd = coord - endCoord;
-                    if (disFromStart.magnitude > minKiwiSeparation && disFromEnd.magnitude > minKiwiSeparation
+                    if (disFromStart.magnitude > minInsectSeparation && disFromEnd.magnitude > minInsectSeparation
                         && !pathToEnd.Contains(coord) && !lightPositions.Contains(position)
-                        && CheckMinSeparation(kiwiPositions, position, minKiwiSeparation)
+                        && CheckMinSeparation(kiwiPositions, position, minInsectSeparation)
                         && allRooms.FindIndex(d => d.Outline.FindIndex(e => e.Position == coord) != -1) == -1)
                     {
-                        Transform newInsect = Instantiate(kiwiPrefab, mapTransform);
+                        Transform newInsect = Instantiate(insectPrefab, mapTransform);
                         newInsect.localPosition = position;
                         kiwiPositions.Add(position);
                     }
@@ -507,10 +512,10 @@ public class MazeGenerator : MonoBehaviour
                 //Generate enemies
                 Vector2Int disFromStart = coord - startCoord;
                 Vector2Int disFromEnd = coord - endCoord;
-                if (wallPosList.Count == 3 && disFromStart.magnitude > minKiwiSeparation && disFromEnd.magnitude > minKiwiSeparation
-                    && CheckMinSeparation(kiwiPositions, position, minKiwiSeparation))
+                if (wallPosList.Count == 3 && disFromStart.magnitude > minInsectSeparation && disFromEnd.magnitude > minInsectSeparation
+                    && CheckMinSeparation(kiwiPositions, position, minInsectSeparation))
                 {
-                    Transform newKiwi = Instantiate(kiwiPrefab, mazeTransform);
+                    Transform newKiwi = Instantiate(insectPrefab, mazeTransform);
                     newKiwi.localPosition = position;
                     kiwiPositions.Add(position);
                 }
@@ -556,6 +561,7 @@ public class MazeGenerator : MonoBehaviour
 
         // Generate lights
         List<Vector2Int> lightCoords = GenerateLightOnOutlineBySeparation(map, mapTransform, caveLightPrefab, minCaveLightSeparation, 0.5f);
+        List<Vector3> giantPositions = new List<Vector3>();
 
         // Generate additional light randomly if there exists a 9x9 empty enough coord space with no light
         for (int k = 0; k < 1000; k++)
@@ -583,10 +589,16 @@ public class MazeGenerator : MonoBehaviour
                 Transform newLight = Instantiate(caveLightTallPrefab, mapTransform);
                 newLight.localPosition = position;
                 lightCoords.Add(newLightCoord);
+
+                // Generate giant things
+                if (CheckMinSeparation(giantPositions, position, minGiantSeparation))
+                {
+                    Transform newGiant = Instantiate(giantPrefab, mapTransform);
+                    newGiant.localPosition = position;
+                    giantPositions.Add(position);
+                }
             }
         }
-
-        // Generate
     }
 
     void GenerateColumnarMaze(Vector2Int mapSize)
