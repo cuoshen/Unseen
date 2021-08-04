@@ -8,7 +8,7 @@
       "url": "https://package.openupm.com"
     },
     "com.unity.cinemachine": {
-      "version": "2.7.4",
+      "version": "2.7.5",
       "depth": 0,
       "source": "registry",
       "dependencies": {},

@@ -111,7 +111,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Enemy Animator
+  m_Name: Kiwi Animator
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: Move Speed

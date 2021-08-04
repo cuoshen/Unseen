@@ -23,12 +23,13 @@ public class MazeGenerator : MonoBehaviour
         }
     }
 
+    // Level 6 with seed 88 with caveChance and dollChance both 0 for a Compartments right at the start
+    public int level;
+    public int seed;
+    public bool useSeed;
+
     MeshGenerator meshGenerator;
     Vector3 lastEndPos;
-    [SerializeField]
-    int level;
-    [SerializeField]
-    int seed;
 
     #region General Parameters
     [Header("General")]
@@ -40,9 +41,13 @@ public class MazeGenerator : MonoBehaviour
     Transform endPrefab;
     [SerializeField]
     Transform connectorPrefab;
+    [SerializeField]
+    Transform trainPrefab;
     #endregion
     #region Maze Variation Creation Chance
     [Header("Maze Variation Creation Chance")]
+    [SerializeField]
+    float trainChance;
     [SerializeField]
     float caveChance;
     [SerializeField]
@@ -50,12 +55,16 @@ public class MazeGenerator : MonoBehaviour
     [SerializeField]
     float _2x2ColumnChance;
     #endregion
-    #region Kiwi Parameters
-    [Header("Kiwi")]
+    #region Enemy Parameters
+    [Header("Enemy")]
     [SerializeField]
-    float minKiwiSeparation;
+    float minInsectSeparation;
     [SerializeField]
-    Transform kiwiPrefab;
+    Transform insectPrefab;
+    [SerializeField]
+    float minGiantSeparation;
+    [SerializeField]
+    Transform giantPrefab;
     #endregion
     #region Corridor Generation Parameters
     [Header("Corridor Generation")]
@@ -66,23 +75,19 @@ public class MazeGenerator : MonoBehaviour
     [SerializeField]
     int minCorridorLightSeparation;
     #endregion
-    #region Doll Room Generation Parameters
-    [Header("Doll Room Generation")]
+    #region Compartments Generation Parameters
+    [Header("Compartments Generation")]
     [SerializeField]
-    Transform dollWallPrefab;
+    Transform compWallPrefab;
     [SerializeField]
-    Transform doorWallPrefab;
+    Transform compDoorPrefab;
     #endregion
     #region Cave Generation Parameters
     [Header("Cave Generation")]
-    [SerializeField]
-    int caveCellInitChance;
-    [SerializeField]
-    int caveCellBirthLimit;
-    [SerializeField]
-    int caveCellDeathLimit;
-    [SerializeField]
-    int cellularPassEpoch;
+    int caveCellInitChance = 25;
+    int caveCellBirthLimit = 3;
+    int caveCellDeathLimit = 2;
+    int cellularPassEpoch = 6;
     [SerializeField]
     Transform caveWallPrefab;
     [SerializeField]
@@ -116,6 +121,9 @@ public class MazeGenerator : MonoBehaviour
 
     void Start()
     {
+        if (useSeed)
+            UnityEngine.Random.InitState(seed);
+
         meshGenerator = GetComponent<MeshGenerator>();
         NextLevel();
     }
@@ -131,14 +139,14 @@ public class MazeGenerator : MonoBehaviour
         return new Vector2Int(UnityEngine.Random.Range(4 + Mathf.CeilToInt(level / 2f), 6 + Mathf.CeilToInt(level / 1.5f)), UnityEngine.Random.Range(4 + Mathf.CeilToInt(level / 2f), 6 + Mathf.CeilToInt(level / 1.5f)));
     }
 
-    int DollRoomWithinAttempts(Vector2Int mazeSize)
+    int CompartmentsAttempts(Vector2Int mazeSize)
     {
         return UnityEngine.Random.Range(Math.Min(mazeSize.x, mazeSize.y), Math.Max(mazeSize.x, mazeSize.y)) / 3 - 2;
     }
 
-    Vector2Int DollRoomSeparateSize()
+    Vector2Int DollRoomSize()
     {
-        return new Vector2Int(UnityEngine.Random.Range(2, 5), UnityEngine.Random.Range(2, 5)) * 2;
+        return new Vector2Int(UnityEngine.Random.Range(3, 5), UnityEngine.Random.Range(3, 5)) * 2;
     }
 
     Vector2Int CaveSize()
@@ -168,7 +176,7 @@ public class MazeGenerator : MonoBehaviour
             if (UnityEngine.Random.Range(0f, 1f) < caveChance)
                 GenerateCave(CaveSize());
             else if (UnityEngine.Random.Range(0f, 1f) < dollChance)
-                GenerateDollRoomSeparate(DollRoomSeparateSize());
+                GenerateDollRoom(DollRoomSize());
             else
                 GenerateCorridorMaze(CorridorSize());
         }
@@ -188,7 +196,6 @@ public class MazeGenerator : MonoBehaviour
 
     public void NextLevel()
     {
-        UnityEngine.Random.InitState(seed);
         level++;
         ClearLevel();
         GenerateLevel();
@@ -289,8 +296,16 @@ public class MazeGenerator : MonoBehaviour
 
     void GenerateConnector()
     {
-        Transform connector = Instantiate(connectorPrefab, transform);
-        connector.localPosition = lastEndPos;
+        if(UnityEngine.Random.Range(0f, 1f) < trainChance)
+        {
+            Transform trainTrack = Instantiate(trainPrefab, transform);
+            trainTrack.localPosition = lastEndPos;
+        }
+        else
+        {
+            Transform connector = Instantiate(connectorPrefab, transform);
+            connector.localPosition = lastEndPos;
+        }
         lastEndPos += new Vector3(0, 0, 1);
     }
 
@@ -324,7 +339,7 @@ public class MazeGenerator : MonoBehaviour
         Direction4[,] maze = RecursiveBacktracker(mazeSize);
         int[,] map = FattenMaze(maze);
 
-        map = RoomInMaze(map, 3, 5, DollRoomWithinAttempts(mazeSize), new List<Region>(), out List<Region> allRooms, out List<RectRoom> newRooms);
+        map = RoomInMaze(map, 3, 5, CompartmentsAttempts(mazeSize), new List<Region>(), out List<Region> allRooms, out List<RectRoom> newRooms);
         map = ConnectRegions(0, map, 1, 1, 1, 1);
         map = OpenDeadEnds(0, map);
 
@@ -380,12 +395,12 @@ public class MazeGenerator : MonoBehaviour
                     //Generate insect things, but not too close to other insect things, or on the critical path, or on lights, or on the outline of rooms
                     Vector2Int disFromStart = coord - startCoord;
                     Vector2Int disFromEnd = coord - endCoord;
-                    if (disFromStart.magnitude > minKiwiSeparation && disFromEnd.magnitude > minKiwiSeparation
+                    if (disFromStart.magnitude > minInsectSeparation && disFromEnd.magnitude > minInsectSeparation
                         && !pathToEnd.Contains(coord) && !lightPositions.Contains(position)
-                        && CheckMinSeparation(kiwiPositions, position, minKiwiSeparation)
+                        && CheckMinSeparation(kiwiPositions, position, minInsectSeparation)
                         && allRooms.FindIndex(d => d.Outline.FindIndex(e => e.Position == coord) != -1) == -1)
                     {
-                        Transform newInsect = Instantiate(kiwiPrefab, mapTransform);
+                        Transform newInsect = Instantiate(insectPrefab, mapTransform);
                         newInsect.localPosition = position;
                         kiwiPositions.Add(position);
                     }
@@ -394,70 +409,11 @@ public class MazeGenerator : MonoBehaviour
 
         foreach (RectRoom newRoom in newRooms)
         {
-            GenerateDollRoomWithin(mapSize, newRoom, mapTransform);
+            GenerateCompartments(mapSize, newRoom, mapTransform);
         }
     }
 
-    void GenerateDollRoomSeparate(Vector2Int mazeSize)
-    {
-        Transform mazeTransform = GenerateBasic(mazeSize, out Vector2Int startCoord, out Vector2Int endCoord, d => true, 0, dollWallPrefab);
-        Direction4[,] maze = RecursiveBacktracker(mazeSize);
-
-        List<Vector3> kiwiPositions = new List<Vector3>();
-
-        for (int i = 0; i < mazeSize.x; i++)
-            for (int j = 0; j < mazeSize.y; j++)
-            {
-                Vector2Int coord = new Vector2Int(i, j);
-                Vector3 position = new Vector3(-mazeSize.x / 2 + i, 0, -mazeSize.y / 2 + j);
-                List<Vector3> wallPosList = new List<Vector3>();
-                List<Vector3> wallAngleList = new List<Vector3>();
-
-                if ((i + j) % 2 == 0)
-                {
-                    // Generate walls
-                    foreach (Direction4 dir in Enum.GetValues(typeof(Direction4)))
-                    {
-                        if (Offset4.ContainsKey(dir) && maze[i, j].HasFlag(dir))
-                        {
-                            Vector3 newPos = position + Coord2PosXZ(Offset4[dir]) * 0.5f;
-                            Vector3 newAngle = Angle4[dir];
-                            wallPosList.Add(newPos);
-                            wallAngleList.Add(newAngle);
-
-                            if (CheckInMapRange(new Vector2Int(i, j) + Offset4[dir], mazeSize))
-                            {
-                                Transform newWall = Instantiate(dollWallPrefab, mazeTransform);
-                                newWall.localPosition = newPos;
-                                newWall.localEulerAngles = newAngle;
-                            }
-                        }
-                    }
-                }
-
-                // Generate lights
-                if (wallPosList.Count != 0 && coord != startCoord && coord != endCoord)
-                {
-                    Transform newLight = Instantiate(corridorLightPrefab, mazeTransform);
-                    int randIndex = UnityEngine.Random.Range(0, wallPosList.Count);
-                    newLight.localPosition = wallPosList[randIndex];
-                    newLight.localEulerAngles = wallAngleList[randIndex];
-                }
-
-                //Generate enemies
-                Vector2Int disFromStart = coord - startCoord;
-                Vector2Int disFromEnd = coord - endCoord;
-                if (wallPosList.Count == 3 && disFromStart.magnitude > minKiwiSeparation && disFromEnd.magnitude > minKiwiSeparation
-                    && CheckMinSeparation(kiwiPositions, position, minKiwiSeparation))
-                {
-                    Transform newKiwi = Instantiate(kiwiPrefab, mazeTransform);
-                    newKiwi.localPosition = position;
-                    kiwiPositions.Add(position);
-                }
-            }
-    }
-
-    void GenerateDollRoomWithin(Vector2Int mapSize, RectRoom room, Transform mazeTransform)
+    void GenerateCompartments(Vector2Int mapSize, RectRoom room, Transform mazeTransform)
     {
         Direction4[,] maze = RecursiveBacktracker(room.Size);
 
@@ -488,17 +444,92 @@ public class MazeGenerator : MonoBehaviour
                             Vector3 newPos = position + Coord2PosXZ(Offset4[dir]) * 0.5f;
                             Vector3 newAngle = Angle4[dir];
 
-                            Transform newWall = Instantiate(doorWallPrefab, mazeTransform);
-                            newWall.localPosition = newPos;
-                            newWall.localEulerAngles = newAngle;
-                            Door door = newWall.GetComponentInChildren<Door>();
-
                             if (maze[i, j].HasFlag(dir))
-                                door.Lock();
+                            {
+                                if (UnityEngine.Random.Range(0f, 1f) < 0.5f)
+                                {
+                                    Transform newWall = Instantiate(compDoorPrefab, mazeTransform);
+                                    newWall.localPosition = newPos;
+                                    newWall.localEulerAngles = newAngle;
+                                    Door door = newWall.GetComponentInChildren<Door>();
+                                    door.Lock();
+                                }
+                                else
+                                {
+                                    Transform newWall = Instantiate(compWallPrefab, mazeTransform);
+                                    newWall.localPosition = newPos;
+                                    newWall.localEulerAngles = newAngle;
+                                }
+                            }
                             else
+                            {
+                                Transform newWall = Instantiate(compDoorPrefab, mazeTransform);
+                                newWall.localPosition = newPos;
+                                newWall.localEulerAngles = newAngle;
+                                Door door = newWall.GetComponentInChildren<Door>();
                                 door.Unlock();
+                            }
                         }
                     }
+                }
+            }
+    }
+
+    void GenerateDollRoom(Vector2Int mazeSize)
+    {
+        Transform mazeTransform = GenerateBasic(mazeSize, out Vector2Int startCoord, out Vector2Int endCoord, d => true, 0, compWallPrefab);
+        Direction4[,] maze = RecursiveBacktracker(mazeSize);
+
+        List<Vector3> kiwiPositions = new List<Vector3>();
+
+        for (int i = 0; i < mazeSize.x; i++)
+            for (int j = 0; j < mazeSize.y; j++)
+            {
+                Vector2Int coord = new Vector2Int(i, j);
+                Vector3 position = new Vector3(-mazeSize.x / 2 + i, 0, -mazeSize.y / 2 + j);
+                List<Vector3> wallPosList = new List<Vector3>();
+                List<Vector3> wallAngleList = new List<Vector3>();
+
+                if ((i + j) % 2 == 0)
+                {
+                    // Generate walls
+                    foreach (Direction4 dir in Enum.GetValues(typeof(Direction4)))
+                    {
+                        if (Offset4.ContainsKey(dir) && maze[i, j].HasFlag(dir))
+                        {
+                            Vector3 newPos = position + Coord2PosXZ(Offset4[dir]) * 0.5f;
+                            Vector3 newAngle = Angle4[dir];
+                            wallPosList.Add(newPos);
+                            wallAngleList.Add(newAngle);
+
+                            if (CheckInMapRange(new Vector2Int(i, j) + Offset4[dir], mazeSize))
+                            {
+                                Transform newWall = Instantiate(compWallPrefab, mazeTransform);
+                                newWall.localPosition = newPos;
+                                newWall.localEulerAngles = newAngle;
+                            }
+                        }
+                    }
+                }
+
+                // Generate lights
+                if (wallPosList.Count != 0 && coord != startCoord && coord != endCoord)
+                {
+                    Transform newLight = Instantiate(corridorLightPrefab, mazeTransform);
+                    int randIndex = UnityEngine.Random.Range(0, wallPosList.Count);
+                    newLight.localPosition = wallPosList[randIndex];
+                    newLight.localEulerAngles = wallAngleList[randIndex];
+                }
+
+                //Generate enemies
+                Vector2Int disFromStart = coord - startCoord;
+                Vector2Int disFromEnd = coord - endCoord;
+                if (wallPosList.Count == 3 && disFromStart.magnitude > minInsectSeparation && disFromEnd.magnitude > minInsectSeparation
+                    && CheckMinSeparation(kiwiPositions, position, minInsectSeparation))
+                {
+                    Transform newKiwi = Instantiate(insectPrefab, mazeTransform);
+                    newKiwi.localPosition = position;
+                    kiwiPositions.Add(position);
                 }
             }
     }
@@ -542,6 +573,7 @@ public class MazeGenerator : MonoBehaviour
 
         // Generate lights
         List<Vector2Int> lightCoords = GenerateLightOnOutlineBySeparation(map, mapTransform, caveLightPrefab, minCaveLightSeparation, 0.5f);
+        List<Vector3> giantPositions = new List<Vector3>();
 
         // Generate additional light randomly if there exists a 9x9 empty enough coord space with no light
         for (int k = 0; k < 1000; k++)
@@ -569,10 +601,16 @@ public class MazeGenerator : MonoBehaviour
                 Transform newLight = Instantiate(caveLightTallPrefab, mapTransform);
                 newLight.localPosition = position;
                 lightCoords.Add(newLightCoord);
+
+                // Generate giant things
+                if (CheckMinSeparation(giantPositions, position, minGiantSeparation))
+                {
+                    Transform newGiant = Instantiate(giantPrefab, mapTransform);
+                    newGiant.localPosition = position;
+                    giantPositions.Add(position);
+                }
             }
         }
-
-        // Generate
     }
 
     void GenerateColumnarMaze(Vector2Int mapSize)
