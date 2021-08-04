@@ -41,9 +41,13 @@ public class MazeGenerator : MonoBehaviour
     Transform endPrefab;
     [SerializeField]
     Transform connectorPrefab;
+    [SerializeField]
+    Transform trainPrefab;
     #endregion
     #region Maze Variation Creation Chance
     [Header("Maze Variation Creation Chance")]
+    [SerializeField]
+    float trainChance;
     [SerializeField]
     float caveChance;
     [SerializeField]
@@ -292,8 +296,16 @@ public class MazeGenerator : MonoBehaviour
 
     void GenerateConnector()
     {
-        Transform connector = Instantiate(connectorPrefab, transform);
-        connector.localPosition = lastEndPos;
+        if(UnityEngine.Random.Range(0f, 1f) < trainChance)
+        {
+            Transform trainTrack = Instantiate(trainPrefab, transform);
+            trainTrack.localPosition = lastEndPos;
+        }
+        else
+        {
+            Transform connector = Instantiate(connectorPrefab, transform);
+            connector.localPosition = lastEndPos;
+        }
         lastEndPos += new Vector3(0, 0, 1);
     }
 
