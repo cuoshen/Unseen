@@ -160,9 +160,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5995dc45925deea44b186a0db2df2a03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  detectPlayerAcrossWall: 0
   detectPlayerRange: 3
   maxIntensity: 0.1
-  lampSphereColor: {r: 0.78431374, g: 0.7176471, b: 0.5568628, a: 0}
   on_curve:
     serializedVersion: 2
     m_Curve:
@@ -754,6 +754,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  time_elapsed: 0
+  is_on: 0
+  is_flicker: 0
 --- !u!114 &2936947992648728277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -767,7 +770,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_UsePipelineSettings: 1
-  m_AdditionalLightsShadowResolutionTier: 2
+  m_AdditionalLightsShadowResolutionTier: 0
 --- !u!1 &7285017026454675821
 GameObject:
   m_ObjectHideFlags: 0
