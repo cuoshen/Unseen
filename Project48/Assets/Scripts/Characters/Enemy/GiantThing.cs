@@ -15,6 +15,8 @@ public class GiantThing : MonoBehaviour
     [SerializeField]
     float maxStepInterval;
     [SerializeField]
+    float patrolRange;
+    [SerializeField]
     float moveFootRange;
     [SerializeField]
     float moveFootSpeed;
@@ -44,7 +46,7 @@ public class GiantThing : MonoBehaviour
             float fractionOfJourney = distCovered / journeyLength;
 
             // Set our position as a fraction of the distance between the markers.
-            curLeg.position = Vector3.Lerp(startPos, targetPos, fractionOfJourney);
+            curLeg.localPosition = Vector3.Lerp(startPos, targetPos, fractionOfJourney);
         }
     }
 
@@ -62,28 +64,37 @@ public class GiantThing : MonoBehaviour
         }
 
         startTime = Time.time;
-        startPos = curLeg.position;
+        startPos = curLeg.localPosition;
         CapsuleCollider curFootCollider = curLeg.GetComponentInChildren<CapsuleCollider>();
-
         bool canLand;
+        Vector2 rand;
+
         do
         {
             canLand = true;
-            Vector2 rand = UnityEngine.Random.insideUnitCircle * moveFootRange;
-            targetPos = new Vector3(rand.x, 0, rand.y) + prevLeg.position;
-            Collider[] allOverlappingColliders = Physics.OverlapSphere(targetPos, curFootCollider.radius + 0.5f);
+            rand = UnityEngine.Random.insideUnitCircle * moveFootRange;
+            targetPos = new Vector3(rand.x, 0, rand.y) + prevLeg.localPosition;
+            journeyLength = Vector3.Distance(targetPos, startPos);
 
-            if (journeyLength < curFootCollider.radius * 2)
+            // Do not step too close to the other foot or the original position
+            // Foot may not have enough time to move to target position
+            if (rand.magnitude < curFootCollider.radius * 2 | journeyLength < curFootCollider.radius * 2)
                 canLand = false;
-            
+
+            // Do not step outside of patrol range
+            if (Vector3.Distance(targetPos, transform.localPosition) > patrolRange)
+                canLand = false;
+
+            // Do not step on walls
+            // Non-convex wall mesh collider cannot be detected
+            Collider[] allOverlappingColliders = Physics.OverlapSphere(targetPos, curFootCollider.radius + 0.5f);
             foreach (Collider collider in allOverlappingColliders)
             {
                 if(collider.tag == "Obstacle")
                     canLand = false;
             }
-            journeyLength = Vector3.Distance(targetPos, startPos);
         } while (!canLand);
-
+        Debug.Log(transform.localPosition + ", " + rand);
         isMoving = true;
     }
 

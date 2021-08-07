@@ -1294,81 +1294,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Giant
       objectReference: {fileID: 0}
-    - target: {fileID: 2428747410710552275, guid: dcf91c45a10b53d409c58b21c9e59458, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dcf91c45a10b53d409c58b21c9e59458, type: 3}
---- !u!1 &806214770 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2428747410710552275, guid: dcf91c45a10b53d409c58b21c9e59458, type: 3}
-  m_PrefabInstance: {fileID: 806214769}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &806214771
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 806214770}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70187ee618ca24743be77142bece5954, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: CM CameraShake at Self
-  impulseSource: {fileID: 0}
-  impulseLocation: 0
-  otherTransform: {fileID: 0}
-  localSpace: 1
-  baseImpulse: {x: 0, y: 1, z: 0}
-  randomImpulse: 0
-  variation: {x: 1, y: 1, z: 1}
-  normalize: 0
-  postNormalizeRemap: {x: 1, y: 1}
---- !u!114 &806214772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 806214770}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ImpulseDefinition:
-    m_ImpulseChannel: 1
-    m_RawSignal: {fileID: 11400000, guid: dc15aedd4ff7c1b489fdb2f0a995e1e0, type: 2}
-    m_AmplitudeGain: 1
-    m_FrequencyGain: 1
-    m_RepeatMode: 0
-    m_Randomize: 1
-    m_TimeEnvelope:
-      m_AttackShape:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      m_DecayShape:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      m_AttackTime: 0
-      m_SustainTime: 0.2
-      m_DecayTime: 0.7
-      m_ScaleWithImpact: 1
-      m_HoldForever: 0
-    m_ImpactRadius: 100
-    m_DirectionMode: 0
-    m_DissipationMode: 2
-    m_DissipationDistance: 1000
-    m_PropagationSpeed: 343
 --- !u!1 &1574380398
 GameObject:
   m_ObjectHideFlags: 0
@@ -1662,7 +1589,6 @@ MonoBehaviour:
   _2x2ColumnChance: 0.25
   minInsectSeparation: 500
   insectPrefab: {fileID: 4899903623646807888, guid: 9660bc8bd0e56834c9f69a94ae7277a1, type: 3}
-  minGiantSeparation: 10
   giantPrefab: {fileID: 2428747410710552272, guid: dcf91c45a10b53d409c58b21c9e59458, type: 3}
   corridorWallPrefab: {fileID: 8587853897269320152, guid: 7e23e3dc6062f7a48842cef9783005cb, type: 3}
   corridorLightPrefab: {fileID: 7285017026454675818, guid: 947a8c0b200a4ef459a521aafd5746a2, type: 3}
