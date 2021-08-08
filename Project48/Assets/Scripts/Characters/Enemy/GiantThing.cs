@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class GiantThing : MonoBehaviour
 {
@@ -11,22 +12,27 @@ public class GiantThing : MonoBehaviour
     [SerializeField]
     Transform leg2;
     [SerializeField]
+    Transform voice;
+    [SerializeField]
     float minStepInterval;
     [SerializeField]
     float maxStepInterval;
     [SerializeField]
-    float moveFootRange;
+    float patrolRange;
     [SerializeField]
-    float moveFootSpeed;
+    float moveFootRange;
 
     Transform prevLeg;
     Transform curLeg;
 
-    float startTime;
+    float moveStartTime;
     Vector3 startPos;
     Vector3 targetPos;
     float journeyLength;
     bool isMoving;
+
+    float idleStartTime;
+    float stepInterval;
 
     void Start()
     {
@@ -37,14 +43,29 @@ public class GiantThing : MonoBehaviour
     {
         if (isMoving)
         {
-            // Distance moved equals elapsed time times speed..
-            float distCovered = (Time.time - startTime) * moveFootSpeed;
+            // Distance moved equals elapsed time times speed.
+            // 2 * moveFootRange allows the foot to traverse diameter within 1 second, which is the duration of the animation.
+            float distCovered = (Time.time - moveStartTime) * 2 * moveFootRange;
 
             // Fraction of journey completed equals current distance divided by total distance.
             float fractionOfJourney = distCovered / journeyLength;
 
             // Set our position as a fraction of the distance between the markers.
             curLeg.position = Vector3.Lerp(startPos, targetPos, fractionOfJourney);
+
+            voice.position = (prevLeg.position + curLeg.position) / 2;
+        }
+
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Giant Idle"))
+        {
+            if(Time.time - idleStartTime < stepInterval)
+            {
+                animator.speed = 0;
+            }
+            else
+            {
+                animator.speed = 1;
+            }
         }
     }
 
@@ -61,27 +82,36 @@ public class GiantThing : MonoBehaviour
             curLeg = leg2;
         }
 
-        startTime = Time.time;
+        moveStartTime = Time.time;
         startPos = curLeg.position;
         CapsuleCollider curFootCollider = curLeg.GetComponentInChildren<CapsuleCollider>();
-
         bool canLand;
+        Vector2 rand;
+
         do
         {
             canLand = true;
-            Vector2 rand = UnityEngine.Random.insideUnitCircle * moveFootRange;
+            rand = UnityEngine.Random.insideUnitCircle * moveFootRange;
             targetPos = new Vector3(rand.x, 0, rand.y) + prevLeg.position;
-            Collider[] allOverlappingColliders = Physics.OverlapSphere(targetPos, curFootCollider.radius + 0.5f);
+            journeyLength = Vector3.Distance(targetPos, startPos);
 
-            if (journeyLength < curFootCollider.radius * 2)
+            // Do not step too close to the other foot or the original position
+            // Foot may not have enough time to move to target position
+            if (rand.magnitude < curFootCollider.radius * 2 | journeyLength < curFootCollider.radius * 2)
                 canLand = false;
-            
+
+            // Do not step outside of patrol range
+            if (Vector3.Distance(targetPos, transform.position) > patrolRange)
+                canLand = false;
+
+            // Do not step on walls
+            // Non-convex wall mesh collider cannot be detected
+            Collider[] allOverlappingColliders = Physics.OverlapSphere(targetPos, curFootCollider.radius + 0.5f);
             foreach (Collider collider in allOverlappingColliders)
             {
                 if(collider.tag == "Obstacle")
                     canLand = false;
             }
-            journeyLength = Vector3.Distance(targetPos, startPos);
         } while (!canLand);
 
         isMoving = true;
@@ -94,6 +124,12 @@ public class GiantThing : MonoBehaviour
 
     void SwitchFoot()
     {
+        if (curLeg != null)
+            curLeg.GetComponentInChildren<CinemachineImpulseSource>().GenerateImpulse();
+
         animator.SetBool("Is Foot 1", !animator.GetBool("Is Foot 1"));
+
+        idleStartTime = Time.time;
+        stepInterval = UnityEngine.Random.Range(minStepInterval, maxStepInterval);
     }
 }
