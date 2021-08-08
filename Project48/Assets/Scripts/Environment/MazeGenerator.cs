@@ -58,11 +58,11 @@ public class MazeGenerator : MonoBehaviour
     #region Enemy Parameters
     [Header("Enemy")]
     [SerializeField]
-    float minInsectSeparation;
+    int minInsectSeparation;
     [SerializeField]
     Transform insectPrefab;
     [SerializeField]
-    float minGiantSeparation;
+    int minGiantHalfSeparation;
     [SerializeField]
     Transform giantPrefab;
     #endregion
@@ -81,13 +81,11 @@ public class MazeGenerator : MonoBehaviour
     Transform compWallPrefab;
     [SerializeField]
     Transform compDoorPrefab;
+    [SerializeField]
+    Transform compLightPrefab;
     #endregion
     #region Cave Generation Parameters
     [Header("Cave Generation")]
-    int caveCellInitChance = 25;
-    int caveCellBirthLimit = 3;
-    int caveCellDeathLimit = 2;
-    int cellularPassEpoch = 6;
     [SerializeField]
     Transform caveWallPrefab;
     [SerializeField]
@@ -95,11 +93,18 @@ public class MazeGenerator : MonoBehaviour
     [SerializeField]
     Transform caveWallMeshPrefab;
     [SerializeField]
+    Transform caveDummyPrefab;
+    [SerializeField]
     Transform caveLightPrefab;
     [SerializeField]
     Transform caveLightTallPrefab;
     [SerializeField]
     int minCaveLightSeparation;
+
+    int caveCellInitChance = 25;
+    int caveCellBirthLimit = 3;
+    int caveCellDeathLimit = 2;
+    int cellularPassEpoch = 6;
     #endregion
     #region Columns Generation Parameters
     [Header("Columns Generation")]
@@ -196,6 +201,7 @@ public class MazeGenerator : MonoBehaviour
 
     public void NextLevel()
     {
+        Debug.Log("Next level");
         level++;
         ClearLevel();
         GenerateLevel();
@@ -289,23 +295,26 @@ public class MazeGenerator : MonoBehaviour
 
         lastEndPos += new Vector3(endCoord.x - startCoord.x, 0, endCoord.y - startCoord.y + 1);
 
-        GenerateConnector();
+
+        if (UnityEngine.Random.Range(0f, 1f) < trainChance)
+            GenerateTrainTrack();
+        else
+            GenerateConnector();
 
         return mapTransform;
     }
 
     void GenerateConnector()
     {
-        if(UnityEngine.Random.Range(0f, 1f) < trainChance)
-        {
-            Transform trainTrack = Instantiate(trainPrefab, transform);
-            trainTrack.localPosition = lastEndPos;
-        }
-        else
-        {
-            Transform connector = Instantiate(connectorPrefab, transform);
-            connector.localPosition = lastEndPos;
-        }
+        Transform connector = Instantiate(connectorPrefab, transform);
+        connector.localPosition = lastEndPos;
+        lastEndPos += new Vector3(0, 0, 1);
+    }
+
+    void GenerateTrainTrack()
+    {
+        Transform trainTrack = Instantiate(trainPrefab, transform);
+        trainTrack.localPosition = lastEndPos;
         lastEndPos += new Vector3(0, 0, 1);
     }
 
@@ -422,23 +431,14 @@ public class MazeGenerator : MonoBehaviour
             {
                 Vector3 position = new Vector3(-mapSize.x / 2 + room.BottomLeft.x + i, 0, -mapSize.y / 2 + room.BottomLeft.y + j);
 
+                Transform newLight = Instantiate(compLightPrefab, mazeTransform);
+                newLight.localPosition = position;
+
                 if ((i + j) % 2 == 0)
                 {
                     // Generate walls
                     foreach (Direction4 dir in Enum.GetValues(typeof(Direction4)))
                     {
-                        //if (Offset4.ContainsKey(dir) && maze[i, j].HasFlag(dir))
-                        //{
-                        //    Vector3 newPos = position + Coord2PosXZ(Offset4[dir]) * 0.5f;
-                        //    Vector3 newAngle = Angle4[dir];
-
-                        //    if (CheckInMapRange(new Vector2Int(i, j) + Offset4[dir], room.Size))
-                        //    {
-                        //        Transform newWall = Instantiate(dollWallPrefab, mazeTransform);
-                        //        newWall.localPosition = newPos;
-                        //        newWall.localEulerAngles = newAngle;
-                        //    }
-                        //}
                         if (Offset4.ContainsKey(dir) && CheckInMapRange(new Vector2Int(i, j) + Offset4[dir], room.Size))
                         {
                             Vector3 newPos = position + Coord2PosXZ(Offset4[dir]) * 0.5f;
@@ -565,25 +565,38 @@ public class MazeGenerator : MonoBehaviour
             tunnelFronEnd += new Vector2Int(0, -1);
         }
 
+        // Generate cave mesh
         Transform caveRoof = Instantiate(caveRoofMeshPrefab, mapTransform);
         Transform caveWall = Instantiate(caveWallMeshPrefab, mapTransform);
         meshGenerator.cave = caveRoof.GetComponent<MeshFilter>();
         meshGenerator.walls = caveWall.GetComponent<MeshFilter>();
         meshGenerator.GenerateMesh(map, 0.5f);
 
+        // Generate dummy colliders for detection
+        for (int x = 0; x < mapSize.x; x++)
+            for (int y = 0; y < mapSize.y; y++)
+            {
+                if (map[x, y] == 1)
+                {
+                    Vector3 position = (new Vector3(-mapSize.x / 2 + x + 0.5f, 0, -mapSize.y / 2 + y + 0.5f)) * 0.5f + new Vector3(-0.5f, -0.1f, -0.5f);
+                    Transform newLight = Instantiate(caveDummyPrefab, mapTransform);
+                    newLight.localPosition = position;
+                }
+            }
+
         // Generate lights
         List<Vector2Int> lightCoords = GenerateLightOnOutlineBySeparation(map, mapTransform, caveLightPrefab, minCaveLightSeparation, 0.5f);
-        List<Vector3> giantPositions = new List<Vector3>();
 
         // Generate additional light randomly if there exists a 9x9 empty enough coord space with no light
+        int minCaveLightTallSeparation = minCaveLightSeparation * 2 + 1;
         for (int k = 0; k < 1000; k++)
         {
-            int x = UnityEngine.Random.Range(0, mapSize.x - 9);
-            int y = UnityEngine.Random.Range(0, mapSize.y - 9);
+            int x = UnityEngine.Random.Range(0, mapSize.x - minCaveLightTallSeparation);
+            int y = UnityEngine.Random.Range(0, mapSize.y - minCaveLightTallSeparation);
             bool hasLight = false;
             int emptyTileCount = 0;
-            for (int i = x; i < x + 9; i++)
-                for (int j = y; j < y + 9; j++)
+            for (int i = x; i < x + minCaveLightTallSeparation; i++)
+                for (int j = y; j < y + minCaveLightTallSeparation; j++)
                 {
                     if (lightCoords.Contains(new Vector2Int(i, j)))
                     {
@@ -594,7 +607,7 @@ public class MazeGenerator : MonoBehaviour
                         emptyTileCount++;
                 }
 
-            Vector2Int newLightCoord = new Vector2Int(x + 4, y + 4);
+            Vector2Int newLightCoord = new Vector2Int(x + minCaveLightSeparation, y + minCaveLightSeparation);
             if (!hasLight && emptyTileCount >= 60 && map[newLightCoord.x, newLightCoord.y] == 0)
             {
                 Vector3 position = new Vector3(-mapSize.x / 2 + newLightCoord.x + 0.5f, 0, -mapSize.y / 2 + newLightCoord.y + 0.5f) * 0.5f + new Vector3(-0.5f, 0, -0.5f);
@@ -602,6 +615,28 @@ public class MazeGenerator : MonoBehaviour
                 newLight.localPosition = position;
                 lightCoords.Add(newLightCoord);
 
+            }
+        }
+
+        // Generate giant things randomly if there exists a 15x15 empty enough coord space
+        List<Vector3> giantPositions = new List<Vector3>();
+        int minGiantSeparation = minGiantHalfSeparation * 2 + 1;
+        for (int k = 0; k < 1000; k++)
+        {
+            int x = UnityEngine.Random.Range(0, mapSize.x - minGiantSeparation);
+            int y = UnityEngine.Random.Range(0, mapSize.y - minGiantSeparation);
+            int emptyTileCount = 0;
+            for (int i = x; i < x + minGiantSeparation; i++)
+                for (int j = y; j < y + minGiantSeparation; j++)
+                {
+                    if (map[i, j] == 0)
+                        emptyTileCount++;
+                }
+
+            Vector2Int newLightCoord = new Vector2Int(x + minGiantHalfSeparation, y + minGiantHalfSeparation);
+            if (emptyTileCount >= 150 && map[newLightCoord.x, newLightCoord.y] == 0)
+            {
+                Vector3 position = new Vector3(-mapSize.x / 2 + newLightCoord.x + 0.5f, 0, -mapSize.y / 2 + newLightCoord.y + 0.5f) * 0.5f + new Vector3(-0.5f, 0, -0.5f);
                 // Generate giant things
                 if (CheckMinSeparation(giantPositions, position, minGiantSeparation))
                 {
@@ -613,7 +648,7 @@ public class MazeGenerator : MonoBehaviour
         }
     }
 
-    void GenerateColumnarMaze(Vector2Int mapSize)
+        void GenerateColumnarMaze(Vector2Int mapSize)
     {
         Transform mapTransform = GenerateBasic(mapSize * 4, out _, out _, d => true);
         int[,] maze = Columnar(mapSize, _2x2ColumnChance);
