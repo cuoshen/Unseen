@@ -81,13 +81,11 @@ public class MazeGenerator : MonoBehaviour
     Transform compWallPrefab;
     [SerializeField]
     Transform compDoorPrefab;
+    [SerializeField]
+    Transform compLightPrefab;
     #endregion
     #region Cave Generation Parameters
     [Header("Cave Generation")]
-    int caveCellInitChance = 25;
-    int caveCellBirthLimit = 3;
-    int caveCellDeathLimit = 2;
-    int cellularPassEpoch = 6;
     [SerializeField]
     Transform caveWallPrefab;
     [SerializeField]
@@ -102,6 +100,11 @@ public class MazeGenerator : MonoBehaviour
     Transform caveLightTallPrefab;
     [SerializeField]
     int minCaveLightSeparation;
+
+    int caveCellInitChance = 25;
+    int caveCellBirthLimit = 3;
+    int caveCellDeathLimit = 2;
+    int cellularPassEpoch = 6;
     #endregion
     #region Columns Generation Parameters
     [Header("Columns Generation")]
@@ -198,6 +201,7 @@ public class MazeGenerator : MonoBehaviour
 
     public void NextLevel()
     {
+        Debug.Log("Next level");
         level++;
         ClearLevel();
         GenerateLevel();
@@ -426,6 +430,9 @@ public class MazeGenerator : MonoBehaviour
             for (int j = 0; j < room.Size.y; j++)
             {
                 Vector3 position = new Vector3(-mapSize.x / 2 + room.BottomLeft.x + i, 0, -mapSize.y / 2 + room.BottomLeft.y + j);
+
+                Transform newLight = Instantiate(compLightPrefab, mazeTransform);
+                newLight.localPosition = position;
 
                 if ((i + j) % 2 == 0)
                 {
