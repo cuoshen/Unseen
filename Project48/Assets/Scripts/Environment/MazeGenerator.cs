@@ -58,9 +58,11 @@ public class MazeGenerator : MonoBehaviour
     #region Enemy Parameters
     [Header("Enemy")]
     [SerializeField]
-    float minInsectSeparation;
+    int minInsectSeparation;
     [SerializeField]
     Transform insectPrefab;
+    [SerializeField]
+    int minGiantHalfSeparation;
     [SerializeField]
     Transform giantPrefab;
     #endregion
@@ -92,6 +94,8 @@ public class MazeGenerator : MonoBehaviour
     Transform caveRoofMeshPrefab;
     [SerializeField]
     Transform caveWallMeshPrefab;
+    [SerializeField]
+    Transform caveDummyPrefab;
     [SerializeField]
     Transform caveLightPrefab;
     [SerializeField]
@@ -287,23 +291,26 @@ public class MazeGenerator : MonoBehaviour
 
         lastEndPos += new Vector3(endCoord.x - startCoord.x, 0, endCoord.y - startCoord.y + 1);
 
-        GenerateConnector();
+
+        if (UnityEngine.Random.Range(0f, 1f) < trainChance)
+            GenerateTrainTrack();
+        else
+            GenerateConnector();
 
         return mapTransform;
     }
 
     void GenerateConnector()
     {
-        if(UnityEngine.Random.Range(0f, 1f) < trainChance)
-        {
-            Transform trainTrack = Instantiate(trainPrefab, transform);
-            trainTrack.localPosition = lastEndPos;
-        }
-        else
-        {
-            Transform connector = Instantiate(connectorPrefab, transform);
-            connector.localPosition = lastEndPos;
-        }
+        Transform connector = Instantiate(connectorPrefab, transform);
+        connector.localPosition = lastEndPos;
+        lastEndPos += new Vector3(0, 0, 1);
+    }
+
+    void GenerateTrainTrack()
+    {
+        Transform trainTrack = Instantiate(trainPrefab, transform);
+        trainTrack.localPosition = lastEndPos;
         lastEndPos += new Vector3(0, 0, 1);
     }
 
@@ -551,25 +558,38 @@ public class MazeGenerator : MonoBehaviour
             tunnelFronEnd += new Vector2Int(0, -1);
         }
 
+        // Generate cave mesh
         Transform caveRoof = Instantiate(caveRoofMeshPrefab, mapTransform);
         Transform caveWall = Instantiate(caveWallMeshPrefab, mapTransform);
         meshGenerator.cave = caveRoof.GetComponent<MeshFilter>();
         meshGenerator.walls = caveWall.GetComponent<MeshFilter>();
         meshGenerator.GenerateMesh(map, 0.5f);
 
+        // Generate dummy colliders for detection
+        for (int x = 0; x < mapSize.x; x++)
+            for (int y = 0; y < mapSize.y; y++)
+            {
+                if (map[x, y] == 1)
+                {
+                    Vector3 position = (new Vector3(-mapSize.x / 2 + x + 0.5f, 0, -mapSize.y / 2 + y + 0.5f)) * 0.5f + new Vector3(-0.5f, -0.1f, -0.5f);
+                    Transform newLight = Instantiate(caveDummyPrefab, mapTransform);
+                    newLight.localPosition = position;
+                }
+            }
+
         // Generate lights
         List<Vector2Int> lightCoords = GenerateLightOnOutlineBySeparation(map, mapTransform, caveLightPrefab, minCaveLightSeparation, 0.5f);
-        List<Vector3> giantPositions = new List<Vector3>();
 
         // Generate additional light randomly if there exists a 9x9 empty enough coord space with no light
+        int minCaveLightTallSeparation = minCaveLightSeparation * 2 + 1;
         for (int k = 0; k < 1000; k++)
         {
-            int x = UnityEngine.Random.Range(0, mapSize.x - 9);
-            int y = UnityEngine.Random.Range(0, mapSize.y - 9);
+            int x = UnityEngine.Random.Range(0, mapSize.x - minCaveLightTallSeparation);
+            int y = UnityEngine.Random.Range(0, mapSize.y - minCaveLightTallSeparation);
             bool hasLight = false;
             int emptyTileCount = 0;
-            for (int i = x; i < x + 9; i++)
-                for (int j = y; j < y + 9; j++)
+            for (int i = x; i < x + minCaveLightTallSeparation; i++)
+                for (int j = y; j < y + minCaveLightTallSeparation; j++)
                 {
                     if (lightCoords.Contains(new Vector2Int(i, j)))
                     {
@@ -580,7 +600,7 @@ public class MazeGenerator : MonoBehaviour
                         emptyTileCount++;
                 }
 
-            Vector2Int newLightCoord = new Vector2Int(x + 4, y + 4);
+            Vector2Int newLightCoord = new Vector2Int(x + minCaveLightSeparation, y + minCaveLightSeparation);
             if (!hasLight && emptyTileCount >= 60 && map[newLightCoord.x, newLightCoord.y] == 0)
             {
                 Vector3 position = new Vector3(-mapSize.x / 2 + newLightCoord.x + 0.5f, 0, -mapSize.y / 2 + newLightCoord.y + 0.5f) * 0.5f + new Vector3(-0.5f, 0, -0.5f);
@@ -592,24 +612,26 @@ public class MazeGenerator : MonoBehaviour
         }
 
         // Generate giant things randomly if there exists a 15x15 empty enough coord space
+        List<Vector3> giantPositions = new List<Vector3>();
+        int minGiantSeparation = minGiantHalfSeparation * 2 + 1;
         for (int k = 0; k < 1000; k++)
         {
-            int x = UnityEngine.Random.Range(0, mapSize.x - 15);
-            int y = UnityEngine.Random.Range(0, mapSize.y - 15);
+            int x = UnityEngine.Random.Range(0, mapSize.x - minGiantSeparation);
+            int y = UnityEngine.Random.Range(0, mapSize.y - minGiantSeparation);
             int emptyTileCount = 0;
-            for (int i = x; i < x + 15; i++)
-                for (int j = y; j < y + 15; j++)
+            for (int i = x; i < x + minGiantSeparation; i++)
+                for (int j = y; j < y + minGiantSeparation; j++)
                 {
                     if (map[i, j] == 0)
                         emptyTileCount++;
                 }
 
-            Vector2Int newLightCoord = new Vector2Int(x + 7, y + 7);
-            if (emptyTileCount >= 60 && map[newLightCoord.x, newLightCoord.y] == 0)
+            Vector2Int newLightCoord = new Vector2Int(x + minGiantHalfSeparation, y + minGiantHalfSeparation);
+            if (emptyTileCount >= 150 && map[newLightCoord.x, newLightCoord.y] == 0)
             {
                 Vector3 position = new Vector3(-mapSize.x / 2 + newLightCoord.x + 0.5f, 0, -mapSize.y / 2 + newLightCoord.y + 0.5f) * 0.5f + new Vector3(-0.5f, 0, -0.5f);
                 // Generate giant things
-                if (CheckMinSeparation(giantPositions, position, 15))
+                if (CheckMinSeparation(giantPositions, position, minGiantSeparation))
                 {
                     Transform newGiant = Instantiate(giantPrefab, mapTransform);
                     newGiant.localPosition = position;
