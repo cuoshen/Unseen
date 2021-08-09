@@ -437,6 +437,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1584103437
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1584103438}
+  m_Layer: 0
+  m_Name: CompartmentArea
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1584103438
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1584103437}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 21.431871, y: 0.05344394, z: 26.052715}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1967859220
 GameObject:
   m_ObjectHideFlags: 0
@@ -572,6 +603,7 @@ MonoBehaviour:
   compWallPrefab: {fileID: 7599237671437475100, guid: 74e6de8e5b70c384ea5644d7429ceb19, type: 3}
   compDoorPrefab: {fileID: 5258459713980368692, guid: b00e1cdb01cbd8946ab98ac205e8ec21, type: 3}
   compLightPrefab: {fileID: 7621400432342485398, guid: 0ec480ffdad4b2c44b6dff7f2f77fba9, type: 3}
+  additionalUnlockChance: 0.1
   caveWallPrefab: {fileID: 4433460659094003551, guid: b67c2ac47f9f96847926d01ed4d792d2, type: 3}
   caveRoofMeshPrefab: {fileID: 2443116424865806980, guid: 0a8df23ccf200814ab8f1108bb4ebc88, type: 3}
   caveWallMeshPrefab: {fileID: 1013605822122728790, guid: 59589664d4ebef34d8d062e3ddaf1027, type: 3}

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4812958003734665456}
   - component: {fileID: 4812958003734665459}
   - component: {fileID: 4812958003734665458}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Train Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -405,9 +405,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4628119604458729959, guid: b240240e1ff2d864da0e6cff1ef2af76, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8044274649116580708, guid: b240240e1ff2d864da0e6cff1ef2af76, type: 3}
       propertyPath: m_Name
       value: Train Light (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8044274649116580708, guid: b240240e1ff2d864da0e6cff1ef2af76, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8532834102248958608, guid: b240240e1ff2d864da0e6cff1ef2af76, type: 3}
       propertyPath: m_BoundingSphereOverride.w
@@ -483,9 +491,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4628119604458729959, guid: b240240e1ff2d864da0e6cff1ef2af76, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8044274649116580708, guid: b240240e1ff2d864da0e6cff1ef2af76, type: 3}
       propertyPath: m_Name
       value: Train Light (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8044274649116580708, guid: b240240e1ff2d864da0e6cff1ef2af76, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8532834102248958608, guid: b240240e1ff2d864da0e6cff1ef2af76, type: 3}
       propertyPath: m_BoundingSphereOverride.w
@@ -561,9 +577,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4628119604458729959, guid: b240240e1ff2d864da0e6cff1ef2af76, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8044274649116580708, guid: b240240e1ff2d864da0e6cff1ef2af76, type: 3}
       propertyPath: m_Name
       value: Train Light (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8044274649116580708, guid: b240240e1ff2d864da0e6cff1ef2af76, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8532834102248958608, guid: b240240e1ff2d864da0e6cff1ef2af76, type: 3}
       propertyPath: m_BoundingSphereOverride.w
@@ -639,9 +663,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4628119604458729959, guid: b240240e1ff2d864da0e6cff1ef2af76, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8044274649116580708, guid: b240240e1ff2d864da0e6cff1ef2af76, type: 3}
       propertyPath: m_Name
       value: Train Light (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8044274649116580708, guid: b240240e1ff2d864da0e6cff1ef2af76, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8532834102248958608, guid: b240240e1ff2d864da0e6cff1ef2af76, type: 3}
       propertyPath: m_BoundingSphereOverride.w
@@ -717,9 +749,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4628119604458729959, guid: b240240e1ff2d864da0e6cff1ef2af76, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8044274649116580708, guid: b240240e1ff2d864da0e6cff1ef2af76, type: 3}
       propertyPath: m_Name
       value: Train Light (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8044274649116580708, guid: b240240e1ff2d864da0e6cff1ef2af76, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8532834102248958608, guid: b240240e1ff2d864da0e6cff1ef2af76, type: 3}
       propertyPath: m_BoundingSphereOverride.w
@@ -795,9 +835,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4628119604458729959, guid: b240240e1ff2d864da0e6cff1ef2af76, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8044274649116580708, guid: b240240e1ff2d864da0e6cff1ef2af76, type: 3}
       propertyPath: m_Name
       value: Train Light (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8044274649116580708, guid: b240240e1ff2d864da0e6cff1ef2af76, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8532834102248958608, guid: b240240e1ff2d864da0e6cff1ef2af76, type: 3}
       propertyPath: m_BoundingSphereOverride.w
@@ -873,9 +921,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4628119604458729959, guid: b240240e1ff2d864da0e6cff1ef2af76, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8044274649116580708, guid: b240240e1ff2d864da0e6cff1ef2af76, type: 3}
       propertyPath: m_Name
       value: Train Light
+      objectReference: {fileID: 0}
+    - target: {fileID: 8044274649116580708, guid: b240240e1ff2d864da0e6cff1ef2af76, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8532834102248958608, guid: b240240e1ff2d864da0e6cff1ef2af76, type: 3}
       propertyPath: m_BoundingSphereOverride.w
@@ -951,9 +1007,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4628119604458729959, guid: b240240e1ff2d864da0e6cff1ef2af76, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8044274649116580708, guid: b240240e1ff2d864da0e6cff1ef2af76, type: 3}
       propertyPath: m_Name
       value: Train Light (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8044274649116580708, guid: b240240e1ff2d864da0e6cff1ef2af76, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8532834102248958608, guid: b240240e1ff2d864da0e6cff1ef2af76, type: 3}
       propertyPath: m_BoundingSphereOverride.w
@@ -1029,9 +1093,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4628119604458729959, guid: b240240e1ff2d864da0e6cff1ef2af76, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8044274649116580708, guid: b240240e1ff2d864da0e6cff1ef2af76, type: 3}
       propertyPath: m_Name
       value: Train Light (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8044274649116580708, guid: b240240e1ff2d864da0e6cff1ef2af76, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8532834102248958608, guid: b240240e1ff2d864da0e6cff1ef2af76, type: 3}
       propertyPath: m_BoundingSphereOverride.w
@@ -1107,9 +1179,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4628119604458729959, guid: b240240e1ff2d864da0e6cff1ef2af76, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8044274649116580708, guid: b240240e1ff2d864da0e6cff1ef2af76, type: 3}
       propertyPath: m_Name
       value: Train Light (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8044274649116580708, guid: b240240e1ff2d864da0e6cff1ef2af76, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8532834102248958608, guid: b240240e1ff2d864da0e6cff1ef2af76, type: 3}
       propertyPath: m_BoundingSphereOverride.w

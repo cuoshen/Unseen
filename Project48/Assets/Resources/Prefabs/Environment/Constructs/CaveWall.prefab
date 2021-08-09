@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3296107920759548773}
   m_Layer: 6
   m_Name: CaveWall
-  m_TagString: Obstacle
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647

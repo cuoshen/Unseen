@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8216619653773275753}
   - component: {fileID: 8216619653773275755}
   - component: {fileID: 8216619653773275752}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -76,7 +76,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8216619653927588064}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlayerWithCam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,7 +111,7 @@ GameObject:
   - component: {fileID: 8216619654928562613}
   - component: {fileID: 8216619654928562570}
   - component: {fileID: 5650737223421063132}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CM vcam1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

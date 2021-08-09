@@ -83,6 +83,8 @@ public class MazeGenerator : MonoBehaviour
     Transform compDoorPrefab;
     [SerializeField]
     Transform compLightPrefab;
+    [SerializeField]
+    float additionalUnlockChance;
     #endregion
     #region Cave Generation Parameters
     [Header("Cave Generation")]
@@ -446,23 +448,38 @@ public class MazeGenerator : MonoBehaviour
 
                             if (maze[i, j].HasFlag(dir))
                             {
-                                if (UnityEngine.Random.Range(0f, 1f) < 0.5f)
+                                if (UnityEngine.Random.Range(0f, 1f) < additionalUnlockChance)
                                 {
+                                    // Make door and unlock them
                                     Transform newWall = Instantiate(compDoorPrefab, mazeTransform);
                                     newWall.localPosition = newPos;
                                     newWall.localEulerAngles = newAngle;
                                     Door door = newWall.GetComponentInChildren<Door>();
-                                    door.Lock();
+                                    door.Unlock();
                                 }
                                 else
                                 {
-                                    Transform newWall = Instantiate(compWallPrefab, mazeTransform);
-                                    newWall.localPosition = newPos;
-                                    newWall.localEulerAngles = newAngle;
+                                    if (UnityEngine.Random.Range(0f, 1f) < 0.5f)
+                                    {
+                                        // Make door but lock them
+                                        Transform newWall = Instantiate(compDoorPrefab, mazeTransform);
+                                        newWall.localPosition = newPos;
+                                        newWall.localEulerAngles = newAngle;
+                                        Door door = newWall.GetComponentInChildren<Door>();
+                                        door.Lock();
+                                    }
+                                    else
+                                    {
+                                        // Make wall
+                                        Transform newWall = Instantiate(compWallPrefab, mazeTransform);
+                                        newWall.localPosition = newPos;
+                                        newWall.localEulerAngles = newAngle;
+                                    }
                                 }
                             }
                             else
                             {
+                                // Make door and unlock them
                                 Transform newWall = Instantiate(compDoorPrefab, mazeTransform);
                                 newWall.localPosition = newPos;
                                 newWall.localEulerAngles = newAngle;

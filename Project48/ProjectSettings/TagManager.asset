@@ -5,7 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
-  - Obstacle
+  - Float Platform
   layers:
   - Default
   - TransparentFX
@@ -15,7 +15,7 @@ TagManager:
   - UI
   - Maze
   - NoLight
-  - Player
+  - Enemy
   - 
   - 
   - 

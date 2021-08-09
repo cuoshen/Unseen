@@ -85,6 +85,7 @@ public class GiantThing : MonoBehaviour
         moveStartTime = Time.time;
         startPos = curLeg.position;
         CapsuleCollider curFootCollider = curLeg.GetComponentInChildren<CapsuleCollider>();
+        LayerMask maze_layer = 1 << LayerMask.NameToLayer("Maze");
         bool canLand;
         Vector2 rand;
 
@@ -106,12 +107,9 @@ public class GiantThing : MonoBehaviour
 
             // Do not step on walls
             // Non-convex wall mesh collider cannot be detected
-            Collider[] allOverlappingColliders = Physics.OverlapSphere(targetPos, curFootCollider.radius + 0.5f);
-            foreach (Collider collider in allOverlappingColliders)
-            {
-                if(collider.tag == "Obstacle")
-                    canLand = false;
-            }
+            Collider[] allOverlappingColliders = Physics.OverlapSphere(targetPos, curFootCollider.radius + 0.5f, maze_layer);
+            if (allOverlappingColliders.Length != 0)
+                canLand = false;
         } while (!canLand);
 
         isMoving = true;
