@@ -19,14 +19,15 @@ public class TriggerLight : MonoBehaviour
     Light lampLight;
     Material material;
 
-    [SerializeField]
+    GameObject player;
+
+    float distanceToPlayer;
     float time_elapsed;
-    [SerializeField]
     bool is_on;
-    [SerializeField]
     bool is_flicker;
 
-    GameObject player;
+    readonly float enableRange = 10;
+    readonly float insectThingVisionRange = 1.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -53,9 +54,9 @@ public class TriggerLight : MonoBehaviour
         }
         else
         {
-            float distance = Vector3.Distance(player.transform.position, transform.position);
+            distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
             
-            if (distance < detectPlayerRange)
+            if (distanceToPlayer < enableRange)
             {
                 DetectObjects();
 
@@ -98,18 +99,19 @@ public class TriggerLight : MonoBehaviour
         bool is_player = false;
         bool is_enemy = false;
         LayerMask maze_layer = 1 << LayerMask.NameToLayer("Maze");
+        LayerMask enemy_layer = 1 << LayerMask.NameToLayer("Enemy");
+
+        if (distanceToPlayer < detectPlayerRange && 
+            (detectPlayerAcrossWall || !Physics.Linecast(transform.position, player.transform.position, out _, maze_layer)))
+            is_player = true;
 
         // Get all colliders in range and look for player
-        Collider[] allOverlappingColliders = Physics.OverlapSphere(transform.position, detectPlayerRange);
+        Collider[] allOverlappingColliders = Physics.OverlapSphere(transform.position, insectThingVisionRange, enemy_layer);
 
         // Look for player and enemy
         foreach (Collider collider in allOverlappingColliders)
         {
-            if (collider.tag == "Player" && (detectPlayerAcrossWall || !Physics.Linecast(transform.position, collider.transform.position, out _, maze_layer)))
-                is_player = true;
-
-            if (collider.tag == "Enemy" && !Physics.Linecast(transform.position, collider.transform.position, out _, maze_layer)
-                && Vector3.Distance(collider.transform.position, transform.position) <= 1.5) // 1.5 is Insect thing vision range
+            if (!Physics.Linecast(transform.position, collider.transform.position, out _, maze_layer))
                 is_enemy = true;
         }
 
