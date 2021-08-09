@@ -26,6 +26,8 @@ public class TriggerLight : MonoBehaviour
     [SerializeField]
     bool is_flicker;
 
+    GameObject player;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,34 +47,50 @@ public class TriggerLight : MonoBehaviour
 
     void Update()
     {
-        DetectObjects();
-
-        // Control light acording to triggered condition
-        AnimationCurve curve;
-        if (is_on)
+        if (player == null)
         {
-            curve = on_curve;
-            if (is_flicker)
-            {
-                curve = on_curve_enemy;
-                if (time_elapsed >= 1.0f)
-                {
-                    time_elapsed = 0;
-                }
-            }
+            player = GameObject.FindWithTag("Player");
         }
         else
         {
-            curve = off_curve;
-            if (is_flicker)
+            float distance = Vector3.Distance(player.transform.position, transform.position);
+            
+            if (distance < detectPlayerRange)
             {
-                curve = off_curve_enemy;
-            }
-        }
+                DetectObjects();
 
-        time_elapsed += Time.deltaTime;
-        lampLight.intensity = curve.Evaluate(time_elapsed) * maxIntensity;
-        material.SetColor("_EmissionColor", lampLight.color * lampLight.intensity / maxIntensity);
+                // Control light acording to triggered condition
+                AnimationCurve curve;
+                if (is_on)
+                {
+                    curve = on_curve;
+                    if (is_flicker)
+                    {
+                        curve = on_curve_enemy;
+                        if (time_elapsed >= 1.0f)
+                        {
+                            time_elapsed = 0;
+                        }
+                    }
+                }
+                else
+                {
+                    curve = off_curve;
+                    if (is_flicker)
+                    {
+                        curve = off_curve_enemy;
+                    }
+                }
+
+                time_elapsed += Time.deltaTime;
+                lampLight.intensity = curve.Evaluate(time_elapsed) * maxIntensity;
+            }
+            else
+            {
+                lampLight.intensity = 0;
+            }
+            material.SetColor("_EmissionColor", lampLight.color * lampLight.intensity / maxIntensity);
+        }
     }
 
     void DetectObjects()
@@ -91,7 +109,7 @@ public class TriggerLight : MonoBehaviour
                 is_player = true;
 
             if (collider.tag == "Enemy" && !Physics.Linecast(transform.position, collider.transform.position, out _, maze_layer)
-                && Vector3.Distance(collider.transform.position, transform.position) <= collider.GetComponent<InsectThing>().visionRange) // GetComponent is costly, change to constant in final build
+                && Vector3.Distance(collider.transform.position, transform.position) <= 1.5) // 1.5 is Insect thing vision range
                 is_enemy = true;
         }
 
