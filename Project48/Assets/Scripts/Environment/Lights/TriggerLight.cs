@@ -51,46 +51,41 @@ public class TriggerLight : MonoBehaviour
         {
             player = GameObject.FindWithTag("Player");
         }
+        float distance = Vector3.Distance(player.transform.position, transform.position);
+        
+        if (distance >= detectPlayerRange)
+        {
+            lampLight.intensity = 0;
+            return;
+        }
+        DetectObjects();
+
+        // Control light acording to triggered condition
+        AnimationCurve curve;
+        if (is_on)
+        {
+            curve = on_curve;
+            if (is_flicker)
+            {
+                curve = on_curve_enemy;
+                if (time_elapsed >= 1.0f)
+                {
+                    time_elapsed = 0;
+                }
+            }
+        }
         else
         {
-            float distance = Vector3.Distance(player.transform.position, transform.position);
-            
-            if (distance < detectPlayerRange)
+            curve = off_curve;
+            if (is_flicker)
             {
-                DetectObjects();
-
-                // Control light acording to triggered condition
-                AnimationCurve curve;
-                if (is_on)
-                {
-                    curve = on_curve;
-                    if (is_flicker)
-                    {
-                        curve = on_curve_enemy;
-                        if (time_elapsed >= 1.0f)
-                        {
-                            time_elapsed = 0;
-                        }
-                    }
-                }
-                else
-                {
-                    curve = off_curve;
-                    if (is_flicker)
-                    {
-                        curve = off_curve_enemy;
-                    }
-                }
-
-                time_elapsed += Time.deltaTime;
-                lampLight.intensity = curve.Evaluate(time_elapsed) * maxIntensity;
+                curve = off_curve_enemy;
             }
-            else
-            {
-                lampLight.intensity = 0;
-            }
-            material.SetColor("_EmissionColor", lampLight.color * lampLight.intensity / maxIntensity);
         }
+
+        time_elapsed += Time.deltaTime;
+        lampLight.intensity = curve.Evaluate(time_elapsed) * maxIntensity;
+        material.SetColor("_EmissionColor", lampLight.color * lampLight.intensity / maxIntensity);
     }
 
     void DetectObjects()
