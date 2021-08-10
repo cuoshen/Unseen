@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4655188880575335747}
   - component: {fileID: 4655188880575335746}
-  m_Layer: 0
-  m_Name: CompartmentArea
+  m_Layer: 9
+  m_Name: Compartment Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

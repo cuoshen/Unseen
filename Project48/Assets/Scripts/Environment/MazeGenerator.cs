@@ -84,6 +84,8 @@ public class MazeGenerator : MonoBehaviour
     [SerializeField]
     Transform compLightPrefab;
     [SerializeField]
+    Transform compAreaPrefab;
+    [SerializeField]
     float additionalUnlockChance;
     #endregion
     #region Cave Generation Parameters
@@ -428,6 +430,10 @@ public class MazeGenerator : MonoBehaviour
     {
         Direction4[,] maze = RecursiveBacktracker(room.Size);
 
+        Transform compArea = Instantiate(compAreaPrefab, mazeTransform);
+        compArea.localPosition = new Vector3(-mapSize.x / 2 + room.BottomLeft.x + room.Size.x / 2, 0.5f, -mapSize.y / 2 + room.BottomLeft.y + room.Size.y / 2);
+        compArea.GetComponent<BoxCollider>().size = new Vector3(room.Size.x, 1, room.Size.y);
+
         for (int i = 0; i < room.Size.x; i++)
             for (int j = 0; j < room.Size.y; j++)
             {
@@ -665,7 +671,7 @@ public class MazeGenerator : MonoBehaviour
         }
     }
 
-        void GenerateColumnarMaze(Vector2Int mapSize)
+    void GenerateColumnarMaze(Vector2Int mapSize)
     {
         Transform mapTransform = GenerateBasic(mapSize * 4, out _, out _, d => true);
         int[,] maze = Columnar(mapSize, _2x2ColumnChance);
