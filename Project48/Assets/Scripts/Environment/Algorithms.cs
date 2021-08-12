@@ -677,7 +677,7 @@ public static class Algorithms
 	/// Insert rooms into a maze. Rooms are always odd-sized on odd coords.
 	/// They are also walled-off and need to be opened up, probably by ConnectRegions and/or OpenDeadEnds.
 	/// </summary>
-	public static int[,] RoomInMaze(int[,] map, int minHalfRoomLength, int maxHalfRoomLength, int attempts, List<Region> existingNonIntersectableRegions, out List<Region> allNIR, out List<RectRoom> newRooms)
+	public static int[,] RoomInMaze(int[,] map, int minHalfLength, int maxHalfLength, int attempts, List<Region> existingNonIntersectableRegions, out List<Region> allNIR, out List<RectRoom> newRooms)
 	{
 		Vector2Int mapSize = new Vector2Int(map.GetLength(0), map.GetLength(1));
 		allNIR = existingNonIntersectableRegions;
@@ -691,8 +691,8 @@ public static class Algorithms
 			// - It avoids creating rooms that are too rectangular: too tall and
 			//   narrow or too wide and flat.
 			// TODO: This isn't very flexible or tunable. Do something better here.
-			Vector2Int roomSize = new Vector2Int(UnityEngine.Random.Range(minHalfRoomLength, maxHalfRoomLength),
-				UnityEngine.Random.Range(minHalfRoomLength, maxHalfRoomLength)) * 2 + new Vector2Int(1, 1);
+			Vector2Int roomSize = new Vector2Int(UnityEngine.Random.Range(minHalfLength, maxHalfLength),
+				UnityEngine.Random.Range(minHalfLength, maxHalfLength)) * 2 + new Vector2Int(1, 1);
 			Vector2Int maxBLCoord = mapSize - roomSize;
 			Vector2Int bottomLeft = new Vector2Int(UnityEngine.Random.Range(0, maxBLCoord.x),
 				UnityEngine.Random.Range(0, maxBLCoord.y)) / 2 * 2 + new Vector2Int(1, 1);

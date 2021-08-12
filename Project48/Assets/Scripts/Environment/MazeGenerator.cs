@@ -86,6 +86,10 @@ public class MazeGenerator : MonoBehaviour
     [SerializeField]
     Transform compAreaPrefab;
     [SerializeField]
+    int minCompHalfLength;
+    [SerializeField]
+    int maxCompHalfLength;
+    [SerializeField]
     float additionalUnlockChance;
     #endregion
     #region Cave Generation Parameters
@@ -352,7 +356,7 @@ public class MazeGenerator : MonoBehaviour
         Direction4[,] maze = RecursiveBacktracker(mazeSize);
         int[,] map = FattenMaze(maze);
 
-        map = RoomInMaze(map, 3, 5, CompartmentsAttempts(mazeSize), new List<Region>(), out List<Region> allRooms, out List<RectRoom> newRooms);
+        map = RoomInMaze(map, minCompHalfLength, maxCompHalfLength, CompartmentsAttempts(mazeSize), new List<Region>(), out List<Region> allRooms, out List<RectRoom> newRooms);
         map = ConnectRegions(0, map, 1, 1, 1, 1);
         map = OpenDeadEnds(0, map);
 
