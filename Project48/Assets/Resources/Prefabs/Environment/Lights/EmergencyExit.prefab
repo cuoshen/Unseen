@@ -98,8 +98,8 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 0.13919187, g: 1, b: 0, a: 1}
-  m_Intensity: 0
-  m_Range: 3
+  m_Intensity: 0.05
+  m_Range: 2
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -162,7 +162,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detectPlayerAcrossWall: 0
   detectPlayerRange: 2.5
-  maxIntensity: 0.1
   on_curve:
     serializedVersion: 2
     m_Curve:

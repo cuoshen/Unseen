@@ -121,7 +121,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.04
+  m_Radius: 0.03
   m_Center: {x: 0, y: 0.015, z: 0}
 --- !u!1 &3783455613422746031
 GameObject:
@@ -287,7 +287,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 0.94509804, g: 0.5137255, b: 0, a: 0}
-  m_Intensity: 0.3
+  m_Intensity: 0.2
   m_Range: 6
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -299,7 +299,7 @@ Light:
     m_Strength: 1
     m_Bias: 1
     m_NormalBias: 1
-    m_NearPlane: 0.1
+    m_NearPlane: 0.06
     m_CullingMatrixOverride:
       e00: 1
       e01: 0
@@ -371,7 +371,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detectPlayerAcrossWall: 1
   detectPlayerRange: 6
-  maxIntensity: 0.3
   on_curve:
     serializedVersion: 2
     m_Curve:
@@ -394,8 +393,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.05
-      value: 0
+      time: 0.08092956
+      value: 0.32611084
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -412,8 +411,8 @@ MonoBehaviour:
       inWeight: 0.86751413
       outWeight: 0.4531274
     - serializedVersion: 3
-      time: 0.20274112
-      value: -0.001953125
+      time: 0.20080325
+      value: 0.4045105
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -421,7 +420,7 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.27395022
+      time: 0.24688113
       value: 1
       inSlope: -0.0193691
       outSlope: -0.0193691
@@ -429,6 +428,24 @@ MonoBehaviour:
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.25927845
+    - serializedVersion: 3
+      time: 0.2996668
+      value: 0.55442685
+      inSlope: -0.010856746
+      outSlope: -0.010856746
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.3988087
+      value: 1
+      inSlope: 0.91264063
+      outSlope: Infinity
+      tangentMode: 97
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 0.99852294
       value: 0.99999666

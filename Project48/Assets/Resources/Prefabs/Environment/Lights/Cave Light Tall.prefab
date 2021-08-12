@@ -129,9 +129,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.2
-  m_Height: 1
+  m_Height: 1.2
   m_Direction: 1
-  m_Center: {x: 0.05, y: 0.5, z: 0.06}
+  m_Center: {x: 0.05, y: 0.6, z: 0.06}
 --- !u!1 &4237696903070911324
 GameObject:
   m_ObjectHideFlags: 0
@@ -300,7 +300,7 @@ Light:
     m_Strength: 1
     m_Bias: 1
     m_NormalBias: 1
-    m_NearPlane: 0.1
+    m_NearPlane: 0.06
     m_CullingMatrixOverride:
       e00: 1
       e01: 0
@@ -372,7 +372,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detectPlayerAcrossWall: 1
   detectPlayerRange: 6
-  maxIntensity: 1
   on_curve:
     serializedVersion: 2
     m_Curve:

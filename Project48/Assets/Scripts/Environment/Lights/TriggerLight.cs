@@ -8,8 +8,6 @@ public class TriggerLight : MonoBehaviour
     protected bool detectPlayerAcrossWall;
     [SerializeField]
     protected float detectPlayerRange;
-    [SerializeField]
-    protected float maxIntensity;
 
     [SerializeField]
     protected AnimationCurve on_curve, on_curve_enemy, off_curve, off_curve_enemy;
@@ -19,6 +17,7 @@ public class TriggerLight : MonoBehaviour
 
     GameObject player;
 
+    protected float maxIntensity;
     protected float distanceToPlayer;
     protected float time_elapsed;
     protected bool is_on;
@@ -27,7 +26,11 @@ public class TriggerLight : MonoBehaviour
     protected readonly float enableRange = 10;
     protected readonly float insectThingVisionRange = 1.5f;
 
-    // Start is called before the first frame update
+    protected void Awake()
+    {
+        maxIntensity = lampLight.intensity;
+    }
+
     protected void Start()
     {
         on_curve.postWrapMode = WrapMode.Clamp;
