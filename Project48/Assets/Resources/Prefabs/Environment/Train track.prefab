@@ -1362,7 +1362,7 @@ MonoBehaviour:
     m_ImpactRadius: 0
     m_DirectionMode: 1
     m_DissipationMode: 2
-    m_DissipationDistance: 5
+    m_DissipationDistance: 15
     m_PropagationSpeed: 343
   m_DefaultVelocity: {x: 0, y: -1, z: 0}
   m_LayerMask:
