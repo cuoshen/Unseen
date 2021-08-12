@@ -26,11 +26,6 @@ public class TriggerLight : MonoBehaviour
     protected readonly float enableRange = 10;
     protected readonly float insectThingVisionRange = 1.5f;
 
-    protected void Awake()
-    {
-        maxIntensity = lampLight.intensity;
-    }
-
     protected void Start()
     {
         on_curve.postWrapMode = WrapMode.Clamp;
@@ -38,6 +33,7 @@ public class TriggerLight : MonoBehaviour
         off_curve.postWrapMode = WrapMode.Clamp;
         off_curve_enemy.postWrapMode = WrapMode.Clamp;
 
+        maxIntensity = lampLight.intensity;
         time_elapsed = 2;
     }
 
