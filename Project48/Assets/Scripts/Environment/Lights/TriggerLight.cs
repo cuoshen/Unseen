@@ -40,6 +40,8 @@ public class TriggerLight : MonoBehaviour
         off_curve_enemy.postWrapMode = WrapMode.Clamp;
 
         time_elapsed = 2;
+        if (emission_material_index != -1)
+            emission_material = GetComponent<MeshRenderer>().materials[emission_material_index];
     }
 
     void Update()
