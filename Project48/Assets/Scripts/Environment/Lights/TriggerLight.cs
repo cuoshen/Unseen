@@ -17,6 +17,8 @@ public class TriggerLight : MonoBehaviour
     [SerializeField]
     Light lampLight;
     [SerializeField]
+    int emission_material_index;
+
     Material emission_material;
 
     GameObject player;
