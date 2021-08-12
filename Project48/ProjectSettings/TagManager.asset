@@ -15,7 +15,7 @@ TagManager:
   - Maze
   - NoLight
   - Enemy
-  - AreaMarker
+  - CompartmentArea
   - 
   - 
   - 

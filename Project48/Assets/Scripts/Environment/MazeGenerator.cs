@@ -420,26 +420,26 @@ public class MazeGenerator : MonoBehaviour
                 }
             }
 
-        foreach (RectRoom newRoom in newRooms)
+        foreach (RectRoom room in newRooms)
         {
-            GenerateCompartments(mapSize, newRoom, mapTransform);
+            Transform compArea = Instantiate(compAreaPrefab, mapTransform);
+            compArea.localPosition = new Vector3(-mapSize.x / 2 + room.BottomLeft.x + room.Size.x / 2, 0, -mapSize.y / 2 + room.BottomLeft.y + room.Size.y / 2);
+            compArea.GetComponent<BoxCollider>().size = new Vector3(room.Size.x, 1, room.Size.y);
+
+            GenerateCompartments(room.Size, compArea);
         }
     }
 
-    void GenerateCompartments(Vector2Int mapSize, RectRoom room, Transform mazeTransform)
+    void GenerateCompartments(Vector2Int roomSize, Transform compArea)
     {
-        Direction4[,] maze = RecursiveBacktracker(room.Size);
+        Direction4[,] maze = RecursiveBacktracker(roomSize);
 
-        Transform compArea = Instantiate(compAreaPrefab, mazeTransform);
-        compArea.localPosition = new Vector3(-mapSize.x / 2 + room.BottomLeft.x + room.Size.x / 2, 0.5f, -mapSize.y / 2 + room.BottomLeft.y + room.Size.y / 2);
-        compArea.GetComponent<BoxCollider>().size = new Vector3(room.Size.x, 1, room.Size.y);
-
-        for (int i = 0; i < room.Size.x; i++)
-            for (int j = 0; j < room.Size.y; j++)
+        for (int i = 0; i < roomSize.x; i++)
+            for (int j = 0; j < roomSize.y; j++)
             {
-                Vector3 position = new Vector3(-mapSize.x / 2 + room.BottomLeft.x + i, 0, -mapSize.y / 2 + room.BottomLeft.y + j);
+                Vector3 position = new Vector3(-roomSize.x / 2 + i, 0, -roomSize.y / 2 + j);
 
-                Transform newLight = Instantiate(compLightPrefab, mazeTransform);
+                Transform newLight = Instantiate(compLightPrefab, compArea);
                 newLight.localPosition = position;
 
                 if ((i + j) % 2 == 0)
@@ -447,7 +447,7 @@ public class MazeGenerator : MonoBehaviour
                     // Generate walls
                     foreach (Direction4 dir in Enum.GetValues(typeof(Direction4)))
                     {
-                        if (Offset4.ContainsKey(dir) && CheckInMapRange(new Vector2Int(i, j) + Offset4[dir], room.Size))
+                        if (Offset4.ContainsKey(dir) && CheckInMapRange(new Vector2Int(i, j) + Offset4[dir], roomSize))
                         {
                             Vector3 newPos = position + Coord2PosXZ(Offset4[dir]) * 0.5f;
                             Vector3 newAngle = Angle4[dir];
@@ -457,7 +457,7 @@ public class MazeGenerator : MonoBehaviour
                                 if (UnityEngine.Random.Range(0f, 1f) < additionalUnlockChance)
                                 {
                                     // Make door and unlock them
-                                    Transform newWall = Instantiate(compDoorPrefab, mazeTransform);
+                                    Transform newWall = Instantiate(compDoorPrefab, compArea);
                                     newWall.localPosition = newPos;
                                     newWall.localEulerAngles = newAngle;
                                     Door door = newWall.GetComponentInChildren<Door>();
@@ -468,7 +468,7 @@ public class MazeGenerator : MonoBehaviour
                                     if (UnityEngine.Random.Range(0f, 1f) < 0.5f)
                                     {
                                         // Make door but lock them
-                                        Transform newWall = Instantiate(compDoorPrefab, mazeTransform);
+                                        Transform newWall = Instantiate(compDoorPrefab, compArea);
                                         newWall.localPosition = newPos;
                                         newWall.localEulerAngles = newAngle;
                                         Door door = newWall.GetComponentInChildren<Door>();
@@ -477,7 +477,7 @@ public class MazeGenerator : MonoBehaviour
                                     else
                                     {
                                         // Make wall
-                                        Transform newWall = Instantiate(compWallPrefab, mazeTransform);
+                                        Transform newWall = Instantiate(compWallPrefab, compArea);
                                         newWall.localPosition = newPos;
                                         newWall.localEulerAngles = newAngle;
                                     }
@@ -486,7 +486,7 @@ public class MazeGenerator : MonoBehaviour
                             else
                             {
                                 // Make door and unlock them
-                                Transform newWall = Instantiate(compDoorPrefab, mazeTransform);
+                                Transform newWall = Instantiate(compDoorPrefab, compArea);
                                 newWall.localPosition = newPos;
                                 newWall.localEulerAngles = newAngle;
                                 Door door = newWall.GetComponentInChildren<Door>();
