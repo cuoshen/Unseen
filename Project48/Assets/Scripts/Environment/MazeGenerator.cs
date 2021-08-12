@@ -614,16 +614,16 @@ public class MazeGenerator : MonoBehaviour
         // Generate lights
         List<Vector2Int> lightCoords = GenerateLightOnOutlineBySeparation(map, mapTransform, caveLightPrefab, minCaveLightSeparation, 0.5f);
 
-        // Generate additional light randomly if there exists a 9x9 empty enough coord space with no light
-        int minCaveLightTallSeparation = minCaveLightSeparation * 2 + 1;
+        // Generate additional light randomly if there exists an empty enough coord space with no light
         for (int k = 0; k < 1000; k++)
         {
-            int x = UnityEngine.Random.Range(0, mapSize.x - minCaveLightTallSeparation);
-            int y = UnityEngine.Random.Range(0, mapSize.y - minCaveLightTallSeparation);
+            int x = UnityEngine.Random.Range(minCaveLightSeparation, mapSize.x - minCaveLightSeparation);
+            int y = UnityEngine.Random.Range(minCaveLightSeparation, mapSize.y - minCaveLightSeparation);
+
             bool hasLight = false;
             int emptyTileCount = 0;
-            for (int i = x; i < x + minCaveLightTallSeparation; i++)
-                for (int j = y; j < y + minCaveLightTallSeparation; j++)
+            for (int i = x - minCaveLightSeparation; i <= x + minCaveLightSeparation; i++)
+                for (int j = y - minCaveLightSeparation; j <= y + minCaveLightSeparation; j++)
                 {
                     if (lightCoords.Contains(new Vector2Int(i, j)))
                     {
@@ -634,18 +634,25 @@ public class MazeGenerator : MonoBehaviour
                         emptyTileCount++;
                 }
 
-            Vector2Int newLightCoord = new Vector2Int(x + minCaveLightSeparation, y + minCaveLightSeparation);
-            if (!hasLight && emptyTileCount >= 60 && map[newLightCoord.x, newLightCoord.y] == 0)
+            bool tooCloseToWall = false;
+            for (int i = x - 1; i <= x + 1; i++)
+                for (int j = y - 1; j <= y + 1; j++)
+                {
+                    if (map[i, j] == 1)
+                        tooCloseToWall = true;
+                }
+
+            if (!hasLight && !tooCloseToWall && emptyTileCount >= 60 && map[x, y] == 0)
             {
-                Vector3 position = new Vector3(-mapSize.x / 2 + newLightCoord.x + 0.5f, 0, -mapSize.y / 2 + newLightCoord.y + 0.5f) * 0.5f + new Vector3(-0.5f, 0, -0.5f);
+                Vector3 position = new Vector3(-mapSize.x / 2 + x + 0.5f, 0, -mapSize.y / 2 + y + 0.5f) * 0.5f + new Vector3(-0.5f, 0, -0.5f);
                 Transform newLight = Instantiate(caveLightTallPrefab, mapTransform);
                 newLight.localPosition = position;
-                lightCoords.Add(newLightCoord);
+                lightCoords.Add(new Vector2Int(x, y));
 
             }
         }
 
-        // Generate giant things randomly if there exists a 15x15 empty enough coord space
+        // Generate giant things randomly if there exists an empty enough coord space
         List<Vector3> giantPositions = new List<Vector3>();
         int minGiantSeparation = minGiantHalfSeparation * 2 + 1;
         for (int k = 0; k < 1000; k++)

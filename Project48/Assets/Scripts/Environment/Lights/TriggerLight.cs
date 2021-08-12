@@ -110,10 +110,8 @@ public class TriggerLight : MonoBehaviour
 
         // Look for player and enemy
         foreach (Collider collider in allOverlappingColliders)
-        {
             if (!Physics.Linecast(transform.position, collider.transform.position, out _, maze_layer))
                 is_enemy = true;
-        }
 
         // Reset time_elapsed when switching states
         if ((!is_on && is_player) || (is_on && !is_player) || (!is_flicker && is_enemy))
