@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 7441179580107041493}
   - component: {fileID: 4661576731950426006}
   - component: {fileID: 5204850049220421283}
+  - component: {fileID: 3576097083499697482}
   m_Layer: 0
   m_Name: Lamp_01_Snaps014 Variant
   m_TagString: Untagged
@@ -807,6 +808,25 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  time_elapsed: 0
-  is_on: 0
-  is_flicker: 0
+  lampLight: {fileID: 4661576731950426006}
+  emission_material: {fileID: 0}
+--- !u!114 &3576097083499697482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3870828754575737777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 1
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}

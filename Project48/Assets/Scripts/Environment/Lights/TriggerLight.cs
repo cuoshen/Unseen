@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Light))]
-
 public class TriggerLight : MonoBehaviour
 {
     [SerializeField]
@@ -16,8 +14,10 @@ public class TriggerLight : MonoBehaviour
     [SerializeField]
     AnimationCurve on_curve, on_curve_enemy, off_curve, off_curve_enemy;
 
+    [SerializeField]
     Light lampLight;
-    Material material;
+    [SerializeField]
+    Material emission_material;
 
     GameObject player;
 
@@ -36,12 +36,6 @@ public class TriggerLight : MonoBehaviour
         on_curve_enemy.postWrapMode = WrapMode.Clamp;
         off_curve.postWrapMode = WrapMode.Clamp;
         off_curve_enemy.postWrapMode = WrapMode.Clamp;
-
-        // init gameObject references
-        lampLight = GetComponent<Light>();
-
-        // materials[0] is the emission of light
-        material = GetComponent<MeshRenderer>().materials[0];
 
         time_elapsed = 2;
     }
@@ -90,7 +84,8 @@ public class TriggerLight : MonoBehaviour
             {
                 lampLight.intensity = 0;
             }
-            material.SetColor("_EmissionColor", lampLight.color * lampLight.intensity / maxIntensity);
+            if (emission_material)
+                emission_material.SetColor("_EmissionColor", lampLight.color * lampLight.intensity / maxIntensity);
         }
     }
 

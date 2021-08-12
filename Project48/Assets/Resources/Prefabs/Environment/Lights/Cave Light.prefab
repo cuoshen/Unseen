@@ -871,9 +871,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  time_elapsed: 0
-  is_on: 0
-  is_flicker: 0
+  lampLight: {fileID: 5762188474425091916}
+  emission_material: {fileID: 2100000, guid: ef6151af21a124a4b91453ff96a69495, type: 2}
 --- !u!114 &3214530739990959880
 MonoBehaviour:
   m_ObjectHideFlags: 0
