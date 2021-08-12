@@ -200,6 +200,15 @@
         "com.unity.modules.imgui": "1.0.0"
       }
     },
+    "com.unity.visualeffectgraph": {
+      "version": "12.0.0",
+      "depth": 0,
+      "source": "builtin",
+      "dependencies": {
+        "com.unity.shadergraph": "12.0.0",
+        "com.unity.render-pipelines.core": "12.0.0"
+      }
+    },
     "net.peeweek.gameplay-ingredients": {
       "version": "2020.2.9",
       "depth": 0,
