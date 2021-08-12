@@ -110,6 +110,19 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!135 &3782684233280011490
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3214817073452341454}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.04
+  m_Center: {x: 0, y: 0.015, z: 0}
 --- !u!1 &3783455613422746031
 GameObject:
   m_ObjectHideFlags: 0
@@ -274,7 +287,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 0.94509804, g: 0.5137255, b: 0, a: 0}
-  m_Intensity: 0.5
+  m_Intensity: 0.4
   m_Range: 6
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -1021,6 +1034,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e7daa7f753e4d0547b5caf9b3b38da81, type: 3}
+--- !u!1 &3214817073452341454 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3923962264506004563, guid: e7daa7f753e4d0547b5caf9b3b38da81, type: 3}
+  m_PrefabInstance: {fileID: 1939333984099380381}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2870626625543504500 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4413358650095742697, guid: e7daa7f753e4d0547b5caf9b3b38da81, type: 3}
