@@ -10,7 +10,7 @@ public class Player : CCCharacter
         Vector2 movementInput = context.ReadValue<Vector2>();
         movement.x = movementInput.x;
         movement.z = movementInput.y;
-        movement = Quaternion.Euler(0, 45, 0) * movement;
+        movement = Quaternion.Euler(0, -45, 0) * movement;
     }
 
     // this script pushes all rigidbodies that the character touches
