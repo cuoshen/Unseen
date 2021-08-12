@@ -253,7 +253,7 @@ GameObject:
   - component: {fileID: 9133582499761089941}
   - component: {fileID: 9133582499761089940}
   - component: {fileID: 3717990109262712120}
-  - component: {fileID: 8740914548617954642}
+  - component: {fileID: 5542793639976856195}
   m_Layer: 0
   m_Name: Trigger Light
   m_TagString: Untagged
@@ -289,7 +289,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 0.94509804, g: 0.5137255, b: 0, a: 0}
   m_Intensity: 0.5
-  m_Range: 5
+  m_Range: 6
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -333,10 +333,10 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 7.865699e+34, y: NaN, z: 9.411368e+11, w: -494.6399}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: -106.48718}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
-  m_ShadowRadius: 0
+  m_ShadowRadius: 1
   m_ShadowAngle: 0
 --- !u!114 &3717990109262712120
 MonoBehaviour:
@@ -358,7 +358,7 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
---- !u!114 &8740914548617954642
+--- !u!114 &5542793639976856195
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -367,12 +367,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 9133582499761089937}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5995dc45925deea44b186a0db2df2a03, type: 3}
+  m_Script: {fileID: 11500000, guid: cc0722cc1efa1d84a943dfc8f2f4e66e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   detectPlayerAcrossWall: 1
   detectPlayerRange: 6
-  maxIntensity: 0.5
+  maxIntensity: 0.4
   on_curve:
     serializedVersion: 2
     m_Curve:
@@ -695,10 +695,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.0023933598
-      value: 0.99904686
-      inSlope: 2
-      outSlope: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
@@ -965,4 +965,4 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   lampLight: {fileID: 9133582499761089940}
-  emission_material_index: -1
+  fire: {fileID: 4237696903070911324}

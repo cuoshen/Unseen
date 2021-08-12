@@ -5,34 +5,30 @@ using UnityEngine;
 public class TriggerLight : MonoBehaviour
 {
     [SerializeField]
-    bool detectPlayerAcrossWall;
+    protected bool detectPlayerAcrossWall;
     [SerializeField]
-    float detectPlayerRange;
+    protected float detectPlayerRange;
     [SerializeField]
-    float maxIntensity;
+    protected float maxIntensity;
 
     [SerializeField]
-    AnimationCurve on_curve, on_curve_enemy, off_curve, off_curve_enemy;
+    protected AnimationCurve on_curve, on_curve_enemy, off_curve, off_curve_enemy;
 
     [SerializeField]
-    Light lampLight;
-    [SerializeField]
-    int emission_material_index;
-
-    Material emission_material;
+    protected Light lampLight;
 
     GameObject player;
 
-    float distanceToPlayer;
-    float time_elapsed;
-    bool is_on;
-    bool is_flicker;
+    protected float distanceToPlayer;
+    protected float time_elapsed;
+    protected bool is_on;
+    protected bool is_flicker;
 
-    readonly float enableRange = 10;
-    readonly float insectThingVisionRange = 1.5f;
+    protected readonly float enableRange = 10;
+    protected readonly float insectThingVisionRange = 1.5f;
 
     // Start is called before the first frame update
-    void Start()
+    protected void Start()
     {
         on_curve.postWrapMode = WrapMode.Clamp;
         on_curve_enemy.postWrapMode = WrapMode.Clamp;
@@ -40,11 +36,9 @@ public class TriggerLight : MonoBehaviour
         off_curve_enemy.postWrapMode = WrapMode.Clamp;
 
         time_elapsed = 2;
-        if (emission_material_index != -1)
-            emission_material = GetComponent<MeshRenderer>().materials[emission_material_index];
     }
 
-    void Update()
+    protected void Update()
     {
         if (player == null)
         {
@@ -88,8 +82,6 @@ public class TriggerLight : MonoBehaviour
             {
                 lampLight.intensity = 0;
             }
-            if (emission_material)
-                emission_material.SetColor("_EmissionColor", lampLight.color * lampLight.intensity / maxIntensity);
         }
     }
 
