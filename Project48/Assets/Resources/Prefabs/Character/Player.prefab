@@ -183,7 +183,7 @@ Transform:
   m_GameObject: {fileID: 1689693965214588731}
   m_LocalRotation: {x: -0.7033947, y: 0.00000001116143, z: -0.000000010104587, w: 0.71079946}
   m_LocalPosition: {x: 0.0004083444, y: 0.28329906, z: 0.0036725404}
-  m_LocalScale: {x: 27.090374, y: 27.09037, z: 29.033792}
+  m_LocalScale: {x: 27.090374, y: 27.090366, z: 29.033789}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3164956843992085849}
@@ -505,7 +505,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f31e1a2431e4f9479141b500cb17209, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 1.1
   angularSpeed: 15
   gravity: 9.81
 --- !u!114 &5866113910783640382
@@ -555,7 +555,7 @@ CharacterController:
   m_StepOffset: 0.25
   m_SkinWidth: 0.002
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.25, z: 0}
+  m_Center: {x: 0, y: 0.255, z: 0}
 --- !u!1 &2393836024235095765
 GameObject:
   m_ObjectHideFlags: 0

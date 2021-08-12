@@ -481,7 +481,7 @@ MonoBehaviour:
   compAreaPrefab: {fileID: 4655188880575335747, guid: 39794e91b0dea7d4a88bab4f5ee8f273, type: 3}
   minCompHalfLength: 3
   maxCompHalfLength: 5
-  additionalUnlockChance: 0.03
+  additionalUnlockChance: 0.02
   caveWallPrefab: {fileID: 4433460659094003551, guid: b67c2ac47f9f96847926d01ed4d792d2, type: 3}
   caveRoofMeshPrefab: {fileID: 2443116424865806980, guid: 0a8df23ccf200814ab8f1108bb4ebc88, type: 3}
   caveWallMeshPrefab: {fileID: 1013605822122728790, guid: 59589664d4ebef34d8d062e3ddaf1027, type: 3}

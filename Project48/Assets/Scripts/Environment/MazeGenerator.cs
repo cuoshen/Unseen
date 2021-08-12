@@ -323,6 +323,7 @@ public class MazeGenerator : MonoBehaviour
     {
         Transform trainTrack = Instantiate(trainPrefab, transform);
         trainTrack.localPosition = lastEndPos;
+        trainTrack.localEulerAngles = new Vector3(0, 180, 0);
         lastEndPos += new Vector3(0, 0, 1);
     }
 

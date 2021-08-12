@@ -1337,7 +1337,7 @@ MonoBehaviour:
     m_ImpulseType: 3
     m_DissipationRate: 0.25
     m_RawSignal: {fileID: 11400000, guid: 86f19195d8afa83448c31596ef830811, type: 2}
-    m_AmplitudeGain: 0.2
+    m_AmplitudeGain: 0.16
     m_FrequencyGain: 4
     m_RepeatMode: 0
     m_Randomize: 1
@@ -1362,7 +1362,7 @@ MonoBehaviour:
     m_ImpactRadius: 0
     m_DirectionMode: 1
     m_DissipationMode: 2
-    m_DissipationDistance: 15
+    m_DissipationDistance: 13
     m_PropagationSpeed: 343
   m_DefaultVelocity: {x: 0, y: -1, z: 0}
   m_LayerMask:
