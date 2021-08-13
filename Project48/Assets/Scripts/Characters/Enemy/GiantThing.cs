@@ -123,7 +123,10 @@ public class GiantThing : MonoBehaviour
     void SwitchFoot()
     {
         if (curLeg != null)
+        {
             curLeg.GetComponentInChildren<CinemachineImpulseSource>().GenerateImpulse();
+            curLeg.GetComponent<AudioSource>().Play();
+        }
 
         animator.SetBool("Is Foot 1", !animator.GetBool("Is Foot 1"));
 
