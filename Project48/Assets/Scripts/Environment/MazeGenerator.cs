@@ -24,10 +24,9 @@ public class MazeGenerator : MonoBehaviour
     }
 
     // Level 6 with seed 88 with caveChance and dollChance both 0 for a Compartments right at the start
-    public int level;
     public int seed;
     public bool useSeed;
-
+    int level;
     MeshGenerator meshGenerator;
     Vector3 lastEndPos;
 
@@ -210,7 +209,7 @@ public class MazeGenerator : MonoBehaviour
     public void NextLevel()
     {
         Debug.Log("Next level");
-        level++;
+        level = LevelCounter.Instance.IncrementLevel();
         ClearLevel();
         GenerateLevel();
     }

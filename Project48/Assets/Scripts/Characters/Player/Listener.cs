@@ -16,6 +16,7 @@ public class Listener : MonoBehaviour
             return s_Instance;
         }
     }
+
     GameObject player;
 
     void Awake()
