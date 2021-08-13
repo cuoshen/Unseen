@@ -35,7 +35,7 @@ public class LevelCounter : MonoBehaviour
         s_Instance = this;
         DontDestroyOnLoad(this);
 
-        Level = 0;
+        // Level = 0;
     }
 
     public int IncrementLevel()
