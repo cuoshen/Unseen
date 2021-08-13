@@ -18,8 +18,10 @@ public class TriggerLight : MonoBehaviour
     GameObject player;
 
     protected float maxIntensity;
+    protected float onSwitchStateIntensity;
     protected float distanceToPlayer;
     protected float time_elapsed;
+    protected float currentCurveValue;
     protected bool is_on;
     protected bool is_flicker;
 
@@ -35,6 +37,7 @@ public class TriggerLight : MonoBehaviour
 
         maxIntensity = lampLight.intensity;
         time_elapsed = 2;
+        currentCurveValue = 0;
     }
 
     protected void Update()
@@ -50,6 +53,7 @@ public class TriggerLight : MonoBehaviour
             if (distanceToPlayer < enableRange)
             {
                 DetectObjects();
+                time_elapsed += Time.deltaTime;
 
                 // Control light acording to triggered condition
                 AnimationCurve curve;
@@ -64,6 +68,9 @@ public class TriggerLight : MonoBehaviour
                             time_elapsed = 0;
                         }
                     }
+
+                    currentCurveValue = curve.Evaluate(time_elapsed);
+                    lampLight.intensity = currentCurveValue * (maxIntensity - onSwitchStateIntensity) + onSwitchStateIntensity;
                 }
                 else
                 {
@@ -72,10 +79,10 @@ public class TriggerLight : MonoBehaviour
                     {
                         curve = off_curve_enemy;
                     }
-                }
 
-                time_elapsed += Time.deltaTime;
-                lampLight.intensity = curve.Evaluate(time_elapsed) * maxIntensity;
+                    currentCurveValue = curve.Evaluate(time_elapsed);
+                    lampLight.intensity = currentCurveValue * onSwitchStateIntensity;
+                }
             }
             else
             {
@@ -88,26 +95,36 @@ public class TriggerLight : MonoBehaviour
     {
         bool is_player = false;
         bool is_enemy = false;
+        bool is_giant = false;
         LayerMask maze_layer = 1 << LayerMask.NameToLayer("Maze");
         LayerMask insect_layer = 1 << LayerMask.NameToLayer("InsectThing");
         LayerMask giant_layer = 1 << LayerMask.NameToLayer("GiantThing");
 
-        if (distanceToPlayer < detectPlayerRange &&
-            !Physics.Linecast(transform.position, player.transform.position, out _, giant_layer) &&
+        if (Physics.Linecast(transform.position, player.transform.position, out _, giant_layer))
+            is_giant = true;
+
+        Collider[] allGiantCollidersInRange = Physics.OverlapSphere(transform.position, 0.2f, giant_layer);
+        if (allGiantCollidersInRange.Length != 0)
+        {
+            lampLight.intensity = 0;
+            is_giant = true;
+        }
+
+        if (distanceToPlayer < detectPlayerRange && !is_giant &&
             (detectPlayerAcrossWall || !Physics.Linecast(transform.position, player.transform.position, out _, maze_layer)))
             is_player = true;
 
-        // Get all colliders in range and look for player
-        Collider[] allOverlappingColliders = Physics.OverlapSphere(transform.position, insectThingVisionRange, insect_layer);
-
-        // Look for player and enemy
-        foreach (Collider collider in allOverlappingColliders)
+        Collider[] allKiwiCollidersInRange = Physics.OverlapSphere(transform.position, insectThingVisionRange, insect_layer);
+        foreach (Collider collider in allKiwiCollidersInRange)
             if (!Physics.Linecast(transform.position, collider.transform.position, out _, maze_layer))
                 is_enemy = true;
 
         // Reset time_elapsed when switching states
         if ((!is_on && is_player) || (is_on && !is_player) || (!is_flicker && is_enemy))
+        {
+            onSwitchStateIntensity = lampLight.intensity;
             time_elapsed = 0;
+        }
 
         // Set states
         is_on = is_player;

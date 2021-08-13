@@ -124,9 +124,9 @@ public class GiantThing : MonoBehaviour
     {
         if (curLeg != null)
         {
+            curLeg.GetComponentInChildren<ParticleSystem>().Play();
             curLeg.GetComponentInChildren<CinemachineImpulseSource>().GenerateImpulse();
             curLeg.GetComponent<AudioSource>().Play();
-            curLeg.GetComponentInChildren<ParticleSystem>().Play();
         }
 
         animator.SetBool("Is Foot 1", !animator.GetBool("Is Foot 1"));
