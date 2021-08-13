@@ -14,9 +14,9 @@ TagManager:
   - UI
   - Maze
   - NoLight
-  - Enemy
+  - InsectThing
   - CompartmentArea
-  - 
+  - GiantThing
   - 
   - 
   - 

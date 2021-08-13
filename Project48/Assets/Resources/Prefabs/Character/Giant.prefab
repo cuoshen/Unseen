@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1154049642}
   - component: {fileID: 3677163644847157759}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Leg 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -185,7 +185,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1685589443}
   - component: {fileID: 6088681590111576230}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Leg 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -360,7 +360,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1898490411}
   - component: {fileID: 1898490412}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Voice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -518,7 +518,7 @@ GameObject:
   - component: {fileID: 2428747409788470740}
   - component: {fileID: 2428747409788470743}
   - component: {fileID: 974925396}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Foot 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -556,7 +556,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2428747409788470742}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 3
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -629,7 +629,7 @@ MonoBehaviour:
     m_ImpulseType: 3
     m_DissipationRate: 0
     m_RawSignal: {fileID: 11400000, guid: 86f19195d8afa83448c31596ef830811, type: 2}
-    m_AmplitudeGain: 1
+    m_AmplitudeGain: 2
     m_FrequencyGain: 1
     m_RepeatMode: 0
     m_Randomize: 1
@@ -668,7 +668,7 @@ GameObject:
   - component: {fileID: 2428747410710552272}
   - component: {fileID: 1999587291}
   - component: {fileID: 1999587299}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Giant
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -745,7 +745,7 @@ GameObject:
   - component: {fileID: 2428747410757143071}
   - component: {fileID: 2428747410757143070}
   - component: {fileID: 722980186}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Foot 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -783,7 +783,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2428747410757143041}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 3
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -856,7 +856,7 @@ MonoBehaviour:
     m_ImpulseType: 3
     m_DissipationRate: 0
     m_RawSignal: {fileID: 11400000, guid: 86f19195d8afa83448c31596ef830811, type: 2}
-    m_AmplitudeGain: 1
+    m_AmplitudeGain: 2
     m_FrequencyGain: 1
     m_RepeatMode: 0
     m_Randomize: 1
@@ -891,6 +891,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1685589443}
     m_Modifications:
+    - target: {fileID: 8102471553291954565, guid: 935b94a106b26f4448f6efc2cdccbabf, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 8104957454204861209, guid: 935b94a106b26f4448f6efc2cdccbabf, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -958,6 +962,10 @@ PrefabInstance:
     - target: {fileID: 8265552465562169471, guid: 935b94a106b26f4448f6efc2cdccbabf, type: 3}
       propertyPath: ShapeModule.radiusThickness
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8265552465562169471, guid: 935b94a106b26f4448f6efc2cdccbabf, type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8265552465562169471, guid: 935b94a106b26f4448f6efc2cdccbabf, type: 3}
       propertyPath: InitialModule.startLifetime.scalar
@@ -1037,6 +1045,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Thump Smoke
       objectReference: {fileID: 0}
+    - target: {fileID: 8102471553291954565, guid: 935b94a106b26f4448f6efc2cdccbabf, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 8104957454204861209, guid: 935b94a106b26f4448f6efc2cdccbabf, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1112,6 +1124,10 @@ PrefabInstance:
     - target: {fileID: 8265552465562169471, guid: 935b94a106b26f4448f6efc2cdccbabf, type: 3}
       propertyPath: ShapeModule.radiusThickness
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8265552465562169471, guid: 935b94a106b26f4448f6efc2cdccbabf, type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8265552465562169471, guid: 935b94a106b26f4448f6efc2cdccbabf, type: 3}
       propertyPath: InitialModule.startLifetime.scalar

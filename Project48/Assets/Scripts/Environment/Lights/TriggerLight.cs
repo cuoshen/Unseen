@@ -89,14 +89,16 @@ public class TriggerLight : MonoBehaviour
         bool is_player = false;
         bool is_enemy = false;
         LayerMask maze_layer = 1 << LayerMask.NameToLayer("Maze");
-        LayerMask enemy_layer = 1 << LayerMask.NameToLayer("Enemy");
+        LayerMask insect_layer = 1 << LayerMask.NameToLayer("InsectThing");
+        LayerMask giant_layer = 1 << LayerMask.NameToLayer("GiantThing");
 
-        if (distanceToPlayer < detectPlayerRange && 
+        if (distanceToPlayer < detectPlayerRange &&
+            !Physics.Linecast(transform.position, player.transform.position, out _, giant_layer) &&
             (detectPlayerAcrossWall || !Physics.Linecast(transform.position, player.transform.position, out _, maze_layer)))
             is_player = true;
 
         // Get all colliders in range and look for player
-        Collider[] allOverlappingColliders = Physics.OverlapSphere(transform.position, insectThingVisionRange, enemy_layer);
+        Collider[] allOverlappingColliders = Physics.OverlapSphere(transform.position, insectThingVisionRange, insect_layer);
 
         // Look for player and enemy
         foreach (Collider collider in allOverlappingColliders)
