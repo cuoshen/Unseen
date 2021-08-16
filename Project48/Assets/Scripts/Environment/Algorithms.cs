@@ -236,7 +236,7 @@ public static class Algorithms
 		}
 	}
 
-	static float PerlinAtTile(float x, float y)
+	public static float PerlinAtTile(float x, float y)
 	{
 		// Taking absolute value of the coordinates so negative values won't cause a glitch
 		x = Mathf.Abs(x);

@@ -1500,6 +1500,9 @@ MonoBehaviour:
     m_RotationOrder: 4
   lampLight: {fileID: 9133582499761089940}
   fire: {fileID: 4237696903070911324}
+  flickerRate: 60
+  flickerAmplitude: 0.3
+  perlin: 0
 --- !u!1001 &2717409788342604189
 PrefabInstance:
   m_ObjectHideFlags: 0
