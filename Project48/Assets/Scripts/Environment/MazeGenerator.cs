@@ -459,18 +459,24 @@ public class MazeGenerator : MonoBehaviour
             // Add doors to compartment openings
             foreach (DirectionalTile tile in room.RoomRegion.Outline)
             {
+                Vector3 newPos = new Vector3(-mapSize.x / 2 + tile.Position.x, 0, -mapSize.y / 2 + tile.Position.y)
+                    + Coord2PosXZ(Offset4[GetOpposite(tile.Direction)]) * 0.5f;
+                Vector3 newAngle = Angle4[GetOpposite(tile.Direction)];
                 if (map[tile.Position.x, tile.Position.y] == 0)
                 {
-                    Debug.Log("rua");
-                    Vector3 newPos = new Vector3(-mapSize.x / 2 + tile.Position.x, 0, -mapSize.y / 2 + tile.Position.y)
-                        + Coord2PosXZ(Offset4[GetOpposite(tile.Direction)]) * 0.5f;
-                    Vector3 newAngle = Angle4[GetOpposite(tile.Direction)];
                     // Make door and unlock them
                     Transform newWall = Instantiate(compDoorPrefab, mapTransform);
                     newWall.localPosition = newPos;
                     newWall.localEulerAngles = newAngle;
                     Door door = newWall.GetComponentInChildren<Door>();
                     door.Unlock();
+                }
+                else
+                {
+                    // Make wall
+                    Transform newWall = Instantiate(compWallPrefab, compArea);
+                    newWall.localPosition = newPos;
+                    newWall.localEulerAngles = newAngle;
                 }
             }
         }
