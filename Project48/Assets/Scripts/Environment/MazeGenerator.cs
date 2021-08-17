@@ -432,7 +432,7 @@ public class MazeGenerator : MonoBehaviour
                 Vector2Int coord = new Vector2Int(i, j);
                 Vector3 position = new Vector3(-mapSize.x / 2 + i, 0, -mapSize.y / 2 + j);
 
-                if (map[i, j] == 0 || map[i, j] == 1)
+                if (map[i, j] != 2)
                 {
                     Transform newFloor = Instantiate(corridorFloorPrefab, mapTransform);
                     newFloor.localPosition = position;
