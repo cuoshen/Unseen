@@ -41,11 +41,13 @@ public struct RectRoom
 {
 	public Vector2Int BottomLeft;
 	public Vector2Int Size;
+	public Region RoomRegion;
 
-	public RectRoom(Vector2Int bottomleft, Vector2Int size)
+	public RectRoom(Vector2Int bottomleft, Vector2Int size, Region roomRegion)
     {
 		BottomLeft = bottomleft;
 		Size = size;
+		RoomRegion = roomRegion;
     }
 }
 
@@ -675,12 +677,12 @@ public static class Algorithms
 
 	/// <summary>
 	/// Insert rooms into a maze. Rooms are always odd-sized on odd coords.
-	/// They are also walled-off and need to be opened up, probably by ConnectRegions and/or OpenDeadEnds.
+	/// They are also walled-off and need to be opened up, probably by ConnectRegions and/or OpenDeadEnds. NIR stands for Non Intersectable Regions.
 	/// </summary>
-	public static int[,] RoomInMaze(int[,] map, int minHalfLength, int maxHalfLength, int attempts, List<Region> existingNonIntersectableRegions, out List<Region> allNIR, out List<RectRoom> newRooms)
+	public static int[,] RoomInMaze(int[,] map, int minHalfLength, int maxHalfLength, int attempts, List<Region> existingNIR, out List<Region> allNIR, out List<RectRoom> newRooms)
 	{
 		Vector2Int mapSize = new Vector2Int(map.GetLength(0), map.GetLength(1));
-		allNIR = existingNonIntersectableRegions;
+		allNIR = existingNIR;
 		newRooms = new List<RectRoom>();
 		int counter = 0;
 
@@ -731,7 +733,7 @@ public static class Algorithms
 			if (canPlace)
             {
 				allNIR.Add(newRegion);
-				newRooms.Add(new RectRoom(bottomLeft, roomSize));
+				newRooms.Add(new RectRoom(bottomLeft, roomSize, newRegion));
 				foreach (Vector2Int tile in newRegion.Area)
 					map[tile.x, tile.y] = 0;
 				foreach (DirectionalTile dirTile in newRegion.Outline)
