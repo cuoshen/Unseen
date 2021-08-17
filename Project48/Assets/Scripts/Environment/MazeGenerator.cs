@@ -72,7 +72,9 @@ public class MazeGenerator : MonoBehaviour
     [SerializeField]
     Transform corridorLightPrefab;
     [SerializeField]
-    Transform corridorVoidFencePrefab;
+    Transform voidFencePrefab;
+    [SerializeField]
+    Transform voidLightPrefab;
     [SerializeField]
     int minCorridorLightSeparation;
     [SerializeField]
@@ -410,7 +412,7 @@ public class MazeGenerator : MonoBehaviour
                     Vector3 newAngle = Angle4[GetOpposite(tile.Direction)];
 
                     // Make Fence
-                    Transform newFence = Instantiate(corridorVoidFencePrefab, mapTransform);
+                    Transform newFence = Instantiate(voidFencePrefab, mapTransform);
                     newFence.localPosition = newPos;
                     newFence.localEulerAngles = newAngle;
                 }
@@ -447,6 +449,7 @@ public class MazeGenerator : MonoBehaviour
                 if (map[i, j] == 0 && new Vector2Int(i, j - 1) != startCoord && new Vector2Int(i, j + 1) != endCoord
                     && allRooms.FindIndex(d => d.Area.Contains(coord)) == -1)
                 {
+                    List<int> wallTypeList = new List<int>();
                     List<Vector3> wallPosList = new List<Vector3>();
                     List<Vector3> wallAngleList = new List<Vector3>();
                     foreach (DirectionalTile p in GetNeighbours4(coord, mapSize))
@@ -455,6 +458,7 @@ public class MazeGenerator : MonoBehaviour
                         {
                             Vector3 newPos = position + Coord2PosXZ(Offset4[p.Direction]) * 0.5f;
                             Vector3 newAngle = Angle4[p.Direction];
+                            wallTypeList.Add(map[p.Position.x, p.Position.y]);
                             wallPosList.Add(newPos);
                             wallAngleList.Add(newAngle);
                         }
@@ -463,8 +467,12 @@ public class MazeGenerator : MonoBehaviour
                     // Generate lights, but not too close to other lights
                     if (wallPosList.Count != 0 && CheckMinSeparation(lightPositions, position, minCorridorLightSeparation))
                     {
-                        Transform newLight = Instantiate(corridorLightPrefab, mapTransform);
                         int randIndex = UnityEngine.Random.Range(0, wallPosList.Count);
+                        Transform newLight = null;
+                        if (wallTypeList[randIndex] == 1)
+                            newLight = Instantiate(corridorLightPrefab, mapTransform);
+                        else if (wallTypeList[randIndex] == 2)
+                            newLight = Instantiate(voidLightPrefab, mapTransform);
                         newLight.localPosition = wallPosList[randIndex];
                         newLight.localEulerAngles = wallAngleList[randIndex];
                         lightPositions.Add(position);

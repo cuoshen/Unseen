@@ -5,6 +5,8 @@ using UnityEngine;
 public class CorridorLight : TriggerLight
 {
     [SerializeField]
+    Transform emission_material_transform;
+    [SerializeField]
     int emission_material_index;
 
     Material emission_material;
@@ -14,7 +16,7 @@ public class CorridorLight : TriggerLight
         base.Start();
 
         if (emission_material_index != -1)
-            emission_material = GetComponent<MeshRenderer>().materials[emission_material_index];
+            emission_material = emission_material_transform.GetComponent<MeshRenderer>().materials[emission_material_index];
     }
 
     new void Update()

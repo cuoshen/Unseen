@@ -783,4 +783,5 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   lampLight: {fileID: 3056719674795430567}
+  emission_material_transform: {fileID: 8423847146704441617}
   emission_material_index: 0
