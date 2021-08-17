@@ -72,7 +72,13 @@ public class MazeGenerator : MonoBehaviour
     [SerializeField]
     Transform corridorLightPrefab;
     [SerializeField]
+    Transform corridorVoidFencePrefab;
+    [SerializeField]
     int minCorridorLightSeparation;
+    [SerializeField]
+    int maxVoidSize;
+    [SerializeField]
+    float voidChance;
     #endregion
     #region Compartments Generation Parameters
     [Header("Compartments Generation")]
@@ -384,7 +390,32 @@ public class MazeGenerator : MonoBehaviour
         map = OpenDeadEnds(0, map);
 
         Vector2Int mapSize = new Vector2Int(map.GetLength(0), map.GetLength(1));
-        Transform mapTransform = GenerateBasic(corridorFloorPrefab, null, mapSize, out Vector2Int startCoord, out Vector2Int endCoord, d => d.x % 2 == 1, 2);
+        Transform mapTransform = GenerateBasic(null, null, mapSize, out Vector2Int startCoord, out Vector2Int endCoord, d => d.x % 2 == 1, 2);
+
+        // Generate void
+        List<Region> impassableRegions = GetRegions(1, map);
+
+        foreach (Region region in impassableRegions)
+        {
+            if (region.Area.Count <= maxVoidSize && UnityEngine.Random.Range(0f, 1f) < voidChance)
+            {
+                foreach (Vector2Int tile in region.Area)
+                {
+                    map[tile.x, tile.y] = 2;
+                }
+                foreach (DirectionalTile tile in region.Outline)
+                {
+                    Vector3 newPos = new Vector3(-mapSize.x / 2 + tile.Position.x, 0, -mapSize.y / 2 + tile.Position.y)
+                        + Coord2PosXZ(Offset4[GetOpposite(tile.Direction)]) * 0.5f;
+                    Vector3 newAngle = Angle4[GetOpposite(tile.Direction)];
+
+                    // Make Fence
+                    Transform newFence = Instantiate(corridorVoidFencePrefab, mapTransform);
+                    newFence.localPosition = newPos;
+                    newFence.localEulerAngles = newAngle;
+                }
+            }
+        }
 
         Vector2Int s = new Vector2Int(startCoord.x, startCoord.y + 1);
         Vector2Int e = new Vector2Int(endCoord.x, endCoord.y - 1);
@@ -399,10 +430,17 @@ public class MazeGenerator : MonoBehaviour
                 Vector2Int coord = new Vector2Int(i, j);
                 Vector3 position = new Vector3(-mapSize.x / 2 + i, 0, -mapSize.y / 2 + j);
 
+                if (map[i, j] == 0 || map[i, j] == 1)
+                {
+                    Transform newFloor = Instantiate(corridorFloorPrefab, mapTransform);
+                    newFloor.localPosition = position;
+                    newFloor.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+                }
+
                 if (map[i, j] == 1 && new Vector2Int(i, j) != startCoord && new Vector2Int(i, j) != endCoord)
                 {
-                    Transform newCube = Instantiate(corridorWallPrefab, mapTransform);
-                    newCube.localPosition = position;
+                    Transform newWall = Instantiate(corridorWallPrefab, mapTransform);
+                    newWall.localPosition = position;
                 }
                 
                 // Do not generate light or enemies inside walls, at start and end, or within rooms
@@ -471,10 +509,10 @@ public class MazeGenerator : MonoBehaviour
                     Door door = newWall.GetComponentInChildren<Door>();
                     door.Unlock();
                 }
-                else
+                else if (map[tile.Position.x, tile.Position.y] == 1)
                 {
                     // Make wall
-                    Transform newWall = Instantiate(compWallPrefab, compArea);
+                    Transform newWall = Instantiate(compWallPrefab, mapTransform);
                     newWall.localPosition = newPos;
                     newWall.localEulerAngles = newAngle;
                 }
