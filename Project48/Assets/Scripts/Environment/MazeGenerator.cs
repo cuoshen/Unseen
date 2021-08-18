@@ -207,7 +207,7 @@ public class MazeGenerator : MonoBehaviour
         lastEndPos = new Vector3(0, 0, 0);
 
         Transform start = Instantiate(startPrefab, transform);
-        start.localPosition = lastEndPos + new Vector3(0, -0.5f, -1f);
+        start.localPosition = lastEndPos;
 
         GenerateConnector();
 
@@ -222,7 +222,7 @@ public class MazeGenerator : MonoBehaviour
         }
 
         Transform end = Instantiate(endPrefab, transform);
-        end.localPosition = lastEndPos + new Vector3(0, 0.5f, 0);
+        end.localPosition = lastEndPos;
     }
 
     public void ClearLevel()
@@ -346,7 +346,7 @@ public class MazeGenerator : MonoBehaviour
     {
         Transform connector = Instantiate(connectorPrefab, transform);
         connector.localPosition = lastEndPos;
-        lastEndPos += new Vector3(0, 0, 1);
+        lastEndPos += new Vector3(0, 0.12f, 1.6f);
     }
 
     void GenerateTrainTrack()
