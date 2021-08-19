@@ -110,7 +110,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8216619654928562613}
   - component: {fileID: 8216619654928562570}
-  - component: {fileID: 5650737223421063132}
+  - component: {fileID: 4568945843738808313}
   m_Layer: 0
   m_Name: CM vcam1
   m_TagString: Untagged
@@ -172,7 +172,7 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 8216619653773275753}
---- !u!114 &5650737223421063132
+--- !u!114 &4568945843738808313
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -181,20 +181,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 8216619654928562571}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00b2d199b96b516448144ab30fb26aed, type: 3}
+  m_Script: {fileID: 11500000, guid: 842abee1e568927408f98033166c2504, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_ApplyAfter: 2
   m_ChannelMask: 1
   m_Gain: 1
   m_Use2DDistance: 0
-  m_UseCameraSpace: 0
+  m_UseCameraSpace: 1
   m_ReactionSettings:
     m_SecondaryNoise: {fileID: 0}
-    m_AmplitudeGain: 0
-    m_FrequencyGain: 0
-    m_Duration: 0
-    m_NoiseOffsets: {x: 610.68726, y: 761.3756, z: 158.27429}
+    m_AmplitudeGain: 1
+    m_FrequencyGain: 1
+    m_Duration: 1
+    m_NoiseOffsets: {x: 0, y: 0, z: 0}
+  m_Target: {fileID: 8052311718773652581}
 --- !u!1001 &4923456541205530940
 PrefabInstance:
   m_ObjectHideFlags: 0
