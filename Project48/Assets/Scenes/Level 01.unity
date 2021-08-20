@@ -463,7 +463,7 @@ MonoBehaviour:
   dollChance: 0
   _2x2ColumnChance: 0.25
   minInsectSeparation: 5
-  insectPrefab: {fileID: 4899903623646807888, guid: 9660bc8bd0e56834c9f69a94ae7277a1, type: 3}
+  insectPrefab: {fileID: 4899903623646807888, guid: de055a5aa554a674aba38d318268a687, type: 3}
   minGiantHalfSeparation: 7
   giantPrefab: {fileID: 2428747410710552272, guid: dcf91c45a10b53d409c58b21c9e59458, type: 3}
   corridorFloorPrefab: {fileID: 634900085634603167, guid: c63b853af646d4a41922de49c6d46be0, type: 3}

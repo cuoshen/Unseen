@@ -208,6 +208,7 @@ public class MazeGenerator : MonoBehaviour
 
         Transform start = Instantiate(startPrefab, transform);
         start.localPosition = lastEndPos;
+        lastEndPos += new Vector3(-1, 0, 3);
 
         GenerateConnector();
 

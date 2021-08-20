@@ -3735,7 +3735,7 @@ GameObject:
   - component: {fileID: 3146788590200104919}
   - component: {fileID: 7656918176493510873}
   m_Layer: 8
-  m_Name: kiwi
+  m_Name: Insect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
