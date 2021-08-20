@@ -155,11 +155,17 @@ public static class Algorithms
 		return new Vector3(coord.x, 0, coord.y);
     }
 
+	/// <summary>
+	/// Return true if in map range
+	/// </summary>
 	public static bool CheckInMapRange(Vector2Int coord, Vector2Int mapSize, int border = 0)
 	{
 		return coord.x >= border && coord.x < mapSize.x - border && coord.y >= border && coord.y < mapSize.y - border;
 	}
 
+	/// <summary>
+	/// Return true if outside of min separation.
+	/// </summary>
 	public static bool CheckMinSeparation(List<Vector3> positions, Vector3 newPosition, float minSeparation)
     {
 		if (positions != null)

@@ -70,6 +70,8 @@ public class MazeGenerator : MonoBehaviour
     [SerializeField]
     Transform corridorWallPrefab;
     [SerializeField]
+    Transform corridorFenceDoorPrefab;
+    [SerializeField]
     Transform corridorLightPrefab;
     [SerializeField]
     Transform voidFencePrefab;
@@ -81,6 +83,8 @@ public class MazeGenerator : MonoBehaviour
     int maxVoidSize;
     [SerializeField]
     float voidChance;
+    [SerializeField]
+    float fenceDoorChance;
     #endregion
     #region Compartments Generation Parameters
     [Header("Compartments Generation")]
@@ -440,14 +444,15 @@ public class MazeGenerator : MonoBehaviour
                     newFloor.localScale = new Vector3(0.1f, 0.1f, 0.1f);
                 }
 
-                if (map[i, j] == 1 && new Vector2Int(i, j) != startCoord && new Vector2Int(i, j) != endCoord)
+                if (map[i, j] == 1 && coord != startCoord && coord != endCoord)
                 {
+                    // Generate Walls
                     Transform newWall = Instantiate(corridorWallPrefab, mapTransform);
                     newWall.localPosition = position;
                 }
-                
+
                 // Do not generate light or enemies inside walls, at start and end, or within rooms
-                if (map[i, j] == 0 && new Vector2Int(i, j - 1) != startCoord && new Vector2Int(i, j + 1) != endCoord
+                if (map[i, j] == 0 && coord + new Vector2Int(0, -1) != startCoord && coord + new Vector2Int(0, 1) != endCoord
                     && allRooms.FindIndex(d => d.Area.Contains(coord)) == -1)
                 {
                     List<int> wallTypeList = new List<int>();
@@ -494,6 +499,19 @@ public class MazeGenerator : MonoBehaviour
                 }
             }
 
+        // Chance to generate fence door below lights on the visible wall without connection to another room.
+        for (int j = 0; j < mapSize.y; j++)
+        {
+            Vector3 position = new Vector3(-mapSize.x / 2, 0, -mapSize.y / 2 + j);
+
+            if (!CheckMinSeparation(lightPositions, position, 1.1f) && UnityEngine.Random.Range(0f, 1f) < fenceDoorChance)
+            {
+                Transform newFenceDoor = Instantiate(corridorFenceDoorPrefab, mapTransform);
+                newFenceDoor.localPosition = position;
+                newFenceDoor.localEulerAngles = new Vector3(0, -90, 0);
+            }
+        }
+        
         // Generate compartments
         foreach (RectRoom room in newRooms)
         {

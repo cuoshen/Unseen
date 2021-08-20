@@ -468,12 +468,14 @@ MonoBehaviour:
   giantPrefab: {fileID: 2428747410710552272, guid: dcf91c45a10b53d409c58b21c9e59458, type: 3}
   corridorFloorPrefab: {fileID: 634900085634603167, guid: c63b853af646d4a41922de49c6d46be0, type: 3}
   corridorWallPrefab: {fileID: 8587853897269320152, guid: 7e23e3dc6062f7a48842cef9783005cb, type: 3}
+  corridorFenceDoorPrefab: {fileID: 8587853897269320152, guid: 1ced7e8eca67a2a4b9e1f07cdbad1375, type: 3}
   corridorLightPrefab: {fileID: 8200740889749337584, guid: 518742c4e3450464492a4fa6c8f6a8c1, type: 3}
   voidFencePrefab: {fileID: 6712452873545065672, guid: 207cbd2415291844dadef488d718a61c, type: 3}
   voidLightPrefab: {fileID: 7285017026454675818, guid: 947a8c0b200a4ef459a521aafd5746a2, type: 3}
   minCorridorLightSeparation: 2
   maxVoidSize: 4
   voidChance: 0.6
+  fenceDoorChance: 0.2
   compWallPrefab: {fileID: 7599237671437475100, guid: 74e6de8e5b70c384ea5644d7429ceb19, type: 3}
   compDoorPrefab: {fileID: 5258459713980368692, guid: b00e1cdb01cbd8946ab98ac205e8ec21, type: 3}
   compLightPrefab: {fileID: 7621400432342485398, guid: 0ec480ffdad4b2c44b6dff7f2f77fba9, type: 3}
