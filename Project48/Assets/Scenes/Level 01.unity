@@ -454,6 +454,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seed: 88
   useSeed: 1
+  roomPrefab: {fileID: 5118989898073772315, guid: 170fe422f7ce5c64d8a625681a452639, type: 3}
   startPrefab: {fileID: 4459196779015730797, guid: cf6767f6c193e954b811cd2de006a999, type: 3}
   endPrefab: {fileID: 6708590964914837869, guid: e462882065328ca4fa37c5e134cf0e3e, type: 3}
   connectorPrefab: {fileID: 8302508908966622360, guid: 1f826802e2addfe48a37974c0e7e78d9, type: 3}
@@ -529,6 +530,63 @@ MonoBehaviour:
   walls: {fileID: 0}
   cave: {fileID: 0}
   is2D: 0
+--- !u!1001 &101065526905590222
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5118989898073772315, guid: 170fe422f7ce5c64d8a625681a452639, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5118989898073772315, guid: 170fe422f7ce5c64d8a625681a452639, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5118989898073772315, guid: 170fe422f7ce5c64d8a625681a452639, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5118989898073772315, guid: 170fe422f7ce5c64d8a625681a452639, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5118989898073772315, guid: 170fe422f7ce5c64d8a625681a452639, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5118989898073772315, guid: 170fe422f7ce5c64d8a625681a452639, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5118989898073772315, guid: 170fe422f7ce5c64d8a625681a452639, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5118989898073772315, guid: 170fe422f7ce5c64d8a625681a452639, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5118989898073772315, guid: 170fe422f7ce5c64d8a625681a452639, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5118989898073772315, guid: 170fe422f7ce5c64d8a625681a452639, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5118989898073772315, guid: 170fe422f7ce5c64d8a625681a452639, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8575105012132085495, guid: 170fe422f7ce5c64d8a625681a452639, type: 3}
+      propertyPath: m_Name
+      value: Room
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 170fe422f7ce5c64d8a625681a452639, type: 3}
 --- !u!1001 &4875967315716232579
 PrefabInstance:
   m_ObjectHideFlags: 0
