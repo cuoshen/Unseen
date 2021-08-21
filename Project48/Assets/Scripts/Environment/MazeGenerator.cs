@@ -284,7 +284,7 @@ public class MazeGenerator : MonoBehaviour
                 floor.localPosition += new Vector3(-0.5f, 0, 0);
             if (mapSize.y % 2 == 0)
                 floor.localPosition += new Vector3(0, 0, -0.5f);
-            floor.localScale = new Vector3(mapSize.x * 0.1f, 1, mapSize.y * 0.1f);
+            floor.localScale = new Vector3(mapSize.x, 1, mapSize.y);
         }
 
         // Generate walls with openings at startPos and endPos
@@ -352,46 +352,6 @@ public class MazeGenerator : MonoBehaviour
         return mapTransform;
     }
 
-    void GenerateConnector()
-    {
-        Transform connector = Instantiate(connectorPrefab, transform);
-        connector.localPosition = lastEndPos;
-        lastEndPos += new Vector3(0, 0.12f, 1.6f);
-    }
-
-    void GenerateTrainTrack()
-    {
-        Transform trainTrack = Instantiate(trainPrefab, transform);
-        trainTrack.localPosition = lastEndPos;
-        trainTrack.localEulerAngles = new Vector3(0, 180, 0);
-        lastEndPos += new Vector3(0, 0, 1);
-    }
-
-    List<Vector2Int> GenerateLightOnOutlineBySeparation(int[,] map, Transform mapTransform, Transform lightPrefab, int minSeparation, float scale = 1)
-    {
-        Vector2Int mapSize = new Vector2Int(map.GetLength(0), map.GetLength(1));
-
-        List<Region> regions = GetRegions(0, map);
-        List<Vector3> lightPositions = new List<Vector3>();
-        List<Vector2Int> lightCoords = new List<Vector2Int>();
-        foreach (DirectionalTile outline in regions[0].Outline)
-        {
-            Vector3 position = (new Vector3(-mapSize.x / 2 + outline.Position.x + 0.5f, 0, -mapSize.y / 2 + outline.Position.y + 0.5f)
-                + Coord2PosXZ(Offset4[GetOpposite(outline.Direction)]) * 0.5f) * scale + new Vector3(-0.5f, 0, -0.5f);
-
-            if (CheckMinSeparation(lightPositions, position, minSeparation))
-            {
-                Transform newLight = Instantiate(lightPrefab, mapTransform);
-                newLight.localPosition = position;
-                newLight.localEulerAngles = Angle4[outline.Direction];
-                lightPositions.Add(position);
-                lightCoords.Add(outline.Position);
-            }
-        }
-
-        return lightCoords;
-    }
-
     void GenerateCorridorMaze(Vector2Int mazeSize)
     {
         Direction4[,] maze = RecursiveBacktracker(mazeSize);
@@ -446,7 +406,6 @@ public class MazeGenerator : MonoBehaviour
                 {
                     Transform newFloor = Instantiate(corridorFloorPrefab, mapTransform);
                     newFloor.localPosition = position;
-                    newFloor.localScale = new Vector3(0.1f, 0.1f, 0.1f);
                 }
 
                 if (map[i, j] == 1 && coord != startCoord && coord != endCoord)
@@ -687,6 +646,11 @@ public class MazeGenerator : MonoBehaviour
             }
     }
 
+    void GenerateSinglePassway()
+    {
+
+    }
+
     void GenerateCave(Vector2Int mapSize)
     {
         Transform mapTransform = GenerateBasic(caveFloorPrefab, caveWallPrefab, AudioReverbPreset.Cave, mapSize / 2, out Vector2Int startPos, out Vector2Int endPos, d => true, 2);
@@ -833,5 +797,49 @@ public class MazeGenerator : MonoBehaviour
                 }
             }
     }
+    #endregion
+
+    #region Misc Generation
+
+    void GenerateConnector()
+    {
+        Transform connector = Instantiate(connectorPrefab, transform);
+        connector.localPosition = lastEndPos;
+        lastEndPos += new Vector3(0, 0.12f, 1.6f);
+    }
+
+    void GenerateTrainTrack()
+    {
+        Transform trainTrack = Instantiate(trainPrefab, transform);
+        trainTrack.localPosition = lastEndPos;
+        trainTrack.localEulerAngles = new Vector3(0, 180, 0);
+        lastEndPos += new Vector3(0, 0, 1);
+    }
+
+    List<Vector2Int> GenerateLightOnOutlineBySeparation(int[,] map, Transform mapTransform, Transform lightPrefab, int minSeparation, float scale = 1)
+    {
+        Vector2Int mapSize = new Vector2Int(map.GetLength(0), map.GetLength(1));
+
+        List<Region> regions = GetRegions(0, map);
+        List<Vector3> lightPositions = new List<Vector3>();
+        List<Vector2Int> lightCoords = new List<Vector2Int>();
+        foreach (DirectionalTile outline in regions[0].Outline)
+        {
+            Vector3 position = (new Vector3(-mapSize.x / 2 + outline.Position.x + 0.5f, 0, -mapSize.y / 2 + outline.Position.y + 0.5f)
+                + Coord2PosXZ(Offset4[GetOpposite(outline.Direction)]) * 0.5f) * scale + new Vector3(-0.5f, 0, -0.5f);
+
+            if (CheckMinSeparation(lightPositions, position, minSeparation))
+            {
+                Transform newLight = Instantiate(lightPrefab, mapTransform);
+                newLight.localPosition = position;
+                newLight.localEulerAngles = Angle4[outline.Direction];
+                lightPositions.Add(position);
+                lightCoords.Add(outline.Position);
+            }
+        }
+
+        return lightCoords;
+    }
+
     #endregion
 }

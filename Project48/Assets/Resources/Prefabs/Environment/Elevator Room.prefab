@@ -2318,26 +2318,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Corridor Light Hanging (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 2451622640524229027, guid: 72f33444ba194ef4eaa7cd78e114812c, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2451622640524229027, guid: 72f33444ba194ef4eaa7cd78e114812c, type: 3}
-      propertyPath: m_Materials.Array.data[1]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5190887349464738890, guid: 72f33444ba194ef4eaa7cd78e114812c, type: 3}
-      propertyPath: m_BoundingSphereOverride.w
-      value: 1e-45
-      objectReference: {fileID: 0}
-    - target: {fileID: 5190887349464738890, guid: 72f33444ba194ef4eaa7cd78e114812c, type: 3}
-      propertyPath: m_BoundingSphereOverride.x
-      value: NaN
-      objectReference: {fileID: 0}
-    - target: {fileID: 5190887349464738890, guid: 72f33444ba194ef4eaa7cd78e114812c, type: 3}
-      propertyPath: m_BoundingSphereOverride.y
-      value: 1.06e-43
-      objectReference: {fileID: 0}
     - target: {fileID: 8200740889749337584, guid: 72f33444ba194ef4eaa7cd78e114812c, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -2381,10 +2361,6 @@ PrefabInstance:
     - target: {fileID: 8200740889749337584, guid: 72f33444ba194ef4eaa7cd78e114812c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8613801690892753660, guid: 72f33444ba194ef4eaa7cd78e114812c, type: 3}
-      propertyPath: m_Mesh
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72f33444ba194ef4eaa7cd78e114812c, type: 3}
@@ -2700,30 +2676,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Corridor Light Hanging
       objectReference: {fileID: 0}
-    - target: {fileID: 2451622640524229027, guid: 72f33444ba194ef4eaa7cd78e114812c, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2451622640524229027, guid: 72f33444ba194ef4eaa7cd78e114812c, type: 3}
-      propertyPath: m_Materials.Array.data[1]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5190887349464738890, guid: 72f33444ba194ef4eaa7cd78e114812c, type: 3}
-      propertyPath: m_BoundingSphereOverride.w
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5190887349464738890, guid: 72f33444ba194ef4eaa7cd78e114812c, type: 3}
-      propertyPath: m_BoundingSphereOverride.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5190887349464738890, guid: 72f33444ba194ef4eaa7cd78e114812c, type: 3}
-      propertyPath: m_BoundingSphereOverride.y
-      value: 3e-45
-      objectReference: {fileID: 0}
-    - target: {fileID: 5190887349464738890, guid: 72f33444ba194ef4eaa7cd78e114812c, type: 3}
-      propertyPath: m_BoundingSphereOverride.z
-      value: 4.2e-44
-      objectReference: {fileID: 0}
     - target: {fileID: 8200740889749337584, guid: 72f33444ba194ef4eaa7cd78e114812c, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -2767,10 +2719,6 @@ PrefabInstance:
     - target: {fileID: 8200740889749337584, guid: 72f33444ba194ef4eaa7cd78e114812c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8613801690892753660, guid: 72f33444ba194ef4eaa7cd78e114812c, type: 3}
-      propertyPath: m_Mesh
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72f33444ba194ef4eaa7cd78e114812c, type: 3}

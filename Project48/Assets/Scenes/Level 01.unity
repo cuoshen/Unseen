@@ -467,7 +467,7 @@ MonoBehaviour:
   insectPrefab: {fileID: 4899903623646807888, guid: de055a5aa554a674aba38d318268a687, type: 3}
   minGiantHalfSeparation: 7
   giantPrefab: {fileID: 2428747410710552272, guid: dcf91c45a10b53d409c58b21c9e59458, type: 3}
-  corridorFloorPrefab: {fileID: 634900085634603167, guid: c63b853af646d4a41922de49c6d46be0, type: 3}
+  corridorFloorPrefab: {fileID: 1956282064550222334, guid: 3394a408753d7084fa3a5f6c2f82ed14, type: 3}
   corridorWallPrefab: {fileID: 8587853897269320152, guid: 7e23e3dc6062f7a48842cef9783005cb, type: 3}
   corridorFenceDoorPrefab: {fileID: 8587853897269320152, guid: 1ced7e8eca67a2a4b9e1f07cdbad1375, type: 3}
   corridorLightPrefab: {fileID: 8200740889749337584, guid: 518742c4e3450464492a4fa6c8f6a8c1, type: 3}
@@ -490,7 +490,7 @@ MonoBehaviour:
   blizzardFloorPrefab: {fileID: 0}
   blizzardWallPrefab: {fileID: 0}
   blizzardLightPrefab: {fileID: 0}
-  caveFloorPrefab: {fileID: 634900085634603167, guid: c2536af29a86e154f82a0b8789b78493, type: 3}
+  caveFloorPrefab: {fileID: 4078646528923912789, guid: c58e1bdff9a3d2847a06c0dfedaae780, type: 3}
   caveWallPrefab: {fileID: 4433460659094003551, guid: b67c2ac47f9f96847926d01ed4d792d2, type: 3}
   caveRoofMeshPrefab: {fileID: 2443116424865806980, guid: 0a8df23ccf200814ab8f1108bb4ebc88, type: 3}
   caveWallMeshPrefab: {fileID: 1013605822122728790, guid: 59589664d4ebef34d8d062e3ddaf1027, type: 3}
@@ -530,63 +530,6 @@ MonoBehaviour:
   walls: {fileID: 0}
   cave: {fileID: 0}
   is2D: 0
---- !u!1001 &101065526905590222
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 5118989898073772315, guid: 170fe422f7ce5c64d8a625681a452639, type: 3}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 5118989898073772315, guid: 170fe422f7ce5c64d8a625681a452639, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5118989898073772315, guid: 170fe422f7ce5c64d8a625681a452639, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5118989898073772315, guid: 170fe422f7ce5c64d8a625681a452639, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5118989898073772315, guid: 170fe422f7ce5c64d8a625681a452639, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5118989898073772315, guid: 170fe422f7ce5c64d8a625681a452639, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5118989898073772315, guid: 170fe422f7ce5c64d8a625681a452639, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5118989898073772315, guid: 170fe422f7ce5c64d8a625681a452639, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5118989898073772315, guid: 170fe422f7ce5c64d8a625681a452639, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5118989898073772315, guid: 170fe422f7ce5c64d8a625681a452639, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5118989898073772315, guid: 170fe422f7ce5c64d8a625681a452639, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8575105012132085495, guid: 170fe422f7ce5c64d8a625681a452639, type: 3}
-      propertyPath: m_Name
-      value: Room
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 170fe422f7ce5c64d8a625681a452639, type: 3}
 --- !u!1001 &4875967315716232579
 PrefabInstance:
   m_ObjectHideFlags: 0
