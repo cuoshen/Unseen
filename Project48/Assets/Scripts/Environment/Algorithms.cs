@@ -364,10 +364,10 @@ public static class Algorithms
 	}
 
 	/// <summary>
-	/// Attempts a connector. This function does not change the values of the map.
+	/// Attempts a connector. This function does not change the values of the map. If isOdd, then length is used as half length.
 	/// </summary>
 	/// <param name="type"> Connect regions of this type of tiles </param>
-	static List<DirectionalTile> ConnectorAttempt(int type, DirectionalTile start, int[,] map, int minSegmentLength, int maxSegmentLength, int minTurnLimit, int maxTurnLimit, out bool isDeadEnd)
+	static List<DirectionalTile> ConnectorAttempt(int type, DirectionalTile start, int[,] map, int minSegmentLength, int maxSegmentLength, int minTurnLimit, int maxTurnLimit, out bool isDeadEnd, bool isOdd = false)
 	{
 		Vector2Int mapSize = new Vector2Int(map.GetLength(0), map.GetLength(1));
 		List<DirectionalTile> corridor = new List<DirectionalTile>();
@@ -379,7 +379,11 @@ public static class Algorithms
 		while (turns >= 0)
         {
 			turns--;
-			int segmentLength = UnityEngine.Random.Range(minSegmentLength, maxSegmentLength);
+			int segmentLength;
+			if (isOdd)
+				segmentLength = UnityEngine.Random.Range(minSegmentLength, maxSegmentLength) * 2 + 2;
+			else
+				segmentLength = UnityEngine.Random.Range(minSegmentLength, maxSegmentLength);
 
 			while (segmentLength > 0)
             {
@@ -424,11 +428,12 @@ public static class Algorithms
 	/// Connect all regions for a specific type of tiles.
 	/// </summary>
 	/// <param name="type"> Connect all regions for this type of tiles </param>
-	public static int[,] ConnectRegions(int type, int[,] map, int minSegmentLength, int maxSegmentLength, int minTurnLimit, int maxTurnLimit, bool infiniteAttempts = false, List<Region> unconnectedRegions = null)
+	public static int[,] ConnectRegions(int type, int[,] map, int minSegmentLength, int maxSegmentLength, int minTurnLimit, int maxTurnLimit, out List<List<DirectionalTile>> connectorList, bool isOdd = false, bool infiniteAttempts = false, List<Region> unconnectedRegions = null)
     {
 		if (unconnectedRegions == null)
 			unconnectedRegions = GetRegions(type, map);
 		List<Region> connectedRegions = new List<Region>();
+		connectorList = new List<List<DirectionalTile>>();
 
 		if (unconnectedRegions.Count > 0)
 		{
@@ -448,7 +453,7 @@ public static class Algorithms
 				randIndex = UnityEngine.Random.Range(0, region.Outline.Count);
 				DirectionalTile start = region.Outline[randIndex];
 
-                List<DirectionalTile> connector = ConnectorAttempt(type, start, map, minSegmentLength, maxSegmentLength, minTurnLimit, maxTurnLimit, out bool isDeadEnd);
+                List<DirectionalTile> connector = ConnectorAttempt(type, start, map, minSegmentLength, maxSegmentLength, minTurnLimit, maxTurnLimit, out bool isDeadEnd, isOdd);
 
                 if (connector != null && !isDeadEnd)
                 {
@@ -461,9 +466,10 @@ public static class Algorithms
 							foreach (DirectionalTile tile in connector)
 								map[tile.Position.x, tile.Position.y] = type;
 
-							// update connected and unconnected regions
+							// update connected and unconnected regions and corridor list
 							connectedRegions.Add(unconnectedRegions[i]);
 							unconnectedRegions.RemoveAt(i);
+							connectorList.Add(connector);
 
 							break;
                         }
@@ -772,74 +778,30 @@ public static class Algorithms
 	}
     #endregion
 
-	public static int[,] SinglePassway(Vector2Int mapSize, out Vector2Int startCoord, out Vector2Int endCoord, int minSegmentLength, int maxSegmentLength, int minTurnLimit, int maxTurnLimit)
+	public static int[,] SinglePassway(Vector2Int mapSize, out Vector2Int startCoord, out Vector2Int endCoord, out List<DirectionalTile> passway, int minHalfSegmentLength, int maxHalfSegmentLength, int minTurnLimit, int maxTurnLimit)
 	{
-		startCoord = new Vector2Int();
-		endCoord = new Vector2Int();
+		int[,] map;
 
-		int[,] map = new int[mapSize.x, mapSize.y];
-
-		for (int i = 0; i < mapSize.x; i++)
+		do
 		{
-			map[i, 0] = 0;
-			map[i, mapSize.y - 1] = 0;
-		}
+			map = new int[mapSize.x, mapSize.y];
 
-		for (int i = 0; i < mapSize.x; i++)
-			for (int j = 1; j < mapSize.y - 1; j++)
-				map[i, j] = 1;
-
-		map = ConnectRegions(0, map, minSegmentLength, maxSegmentLength, minTurnLimit, maxTurnLimit/*, true*/);
-
-		List<Vector2Int> startCoord_ = new List<Vector2Int>();
-		List<Vector2Int> _endCoord = new List<Vector2Int>();
-		for (int i = 0; i < mapSize.x; i++)
-        {
-			if (map[i, 1] == 0)
-				startCoord_.Add(new Vector2Int(i, 1));
-			if (map[i, mapSize.y - 2] == 0)
-				_endCoord.Add(new Vector2Int(i, mapSize.y - 2));
-		}
-
-		if (startCoord_.Count > 1)
-		{
-			for (int i = 0; i < mapSize.x; i++)
-            {
-				if (map[i, 2] == 0)
-                {
-					if (i == 0 || map[i + 1, 2] == 0)
-						startCoord = new Vector2Int(startCoord_.Last().x, 0);
-					else
-						startCoord = new Vector2Int(startCoord_[0].x, 0);
-				}
-			}
-		}
-		else
-			startCoord = new Vector2Int(startCoord_[0].x, 0);
-
-		if (_endCoord.Count > 1)
-		{
 			for (int i = 0; i < mapSize.x; i++)
 			{
-				if (map[i, 2] == 0)
-				{
-					if (i == 0 || map[i + 1, mapSize.y - 3] == 0)
-						endCoord = new Vector2Int(_endCoord.Last().x, mapSize.y - 1);
-					else
-						endCoord = new Vector2Int(_endCoord[0].x, mapSize.y - 1);
-				}
+				map[i, 0] = 0;
+				map[i, mapSize.y - 1] = 0;
 			}
-		}
-		else
-			endCoord = new Vector2Int(_endCoord[0].x, mapSize.y - 1);
 
-		for (int i = 0; i < mapSize.x; i++)
-		{
-			if (i != startCoord.x)
-				map[i, 0] = 1;
-			if (i != endCoord.x)
-				map[i, mapSize.y - 1] = 1;
-		}
+			for (int i = 0; i < mapSize.x; i++)
+				for (int j = 1; j < mapSize.y - 1; j++)
+					map[i, j] = 1;
+
+			map = ConnectRegions(0, map, minHalfSegmentLength, maxHalfSegmentLength, minTurnLimit, maxTurnLimit, out List<List<DirectionalTile>> passwayList, true, true);
+			passway = passwayList[0];
+		} while (passway[0].Position.y > passway.Last().Position.y);
+
+		startCoord = passway[0].Position + new Vector2Int(0, -1);
+		endCoord = passway.Last().Position;
 
 		return map;
 	}
