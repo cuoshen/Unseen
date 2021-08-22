@@ -815,7 +815,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5258459713980368693}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 884974c7b34ea214b9e0392df09f3f2d, type: 2}
   m_CullingMode: 0
@@ -1520,6 +1520,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5258459713980368692}
     m_Modifications:
+    - target: {fileID: 7217095991834729284, guid: d649444a5f27dac4e9c47acef3abfcf2, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8304056354369720511, guid: d649444a5f27dac4e9c47acef3abfcf2, type: 3}
       propertyPath: m_RootOrder
       value: 4
