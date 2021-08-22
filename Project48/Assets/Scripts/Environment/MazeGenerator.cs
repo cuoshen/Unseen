@@ -33,6 +33,8 @@ public class MazeGenerator : MonoBehaviour
     #region General Parameters
     [Header("General")]
     [SerializeField]
+    Transform roomPrefab;
+    [SerializeField]
     Transform startPrefab;
     [SerializeField]
     Transform endPrefab;
@@ -70,6 +72,8 @@ public class MazeGenerator : MonoBehaviour
     [SerializeField]
     Transform corridorWallPrefab;
     [SerializeField]
+    Transform corridorFenceDoorPrefab;
+    [SerializeField]
     Transform corridorLightPrefab;
     [SerializeField]
     Transform voidFencePrefab;
@@ -81,6 +85,8 @@ public class MazeGenerator : MonoBehaviour
     int maxVoidSize;
     [SerializeField]
     float voidChance;
+    [SerializeField]
+    float fenceDoorChance;
     #endregion
     #region Compartments Generation Parameters
     [Header("Compartments Generation")]
@@ -208,6 +214,7 @@ public class MazeGenerator : MonoBehaviour
 
         Transform start = Instantiate(startPrefab, transform);
         start.localPosition = lastEndPos;
+        lastEndPos += new Vector3(-1, 0, 3);
 
         GenerateConnector();
 
@@ -252,7 +259,7 @@ public class MazeGenerator : MonoBehaviour
     /// <param name="startCoord"> Local x-z coordinate of the entrance of current maze </param>
     /// <param name="endCoord"> Local x-z coordinate of the exit of current maze </param>
     /// <param name="border"> Boundary of start/end spawn </param>
-    Transform GenerateBasic(Transform floorprefab, Transform wallPrefab, Vector2Int mapSize, out Vector2Int startCoord, out Vector2Int endCoord, CoordCriteria startEndCriteria, int border = 0)
+    Transform GenerateBasic(Transform floorprefab, Transform wallPrefab, AudioReverbPreset reverbPreset, Vector2Int mapSize, out Vector2Int startCoord, out Vector2Int endCoord, CoordCriteria startEndCriteria, int border = 0)
     {
         do
             startCoord = new Vector2Int(UnityEngine.Random.Range(border, mapSize.x - border), 0);
@@ -262,9 +269,12 @@ public class MazeGenerator : MonoBehaviour
         while (!startEndCriteria(endCoord) || Math.Abs(endCoord.x - startCoord.x) < 2);
 
         // Generate empty parent object
-        Transform mapTransform = new GameObject("Room").transform;
-        mapTransform.SetParent(transform);
+        Transform mapTransform = Instantiate(roomPrefab, transform);
         mapTransform.localPosition = new Vector3(mapSize.x / 2 - startCoord.x, 0, mapSize.y / 2 - startCoord.y) + lastEndPos;
+        AudioReverbZone reverb = mapTransform.GetComponent<AudioReverbZone>();
+        reverb.minDistance = Mathf.Min(mapSize.x / 2, mapSize.y / 2);
+        reverb.maxDistance = Mathf.Max(mapSize.x / 2, mapSize.y / 2);
+        reverb.reverbPreset = reverbPreset;
 
         // Generate floor
         if (floorprefab)
@@ -274,7 +284,7 @@ public class MazeGenerator : MonoBehaviour
                 floor.localPosition += new Vector3(-0.5f, 0, 0);
             if (mapSize.y % 2 == 0)
                 floor.localPosition += new Vector3(0, 0, -0.5f);
-            floor.localScale = new Vector3(mapSize.x * 0.1f, 1, mapSize.y * 0.1f);
+            floor.localScale = new Vector3(mapSize.x, 1, mapSize.y);
         }
 
         // Generate walls with openings at startPos and endPos
@@ -342,46 +352,6 @@ public class MazeGenerator : MonoBehaviour
         return mapTransform;
     }
 
-    void GenerateConnector()
-    {
-        Transform connector = Instantiate(connectorPrefab, transform);
-        connector.localPosition = lastEndPos;
-        lastEndPos += new Vector3(0, 0.12f, 1.6f);
-    }
-
-    void GenerateTrainTrack()
-    {
-        Transform trainTrack = Instantiate(trainPrefab, transform);
-        trainTrack.localPosition = lastEndPos;
-        trainTrack.localEulerAngles = new Vector3(0, 180, 0);
-        lastEndPos += new Vector3(0, 0, 1);
-    }
-
-    List<Vector2Int> GenerateLightOnOutlineBySeparation(int[,] map, Transform mapTransform, Transform lightPrefab, int minSeparation, float scale = 1)
-    {
-        Vector2Int mapSize = new Vector2Int(map.GetLength(0), map.GetLength(1));
-
-        List<Region> regions = GetRegions(0, map);
-        List<Vector3> lightPositions = new List<Vector3>();
-        List<Vector2Int> lightCoords = new List<Vector2Int>();
-        foreach (DirectionalTile outline in regions[0].Outline)
-        {
-            Vector3 position = (new Vector3(-mapSize.x / 2 + outline.Position.x + 0.5f, 0, -mapSize.y / 2 + outline.Position.y + 0.5f)
-                + Coord2PosXZ(Offset4[GetOpposite(outline.Direction)]) * 0.5f) * scale + new Vector3(-0.5f, 0, -0.5f);
-
-            if (CheckMinSeparation(lightPositions, position, minSeparation))
-            {
-                Transform newLight = Instantiate(lightPrefab, mapTransform);
-                newLight.localPosition = position;
-                newLight.localEulerAngles = Angle4[outline.Direction];
-                lightPositions.Add(position);
-                lightCoords.Add(outline.Position);
-            }
-        }
-
-        return lightCoords;
-    }
-
     void GenerateCorridorMaze(Vector2Int mazeSize)
     {
         Direction4[,] maze = RecursiveBacktracker(mazeSize);
@@ -392,7 +362,7 @@ public class MazeGenerator : MonoBehaviour
         map = OpenDeadEnds(0, map);
 
         Vector2Int mapSize = new Vector2Int(map.GetLength(0), map.GetLength(1));
-        Transform mapTransform = GenerateBasic(null, null, mapSize, out Vector2Int startCoord, out Vector2Int endCoord, d => d.x % 2 == 1, 2);
+        Transform mapTransform = GenerateBasic(null, null, AudioReverbPreset.Hallway, mapSize, out Vector2Int startCoord, out Vector2Int endCoord, d => d.x % 2 == 1, 2);
 
         // Generate void
         List<Region> impassableRegions = GetRegions(1, map);
@@ -436,17 +406,17 @@ public class MazeGenerator : MonoBehaviour
                 {
                     Transform newFloor = Instantiate(corridorFloorPrefab, mapTransform);
                     newFloor.localPosition = position;
-                    newFloor.localScale = new Vector3(0.1f, 0.1f, 0.1f);
                 }
 
-                if (map[i, j] == 1 && new Vector2Int(i, j) != startCoord && new Vector2Int(i, j) != endCoord)
+                if (map[i, j] == 1 && coord != startCoord && coord != endCoord)
                 {
+                    // Generate Walls
                     Transform newWall = Instantiate(corridorWallPrefab, mapTransform);
                     newWall.localPosition = position;
                 }
-                
+
                 // Do not generate light or enemies inside walls, at start and end, or within rooms
-                if (map[i, j] == 0 && new Vector2Int(i, j - 1) != startCoord && new Vector2Int(i, j + 1) != endCoord
+                if (map[i, j] == 0 && coord + new Vector2Int(0, -1) != startCoord && coord + new Vector2Int(0, 1) != endCoord
                     && allRooms.FindIndex(d => d.Area.Contains(coord)) == -1)
                 {
                     List<int> wallTypeList = new List<int>();
@@ -493,6 +463,19 @@ public class MazeGenerator : MonoBehaviour
                 }
             }
 
+        // Chance to generate fence door below lights on the visible wall without connection to another room.
+        for (int j = 0; j < mapSize.y; j++)
+        {
+            Vector3 position = new Vector3(-mapSize.x / 2, 0, -mapSize.y / 2 + j);
+
+            if (!CheckMinSeparation(lightPositions, position, 1.1f) && UnityEngine.Random.Range(0f, 1f) < fenceDoorChance)
+            {
+                Transform newFenceDoor = Instantiate(corridorFenceDoorPrefab, mapTransform);
+                newFenceDoor.localPosition = position;
+                newFenceDoor.localEulerAngles = new Vector3(0, -90, 0);
+            }
+        }
+        
         // Generate compartments
         foreach (RectRoom room in newRooms)
         {
@@ -599,14 +582,14 @@ public class MazeGenerator : MonoBehaviour
 
     void GenerateDollRoom(Vector2Int mapSize)
     {
-        Transform mapTransform = GenerateBasic(dollFloorPrefab, dollWallPrefab, mapSize * 2, out _, out _, d => true);
+        Transform mapTransform = GenerateBasic(dollFloorPrefab, dollWallPrefab, AudioReverbPreset.Livingroom, mapSize * 2, out _, out _, d => true);
         Direction4[,] maze = RecursiveBacktracker(mapSize);
 
     }
 
     void GenerateBlizzardRoom(Vector2Int mazeSize)
     {
-        Transform mazeTransform = GenerateBasic(blizzardFloorPrefab, blizzardWallPrefab, mazeSize, out Vector2Int startCoord, out Vector2Int endCoord, d => true, 0);
+        Transform mazeTransform = GenerateBasic(blizzardFloorPrefab, blizzardWallPrefab, AudioReverbPreset.Forest, mazeSize, out Vector2Int startCoord, out Vector2Int endCoord, d => true, 0);
         Direction4[,] maze = RecursiveBacktracker(mazeSize);
 
         List<Vector3> kiwiPositions = new List<Vector3>();
@@ -663,9 +646,14 @@ public class MazeGenerator : MonoBehaviour
             }
     }
 
+    void GenerateSinglePassway()
+    {
+
+    }
+
     void GenerateCave(Vector2Int mapSize)
     {
-        Transform mapTransform = GenerateBasic(caveFloorPrefab, caveWallPrefab, mapSize / 2, out Vector2Int startPos, out Vector2Int endPos, d => true, 2);
+        Transform mapTransform = GenerateBasic(caveFloorPrefab, caveWallPrefab, AudioReverbPreset.Cave, mapSize / 2, out Vector2Int startPos, out Vector2Int endPos, d => true, 2);
 
         int[,][] setting = new int[mapSize.x, mapSize.y][];
         for (int x = 0; x < mapSize.x; x++)
@@ -786,7 +774,7 @@ public class MazeGenerator : MonoBehaviour
 
     void GenerateColumnarMaze(Vector2Int mapSize)
     {
-        Transform mapTransform = GenerateBasic(caveFloorPrefab, caveWallPrefab, mapSize * 4, out _, out _, d => true);
+        Transform mapTransform = GenerateBasic(caveFloorPrefab, caveWallPrefab, AudioReverbPreset.Cave, mapSize * 4, out _, out _, d => true);
         int[,] maze = Columnar(mapSize, _2x2ColumnChance);
 
         for (int i = 0; i < mapSize.x; i++)
@@ -809,5 +797,49 @@ public class MazeGenerator : MonoBehaviour
                 }
             }
     }
+    #endregion
+
+    #region Misc Generation
+
+    void GenerateConnector()
+    {
+        Transform connector = Instantiate(connectorPrefab, transform);
+        connector.localPosition = lastEndPos;
+        lastEndPos += new Vector3(0, 0.12f, 1.6f);
+    }
+
+    void GenerateTrainTrack()
+    {
+        Transform trainTrack = Instantiate(trainPrefab, transform);
+        trainTrack.localPosition = lastEndPos;
+        trainTrack.localEulerAngles = new Vector3(0, 180, 0);
+        lastEndPos += new Vector3(0, 0, 1);
+    }
+
+    List<Vector2Int> GenerateLightOnOutlineBySeparation(int[,] map, Transform mapTransform, Transform lightPrefab, int minSeparation, float scale = 1)
+    {
+        Vector2Int mapSize = new Vector2Int(map.GetLength(0), map.GetLength(1));
+
+        List<Region> regions = GetRegions(0, map);
+        List<Vector3> lightPositions = new List<Vector3>();
+        List<Vector2Int> lightCoords = new List<Vector2Int>();
+        foreach (DirectionalTile outline in regions[0].Outline)
+        {
+            Vector3 position = (new Vector3(-mapSize.x / 2 + outline.Position.x + 0.5f, 0, -mapSize.y / 2 + outline.Position.y + 0.5f)
+                + Coord2PosXZ(Offset4[GetOpposite(outline.Direction)]) * 0.5f) * scale + new Vector3(-0.5f, 0, -0.5f);
+
+            if (CheckMinSeparation(lightPositions, position, minSeparation))
+            {
+                Transform newLight = Instantiate(lightPrefab, mapTransform);
+                newLight.localPosition = position;
+                newLight.localEulerAngles = Angle4[outline.Direction];
+                lightPositions.Add(position);
+                lightCoords.Add(outline.Position);
+            }
+        }
+
+        return lightCoords;
+    }
+
     #endregion
 }

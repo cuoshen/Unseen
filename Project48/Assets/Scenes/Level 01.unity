@@ -454,6 +454,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seed: 88
   useSeed: 1
+  roomPrefab: {fileID: 5118989898073772315, guid: 170fe422f7ce5c64d8a625681a452639, type: 3}
   startPrefab: {fileID: 4459196779015730797, guid: cf6767f6c193e954b811cd2de006a999, type: 3}
   endPrefab: {fileID: 6708590964914837869, guid: e462882065328ca4fa37c5e134cf0e3e, type: 3}
   connectorPrefab: {fileID: 8302508908966622360, guid: 1f826802e2addfe48a37974c0e7e78d9, type: 3}
@@ -463,17 +464,19 @@ MonoBehaviour:
   dollChance: 0
   _2x2ColumnChance: 0.25
   minInsectSeparation: 5
-  insectPrefab: {fileID: 4899903623646807888, guid: 9660bc8bd0e56834c9f69a94ae7277a1, type: 3}
+  insectPrefab: {fileID: 4899903623646807888, guid: de055a5aa554a674aba38d318268a687, type: 3}
   minGiantHalfSeparation: 7
   giantPrefab: {fileID: 2428747410710552272, guid: dcf91c45a10b53d409c58b21c9e59458, type: 3}
-  corridorFloorPrefab: {fileID: 634900085634603167, guid: c63b853af646d4a41922de49c6d46be0, type: 3}
+  corridorFloorPrefab: {fileID: 1956282064550222334, guid: 3394a408753d7084fa3a5f6c2f82ed14, type: 3}
   corridorWallPrefab: {fileID: 8587853897269320152, guid: 7e23e3dc6062f7a48842cef9783005cb, type: 3}
+  corridorFenceDoorPrefab: {fileID: 8587853897269320152, guid: 1ced7e8eca67a2a4b9e1f07cdbad1375, type: 3}
   corridorLightPrefab: {fileID: 8200740889749337584, guid: 518742c4e3450464492a4fa6c8f6a8c1, type: 3}
   voidFencePrefab: {fileID: 6712452873545065672, guid: 207cbd2415291844dadef488d718a61c, type: 3}
   voidLightPrefab: {fileID: 7285017026454675818, guid: 947a8c0b200a4ef459a521aafd5746a2, type: 3}
   minCorridorLightSeparation: 2
   maxVoidSize: 4
   voidChance: 0.6
+  fenceDoorChance: 0.2
   compWallPrefab: {fileID: 7599237671437475100, guid: 74e6de8e5b70c384ea5644d7429ceb19, type: 3}
   compDoorPrefab: {fileID: 5258459713980368692, guid: b00e1cdb01cbd8946ab98ac205e8ec21, type: 3}
   compLightPrefab: {fileID: 7621400432342485398, guid: 0ec480ffdad4b2c44b6dff7f2f77fba9, type: 3}
@@ -487,7 +490,7 @@ MonoBehaviour:
   blizzardFloorPrefab: {fileID: 0}
   blizzardWallPrefab: {fileID: 0}
   blizzardLightPrefab: {fileID: 0}
-  caveFloorPrefab: {fileID: 634900085634603167, guid: c2536af29a86e154f82a0b8789b78493, type: 3}
+  caveFloorPrefab: {fileID: 4078646528923912789, guid: c58e1bdff9a3d2847a06c0dfedaae780, type: 3}
   caveWallPrefab: {fileID: 4433460659094003551, guid: b67c2ac47f9f96847926d01ed4d792d2, type: 3}
   caveRoofMeshPrefab: {fileID: 2443116424865806980, guid: 0a8df23ccf200814ab8f1108bb4ebc88, type: 3}
   caveWallMeshPrefab: {fileID: 1013605822122728790, guid: 59589664d4ebef34d8d062e3ddaf1027, type: 3}

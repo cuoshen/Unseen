@@ -277,6 +277,14 @@ PrefabInstance:
       propertyPath: m_StaticShadowCaster
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4780200481722306187, guid: 84b04aff491bb6d4b98ab1eb8d009475, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7b7234476e699a340b3ba0f8a2cb6c67, type: 2}
+    - target: {fileID: 4780200481722306187, guid: 84b04aff491bb6d4b98ab1eb8d009475, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7a39f35626855754d99f37658dd28966, type: 2}
     - target: {fileID: 6296259094581929731, guid: 84b04aff491bb6d4b98ab1eb8d009475, type: 3}
       propertyPath: m_Name
       value: Chair_01_Snaps014
@@ -367,6 +375,14 @@ PrefabInstance:
       propertyPath: m_StaticShadowCaster
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2050111824291905825, guid: d5ed0a0025f0cd2478c4812e7f339c51, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7a39f35626855754d99f37658dd28966, type: 2}
+    - target: {fileID: 2050111824291905825, guid: d5ed0a0025f0cd2478c4812e7f339c51, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7b7234476e699a340b3ba0f8a2cb6c67, type: 2}
     - target: {fileID: 9213412079064981101, guid: d5ed0a0025f0cd2478c4812e7f339c51, type: 3}
       propertyPath: m_Enabled
       value: 0

@@ -155,11 +155,17 @@ public static class Algorithms
 		return new Vector3(coord.x, 0, coord.y);
     }
 
+	/// <summary>
+	/// Return true if in map range
+	/// </summary>
 	public static bool CheckInMapRange(Vector2Int coord, Vector2Int mapSize, int border = 0)
 	{
 		return coord.x >= border && coord.x < mapSize.x - border && coord.y >= border && coord.y < mapSize.y - border;
 	}
 
+	/// <summary>
+	/// Return true if outside of min separation.
+	/// </summary>
 	public static bool CheckMinSeparation(List<Vector3> positions, Vector3 newPosition, float minSeparation)
     {
 		if (positions != null)
@@ -418,7 +424,7 @@ public static class Algorithms
 	/// Connect all regions for a specific type of tiles.
 	/// </summary>
 	/// <param name="type"> Connect all regions for this type of tiles </param>
-	public static int[,] ConnectRegions(int type, int[,] map, int minSegmentLength, int maxSegmentLength, int minTurnLimit, int maxTurnLimit, List<Region> unconnectedRegions = null)
+	public static int[,] ConnectRegions(int type, int[,] map, int minSegmentLength, int maxSegmentLength, int minTurnLimit, int maxTurnLimit, bool infiniteAttempts = false, List<Region> unconnectedRegions = null)
     {
 		if (unconnectedRegions == null)
 			unconnectedRegions = GetRegions(type, map);
@@ -434,7 +440,7 @@ public static class Algorithms
 
 			int attempts = 1000;
 			int counter = 0;
-			while (unconnectedRegions.Count > 0 && counter++ < attempts)
+			while (unconnectedRegions.Count > 0 && (counter++ < attempts || infiniteAttempts))
 			{
 				// start off a random point on the outline of a random connected region
 				randIndex = UnityEngine.Random.Range(0, connectedRegions.Count);
@@ -765,4 +771,76 @@ public static class Algorithms
 		return map;
 	}
     #endregion
+
+	public static int[,] SinglePassway(Vector2Int mapSize, out Vector2Int startCoord, out Vector2Int endCoord, int minSegmentLength, int maxSegmentLength, int minTurnLimit, int maxTurnLimit)
+	{
+		startCoord = new Vector2Int();
+		endCoord = new Vector2Int();
+
+		int[,] map = new int[mapSize.x, mapSize.y];
+
+		for (int i = 0; i < mapSize.x; i++)
+		{
+			map[i, 0] = 0;
+			map[i, mapSize.y - 1] = 0;
+		}
+
+		for (int i = 0; i < mapSize.x; i++)
+			for (int j = 1; j < mapSize.y - 1; j++)
+				map[i, j] = 1;
+
+		map = ConnectRegions(0, map, minSegmentLength, maxSegmentLength, minTurnLimit, maxTurnLimit/*, true*/);
+
+		List<Vector2Int> startCoord_ = new List<Vector2Int>();
+		List<Vector2Int> _endCoord = new List<Vector2Int>();
+		for (int i = 0; i < mapSize.x; i++)
+        {
+			if (map[i, 1] == 0)
+				startCoord_.Add(new Vector2Int(i, 1));
+			if (map[i, mapSize.y - 2] == 0)
+				_endCoord.Add(new Vector2Int(i, mapSize.y - 2));
+		}
+
+		if (startCoord_.Count > 1)
+		{
+			for (int i = 0; i < mapSize.x; i++)
+            {
+				if (map[i, 2] == 0)
+                {
+					if (i == 0 || map[i + 1, 2] == 0)
+						startCoord = new Vector2Int(startCoord_.Last().x, 0);
+					else
+						startCoord = new Vector2Int(startCoord_[0].x, 0);
+				}
+			}
+		}
+		else
+			startCoord = new Vector2Int(startCoord_[0].x, 0);
+
+		if (_endCoord.Count > 1)
+		{
+			for (int i = 0; i < mapSize.x; i++)
+			{
+				if (map[i, 2] == 0)
+				{
+					if (i == 0 || map[i + 1, mapSize.y - 3] == 0)
+						endCoord = new Vector2Int(_endCoord.Last().x, mapSize.y - 1);
+					else
+						endCoord = new Vector2Int(_endCoord[0].x, mapSize.y - 1);
+				}
+			}
+		}
+		else
+			endCoord = new Vector2Int(_endCoord[0].x, mapSize.y - 1);
+
+		for (int i = 0; i < mapSize.x; i++)
+		{
+			if (i != startCoord.x)
+				map[i, 0] = 1;
+			if (i != endCoord.x)
+				map[i, mapSize.y - 1] = 1;
+		}
+
+		return map;
+	}
 }
