@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FactoryBlueprints:
-  - {fileID: 8216619653927588065, guid: 715ca0863b2369643906adce458725f7, type: 3}
+  - {fileID: 8216619653927588065, guid: b185c8193470ad9439d67b04f3593b16, type: 3}
   blueprintSelecionMode: 0
   gameSaveLocation: 1
   gameSaveVariableName: FactoryBPIndex

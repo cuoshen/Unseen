@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8941046858000915311}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ascent Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 7501224936534075048}
   - component: {fileID: 8334364664912085390}
   - component: {fileID: 5024243434536293361}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -144,7 +144,7 @@ GameObject:
   - component: {fileID: 2434276993791012118}
   - component: {fileID: 1769931774890644897}
   - component: {fileID: 4391981836801988512}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -865,7 +865,7 @@ GameObject:
   - component: {fileID: 2211196311672141450}
   - component: {fileID: 6005260960620308840}
   - component: {fileID: 2773438410001621673}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LargeFlame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -978,7 +978,7 @@ GameObject:
   - component: {fileID: 4974326975007097779}
   - component: {fileID: 4870543956154380836}
   - component: {fileID: 5075124086173010322}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Trigger Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1579,7 +1579,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3058981558828516919, guid: 6f353a85e21c35a43977769930e0f683, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3058981558828516919, guid: 6f353a85e21c35a43977769930e0f683, type: 3}
       propertyPath: m_IsActive
