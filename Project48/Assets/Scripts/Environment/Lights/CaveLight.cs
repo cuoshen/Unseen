@@ -15,7 +15,7 @@ public class CaveLight : TriggerLight
     [SerializeField]
     float flickerAmplitude;
 
-    [SerializeField]
+    //[SerializeField]
     float perlin;
 
     new void Start()
