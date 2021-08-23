@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3269658244463045907}
   - component: {fileID: 3269658244464046035}
   - component: {fileID: 8757962618466049380}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Door_Fence_A_snaps004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3269658244462047505}
-  m_Mesh: {fileID: 4300000, guid: 3abf6f8850bacf146966d2f2e4e88ece, type: 2}
+  m_Mesh: {fileID: 0}
 --- !u!23 &3269658244464046035
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -149,6 +149,10 @@ PrefabInstance:
     - target: {fileID: 7217095991834729284, guid: d649444a5f27dac4e9c47acef3abfcf2, type: 3}
       propertyPath: m_Name
       value: IgnoreLightRoof (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7217095991834729284, guid: d649444a5f27dac4e9c47acef3abfcf2, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8304056354369720511, guid: d649444a5f27dac4e9c47acef3abfcf2, type: 3}
       propertyPath: m_RootOrder

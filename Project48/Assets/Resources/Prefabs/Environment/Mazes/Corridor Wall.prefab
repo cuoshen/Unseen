@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7848926208388797926}
   - component: {fileID: 5333111143848344352}
   - component: {fileID: 5170252087792511578}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -387,6 +387,10 @@ PrefabInstance:
     - target: {fileID: 7217095991834729284, guid: d649444a5f27dac4e9c47acef3abfcf2, type: 3}
       propertyPath: m_Name
       value: IgnoreLightRoof
+      objectReference: {fileID: 0}
+    - target: {fileID: 7217095991834729284, guid: d649444a5f27dac4e9c47acef3abfcf2, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8304056354369720511, guid: d649444a5f27dac4e9c47acef3abfcf2, type: 3}
       propertyPath: m_RootOrder

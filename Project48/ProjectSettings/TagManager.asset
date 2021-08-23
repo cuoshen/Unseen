@@ -9,7 +9,7 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - NoSelect
   - Water
   - UI
   - Maze
@@ -17,8 +17,8 @@ TagManager:
   - InsectThing
   - CompartmentArea
   - GiantThing
-  - 
-  - 
+  - Obstacles
+  - Mask
   - 
   - 
   - 
