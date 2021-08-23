@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8896561133130402781}
   - component: {fileID: 1922598842957054422}
   - component: {fileID: 763368097937199511}
+  - component: {fileID: 8898115248533288198}
   m_Layer: 0
   m_Name: Trigger Light
   m_TagString: Untagged
@@ -31,6 +32,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 6.75, y: 1.03, z: 7.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -122,10 +124,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5995dc45925deea44b186a0db2df2a03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trigger_radius: 1
-  min_intensity: 0
-  max_intensity: 1
-  color: {r: 1, g: 0.821206, b: 0, a: 0}
+  detectPlayerAcrossWall: 0
+  detectPlayerRange: 0
+  maxIntensity: 0
   on_curve:
     serializedVersion: 2
     m_Curve:
@@ -503,6 +504,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -542,3 +544,23 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8896561133130402778}
   m_Mesh: {fileID: 7854830181007740692, guid: 75eec7e00c736ea4a85361a1325025ad, type: 3}
+--- !u!114 &8898115248533288198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8896561133130402778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 1
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}

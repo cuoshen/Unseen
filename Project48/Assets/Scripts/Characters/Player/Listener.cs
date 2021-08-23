@@ -16,6 +16,7 @@ public class Listener : MonoBehaviour
             return s_Instance;
         }
     }
+
     GameObject player;
 
     void Awake()
@@ -31,6 +32,7 @@ public class Listener : MonoBehaviour
 
     void Update()
     {
+        //Debug.Log(Algorithms.PerlinAtTile(Time.deltaTime * 700, 0));
         if (player == null)
         {
             player = GameObject.FindWithTag("Player");

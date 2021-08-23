@@ -19,19 +19,19 @@ public class InsectThing : CCCharacter
         }
         else
         {
-            float distance = Vector3.Distance(player.transform.position, transform.position);
+            float distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
             LayerMask maze_layer = 1 << LayerMask.NameToLayer("Maze");
-            if (distance < attackRange)
+            if (distanceToPlayer < attackRange)
             {
                 animator.SetTrigger("Attack");
                 Debug.LogAssertion("KIWI");
             }
-            else if(visionRange + 1 <= distance || Physics.Linecast(transform.position, player.transform.position, out RaycastHit hit, maze_layer))
+            else if(visionRange + 1 <= distanceToPlayer || Physics.Linecast(transform.position, player.transform.position, out RaycastHit hit, maze_layer))
             {
                 movement.x = 0;
                 movement.z = 0;
             }
-            else if (distance >= attackRange && distance < visionRange)
+            else if (distanceToPlayer >= attackRange && distanceToPlayer < visionRange)
             {
                 Vector3 diff = (player.transform.position - transform.position).normalized;
                 movement.x = diff.x;

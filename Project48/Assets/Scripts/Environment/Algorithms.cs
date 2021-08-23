@@ -41,11 +41,13 @@ public struct RectRoom
 {
 	public Vector2Int BottomLeft;
 	public Vector2Int Size;
+	public Region RoomRegion;
 
-	public RectRoom(Vector2Int bottomleft, Vector2Int size)
+	public RectRoom(Vector2Int bottomleft, Vector2Int size, Region roomRegion)
     {
 		BottomLeft = bottomleft;
 		Size = size;
+		RoomRegion = roomRegion;
     }
 }
 
@@ -153,11 +155,17 @@ public static class Algorithms
 		return new Vector3(coord.x, 0, coord.y);
     }
 
+	/// <summary>
+	/// Return true if in map range
+	/// </summary>
 	public static bool CheckInMapRange(Vector2Int coord, Vector2Int mapSize, int border = 0)
 	{
 		return coord.x >= border && coord.x < mapSize.x - border && coord.y >= border && coord.y < mapSize.y - border;
 	}
 
+	/// <summary>
+	/// Return true if outside of min separation.
+	/// </summary>
 	public static bool CheckMinSeparation(List<Vector3> positions, Vector3 newPosition, float minSeparation)
     {
 		if (positions != null)
@@ -236,7 +244,7 @@ public static class Algorithms
 		}
 	}
 
-	static float PerlinAtTile(float x, float y)
+	public static float PerlinAtTile(float x, float y)
 	{
 		// Taking absolute value of the coordinates so negative values won't cause a glitch
 		x = Mathf.Abs(x);
@@ -356,10 +364,10 @@ public static class Algorithms
 	}
 
 	/// <summary>
-	/// Attempts a connector. This function does not change the values of the map.
+	/// Attempts a connector. This function does not change the values of the map. If isOdd, then length is used as half length.
 	/// </summary>
 	/// <param name="type"> Connect regions of this type of tiles </param>
-	static List<DirectionalTile> ConnectorAttempt(int type, DirectionalTile start, int[,] map, int minSegmentLength, int maxSegmentLength, int minTurnLimit, int maxTurnLimit, out bool isDeadEnd)
+	static List<DirectionalTile> ConnectorAttempt(int type, DirectionalTile start, int[,] map, int minSegmentLength, int maxSegmentLength, int minTurnLimit, int maxTurnLimit, out bool isDeadEnd, bool isOdd = false)
 	{
 		Vector2Int mapSize = new Vector2Int(map.GetLength(0), map.GetLength(1));
 		List<DirectionalTile> corridor = new List<DirectionalTile>();
@@ -371,7 +379,11 @@ public static class Algorithms
 		while (turns >= 0)
         {
 			turns--;
-			int segmentLength = UnityEngine.Random.Range(minSegmentLength, maxSegmentLength);
+			int segmentLength;
+			if (isOdd)
+				segmentLength = UnityEngine.Random.Range(minSegmentLength, maxSegmentLength) * 2 + 2;
+			else
+				segmentLength = UnityEngine.Random.Range(minSegmentLength, maxSegmentLength);
 
 			while (segmentLength > 0)
             {
@@ -416,11 +428,12 @@ public static class Algorithms
 	/// Connect all regions for a specific type of tiles.
 	/// </summary>
 	/// <param name="type"> Connect all regions for this type of tiles </param>
-	public static int[,] ConnectRegions(int type, int[,] map, int minSegmentLength, int maxSegmentLength, int minTurnLimit, int maxTurnLimit, List<Region> unconnectedRegions = null)
+	public static int[,] ConnectRegions(int type, int[,] map, int minSegmentLength, int maxSegmentLength, int minTurnLimit, int maxTurnLimit, out List<List<DirectionalTile>> connectorList, bool isOdd = false, bool infiniteAttempts = false, List<Region> unconnectedRegions = null)
     {
 		if (unconnectedRegions == null)
 			unconnectedRegions = GetRegions(type, map);
 		List<Region> connectedRegions = new List<Region>();
+		connectorList = new List<List<DirectionalTile>>();
 
 		if (unconnectedRegions.Count > 0)
 		{
@@ -432,7 +445,7 @@ public static class Algorithms
 
 			int attempts = 1000;
 			int counter = 0;
-			while (unconnectedRegions.Count > 0 && counter++ < attempts)
+			while (unconnectedRegions.Count > 0 && (counter++ < attempts || infiniteAttempts))
 			{
 				// start off a random point on the outline of a random connected region
 				randIndex = UnityEngine.Random.Range(0, connectedRegions.Count);
@@ -440,7 +453,7 @@ public static class Algorithms
 				randIndex = UnityEngine.Random.Range(0, region.Outline.Count);
 				DirectionalTile start = region.Outline[randIndex];
 
-                List<DirectionalTile> connector = ConnectorAttempt(type, start, map, minSegmentLength, maxSegmentLength, minTurnLimit, maxTurnLimit, out bool isDeadEnd);
+                List<DirectionalTile> connector = ConnectorAttempt(type, start, map, minSegmentLength, maxSegmentLength, minTurnLimit, maxTurnLimit, out bool isDeadEnd, isOdd);
 
                 if (connector != null && !isDeadEnd)
                 {
@@ -453,9 +466,10 @@ public static class Algorithms
 							foreach (DirectionalTile tile in connector)
 								map[tile.Position.x, tile.Position.y] = type;
 
-							// update connected and unconnected regions
+							// update connected and unconnected regions and corridor list
 							connectedRegions.Add(unconnectedRegions[i]);
 							unconnectedRegions.RemoveAt(i);
+							connectorList.Add(connector);
 
 							break;
                         }
@@ -675,12 +689,12 @@ public static class Algorithms
 
 	/// <summary>
 	/// Insert rooms into a maze. Rooms are always odd-sized on odd coords.
-	/// They are also walled-off and need to be opened up, probably by ConnectRegions and/or OpenDeadEnds.
+	/// They are also walled-off and need to be opened up, probably by ConnectRegions and/or OpenDeadEnds. NIR stands for Non Intersectable Regions.
 	/// </summary>
-	public static int[,] RoomInMaze(int[,] map, int minHalfRoomLength, int maxHalfRoomLength, int attempts, List<Region> existingNonIntersectableRegions, out List<Region> allNIR, out List<RectRoom> newRooms)
+	public static int[,] RoomInMaze(int[,] map, int minHalfLength, int maxHalfLength, int attempts, List<Region> existingNIR, out List<Region> allNIR, out List<RectRoom> newRooms)
 	{
 		Vector2Int mapSize = new Vector2Int(map.GetLength(0), map.GetLength(1));
-		allNIR = existingNonIntersectableRegions;
+		allNIR = existingNIR;
 		newRooms = new List<RectRoom>();
 		int counter = 0;
 
@@ -691,8 +705,8 @@ public static class Algorithms
 			// - It avoids creating rooms that are too rectangular: too tall and
 			//   narrow or too wide and flat.
 			// TODO: This isn't very flexible or tunable. Do something better here.
-			Vector2Int roomSize = new Vector2Int(UnityEngine.Random.Range(minHalfRoomLength, maxHalfRoomLength),
-				UnityEngine.Random.Range(minHalfRoomLength, maxHalfRoomLength)) * 2 + new Vector2Int(1, 1);
+			Vector2Int roomSize = new Vector2Int(UnityEngine.Random.Range(minHalfLength, maxHalfLength),
+				UnityEngine.Random.Range(minHalfLength, maxHalfLength)) * 2 + new Vector2Int(1, 1);
 			Vector2Int maxBLCoord = mapSize - roomSize;
 			Vector2Int bottomLeft = new Vector2Int(UnityEngine.Random.Range(0, maxBLCoord.x),
 				UnityEngine.Random.Range(0, maxBLCoord.y)) / 2 * 2 + new Vector2Int(1, 1);
@@ -731,7 +745,7 @@ public static class Algorithms
 			if (canPlace)
             {
 				allNIR.Add(newRegion);
-				newRooms.Add(new RectRoom(bottomLeft, roomSize));
+				newRooms.Add(new RectRoom(bottomLeft, roomSize, newRegion));
 				foreach (Vector2Int tile in newRegion.Area)
 					map[tile.x, tile.y] = 0;
 				foreach (DirectionalTile dirTile in newRegion.Outline)
@@ -763,4 +777,32 @@ public static class Algorithms
 		return map;
 	}
     #endregion
+
+	public static int[,] SinglePassway(Vector2Int mapSize, out Vector2Int startCoord, out Vector2Int endCoord, out List<DirectionalTile> passway, int minHalfSegmentLength, int maxHalfSegmentLength, int minTurnLimit, int maxTurnLimit)
+	{
+		int[,] map;
+
+		do
+		{
+			map = new int[mapSize.x, mapSize.y];
+
+			for (int i = 0; i < mapSize.x; i++)
+			{
+				map[i, 0] = 0;
+				map[i, mapSize.y - 1] = 0;
+			}
+
+			for (int i = 0; i < mapSize.x; i++)
+				for (int j = 1; j < mapSize.y - 1; j++)
+					map[i, j] = 1;
+
+			map = ConnectRegions(0, map, minHalfSegmentLength, maxHalfSegmentLength, minTurnLimit, maxTurnLimit, out List<List<DirectionalTile>> passwayList, true, true);
+			passway = passwayList[0];
+		} while (passway[0].Position.y > passway.Last().Position.y);
+
+		startCoord = passway[0].Position + new Vector2Int(0, -1);
+		endCoord = passway.Last().Position;
+
+		return map;
+	}
 }

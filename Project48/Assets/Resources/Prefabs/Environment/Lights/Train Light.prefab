@@ -140,13 +140,12 @@ GameObject:
   - component: {fileID: 2217917110131789271}
   - component: {fileID: 7311264377509868444}
   - component: {fileID: 1363380987975388460}
-  - component: {fileID: 7660193875238721443}
   m_Layer: 0
   m_Name: Train Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 126
   m_IsActive: 1
 --- !u!4 &2217917110131789271
 Transform:
@@ -192,8 +191,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 256eee0f82507ec4e95305ef81e78918, type: 2}
-  - {fileID: 2100000, guid: a198cfbad82cebc4690e63dbf42b8c22, type: 2}
+  - {fileID: 2100000, guid: 7a39f35626855754d99f37658dd28966, type: 2}
+  - {fileID: 2100000, guid: 6eb8ed4659244364c8e4fa6cadc8cbf0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -215,23 +214,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!95 &7660193875238721443
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8044274649116580708}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: c6f54f91deb718540958cfd2c31d0386, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
