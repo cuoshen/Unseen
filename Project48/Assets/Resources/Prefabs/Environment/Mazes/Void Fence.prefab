@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6712452873517827775}
   - component: {fileID: 6712452873517827772}
   - component: {fileID: 6712452873517827773}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -299,7 +299,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6712452873545065672}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Void Fence
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -340,7 +340,7 @@ GameObject:
   - component: {fileID: 6712452873972741287}
   - component: {fileID: 6712452873972741284}
   - component: {fileID: 6712452873972741285}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -684,7 +684,7 @@ GameObject:
   - component: {fileID: 6712452874386678864}
   - component: {fileID: 6712452874386678865}
   - component: {fileID: 6712452874386678862}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1028,7 +1028,7 @@ GameObject:
   - component: {fileID: 6712452874405694597}
   - component: {fileID: 6712452874405694594}
   - component: {fileID: 6712452874405694595}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1372,7 +1372,7 @@ GameObject:
   - component: {fileID: 6712452875224494321}
   - component: {fileID: 6712452875224494318}
   - component: {fileID: 6712452875224494319}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

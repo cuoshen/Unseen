@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8790101768893552825}
   - component: {fileID: 5643975059595974428}
   - component: {fileID: 7617726757192410070}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Primitive Brazier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
