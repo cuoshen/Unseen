@@ -40,13 +40,13 @@ MonoBehaviour:
   active: 1
   lift:
     m_OverrideState: 1
-    m_Value: {x: 0.9807504, y: 0.9855626, z: 1, w: 0}
+    m_Value: {x: 1, y: 1, z: 1, w: 0}
   gamma:
     m_OverrideState: 1
     m_Value: {x: 0.9982575, y: 0.9695635, z: 1, w: -0.042372882}
   gain:
     m_OverrideState: 1
-    m_Value: {x: 0.9368034, y: 0.97784156, z: 1, w: -0.021186436}
+    m_Value: {x: 1, y: 1, z: 1, w: 0}
 --- !u!114 &-1616048724216535294
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -61,7 +61,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 1
   postExposure:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: -0.13
   contrast:
     m_OverrideState: 1
@@ -74,7 +74,7 @@ MonoBehaviour:
     m_Value: 0
   saturation:
     m_OverrideState: 1
-    m_Value: 37
+    m_Value: 17
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,13 +129,13 @@ MonoBehaviour:
   active: 1
   shadows:
     m_OverrideState: 1
-    m_Value: {x: 0.96696913, y: 1, z: 0.99122185, w: -0.35593206}
+    m_Value: {x: 1, y: 1, z: 1, w: 0}
   midtones:
     m_OverrideState: 1
     m_Value: {x: 0.8027109, y: 0.8058795, z: 1, w: 0}
   highlights:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 1, z: 1, w: -0.4827586}
+    m_Value: {x: 1, y: 1, z: 1, w: -0.2586207}
   shadowsStart:
     m_OverrideState: 1
     m_Value: 0
@@ -351,17 +351,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 1
   color:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: {r: 0, g: 0, b: 0, a: 1}
   center:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.1
+    m_Value: 0.294
   smoothness:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0.896
   rounded:
     m_OverrideState: 0
     m_Value: 1
@@ -439,13 +439,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b2db86121404754db890f4c8dfe81b2, type: 3}
   m_Name: Bloom
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   threshold:
     m_OverrideState: 1
     m_Value: 0.9
   intensity:
     m_OverrideState: 1
-    m_Value: 5
+    m_Value: 1.33
   scatter:
     m_OverrideState: 1
     m_Value: 0
