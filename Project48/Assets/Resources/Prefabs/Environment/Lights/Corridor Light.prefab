@@ -160,7 +160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 507333d6b57d2bf478fb096c757a9fbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectPlayerAcrossWall: 1
+  detectPlayerAcrossWall: 0
   detectPlayerRange: 3
   on_curve:
     serializedVersion: 2
