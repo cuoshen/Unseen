@@ -308,6 +308,9 @@ public static class Algorithms
 	#region Regions & Connectors
 	public static void FloodFill(Vector2Int coord, int[,] map, ref Region region)
 	{
+		if (region.Area.Count == 0)
+			region.Area.Add(coord);
+
 		Vector2Int mapSize = new Vector2Int(map.GetLength(0), map.GetLength(1));
 		int tile = map[coord.x, coord.y];
 		foreach (DirectionalTile p in GetNeighbours4(coord, mapSize))
@@ -319,8 +322,8 @@ public static class Algorithms
 				IsNewTile = true;
 			}
 
-			// Outline from a different direction at the same location is discarded
-			if (map[p.Position.x, p.Position.y] != tile && region.Outline.Count(s => s.Position == p.Position) == 0)
+			// Outline from a different direction at the same location is kept, resulting in two outline entries in one coordinate
+			if (map[p.Position.x, p.Position.y] != tile && !region.Outline.Contains(p))
 			{
 				region.Outline.Add(p);
 			}

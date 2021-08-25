@@ -13,13 +13,13 @@ GameObject:
   - component: {fileID: 7497860943874644266}
   - component: {fileID: 6846452594160285608}
   - component: {fileID: 2302711048663971699}
-  - component: {fileID: 8673393786538651188}
+  - component: {fileID: -8119447334528992184}
   m_Layer: 0
   m_Name: Cave Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &4078646528923912789
 Transform:
@@ -276,8 +276,8 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3525650524063786317}
   m_Mesh: {fileID: 0}
---- !u!64 &8673393786538651188
-MeshCollider:
+--- !u!65 &-8119447334528992184
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -286,7 +286,6 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
