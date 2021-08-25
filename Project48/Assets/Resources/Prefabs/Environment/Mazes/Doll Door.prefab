@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2948341386972277269}
   - component: {fileID: 2948341386971310293}
   - component: {fileID: 7708128449892821939}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Door_B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 3049052475682409745}
   - component: {fileID: 3049052475681279953}
   - component: {fileID: 2100108302434861862}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DoorFrame_B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -205,7 +205,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3708286921050709642}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Doll Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -237,7 +237,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6237214655074723578}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Door_B_snaps004
   m_TagString: Untagged
   m_Icon: {fileID: 0}

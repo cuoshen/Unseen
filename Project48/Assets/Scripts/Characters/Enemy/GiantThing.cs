@@ -96,19 +96,23 @@ public class GiantThing : MonoBehaviour
             targetPos = new Vector3(rand.x, 0, rand.y) + prevLeg.position;
             journeyLength = Vector3.Distance(targetPos, startPos);
 
-            // Do not step too close to the other foot or the original position
-            // Foot may not have enough time to move to target position
-            if (rand.magnitude < curFootCollider.radius * 2 | journeyLength < curFootCollider.radius * 2)
+            // Do not step too close to the other foot
+            if (rand.magnitude < curFootCollider.radius * 2)
                 canLand = false;
 
             // Do not step outside of patrol range
             if (Vector3.Distance(targetPos, transform.position) > patrolRange)
                 canLand = false;
 
+            // Do not step into empty space
+            Collider[] allOverlappingColliders = Physics.OverlapSphere(targetPos, 1f);
+            if (allOverlappingColliders.Length == 0)
+                canLand = false;
+
             // Do not step on walls
             // Non-convex wall mesh collider cannot be detected
-            Collider[] allOverlappingColliders = Physics.OverlapSphere(targetPos, curFootCollider.radius + 0.5f, maze_layer);
-            if (allOverlappingColliders.Length != 0)
+            Collider[] allOverlappingMazeColliders = Physics.OverlapSphere(targetPos, curFootCollider.radius + 0.5f, maze_layer);
+            if (allOverlappingMazeColliders.Length != 0)
                 canLand = false;
         } while (!canLand);
 

@@ -390,6 +390,7 @@ public class MazeGenerator : MonoBehaviour
         {
             if (region.Area.Count <= maxVoidSize && UnityEngine.Random.Range(0f, 1f) < voidChance)
             {
+                Debug.Log(region.Area.Count);
                 foreach (Vector2Int tile in region.Area)
                 {
                     map[tile.x, tile.y] = 2;
