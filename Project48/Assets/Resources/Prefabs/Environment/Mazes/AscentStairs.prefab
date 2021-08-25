@@ -14,12 +14,12 @@ GameObject:
   - component: {fileID: 8939723155246292722}
   - component: {fileID: 7189230533778068245}
   - component: {fileID: 8134453707323269100}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Prism
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &8234036768976846765
 Transform:
@@ -321,12 +321,12 @@ GameObject:
   - component: {fileID: 7369550415992777609}
   - component: {fileID: 5774760353031435432}
   - component: {fileID: 4054999019953470525}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: AscentStairs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &5042584254570564409
 Transform:
@@ -2211,12 +2211,12 @@ GameObject:
   - component: {fileID: 8317019829692247200}
   - component: {fileID: 4890742090556263434}
   - component: {fileID: 5729965459420840646}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: AscentSupport
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &708690330883729502
 Transform:

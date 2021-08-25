@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4880830504480570641}
   - component: {fileID: 6413197767869147684}
   - component: {fileID: 2739966309718185207}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Back Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -357,7 +357,7 @@ GameObject:
   - component: {fileID: 664032552567343128}
   - component: {fileID: 1407750765287975356}
   - component: {fileID: 5767132861963338141}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Plane Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -457,7 +457,7 @@ GameObject:
   - component: {fileID: 8436992067533544890}
   - component: {fileID: 3137372680154634161}
   - component: {fileID: 7815807261669009334}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Front Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -802,7 +802,7 @@ GameObject:
   - component: {fileID: 2129575449472364470}
   - component: {fileID: 8886982727825025953}
   - component: {fileID: 8277769531190177718}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Front Wall (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1147,7 +1147,7 @@ GameObject:
   - component: {fileID: 1352492907964770617}
   - component: {fileID: 754866963059088714}
   - component: {fileID: 8304314058632396696}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Right Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1492,7 +1492,7 @@ GameObject:
   - component: {fileID: 1698938876490296568}
   - component: {fileID: 119055142110835025}
   - component: {fileID: 9200326327768290281}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Back Wall (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1833,7 +1833,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3644110846205933803}
   - component: {fileID: 277493839327166725}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Elevator Room
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1902,7 +1902,7 @@ GameObject:
   - component: {fileID: 7998304406570426332}
   - component: {fileID: 6049303243794128057}
   - component: {fileID: 6005782440640443203}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Left Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2245,10 +2245,6 @@ PrefabInstance:
       value: IgnoreLightRoof
       objectReference: {fileID: 0}
     - target: {fileID: 7217095991834729284, guid: d649444a5f27dac4e9c47acef3abfcf2, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 7217095991834729284, guid: d649444a5f27dac4e9c47acef3abfcf2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -2322,26 +2318,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Corridor Light Hanging (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 47987720440193859, guid: 72f33444ba194ef4eaa7cd78e114812c, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 204883720298080214, guid: 72f33444ba194ef4eaa7cd78e114812c, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 599012593522635667, guid: 72f33444ba194ef4eaa7cd78e114812c, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 3537234337624219524, guid: 72f33444ba194ef4eaa7cd78e114812c, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5190887349464738890, guid: 72f33444ba194ef4eaa7cd78e114812c, type: 3}
-      propertyPath: m_Intensity
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 8200740889749337584, guid: 72f33444ba194ef4eaa7cd78e114812c, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -2386,10 +2362,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8613801690892753660, guid: 72f33444ba194ef4eaa7cd78e114812c, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72f33444ba194ef4eaa7cd78e114812c, type: 3}
 --- !u!4 &6570794454130878712 stripped
@@ -2407,10 +2379,6 @@ PrefabInstance:
     - target: {fileID: 7217095991834729284, guid: d649444a5f27dac4e9c47acef3abfcf2, type: 3}
       propertyPath: m_Name
       value: IgnoreLightRoof
-      objectReference: {fileID: 0}
-    - target: {fileID: 7217095991834729284, guid: d649444a5f27dac4e9c47acef3abfcf2, type: 3}
-      propertyPath: m_Layer
-      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7217095991834729284, guid: d649444a5f27dac4e9c47acef3abfcf2, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -2487,10 +2455,6 @@ PrefabInstance:
       value: IgnoreLightRoof
       objectReference: {fileID: 0}
     - target: {fileID: 7217095991834729284, guid: d649444a5f27dac4e9c47acef3abfcf2, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 7217095991834729284, guid: d649444a5f27dac4e9c47acef3abfcf2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -2563,10 +2527,6 @@ PrefabInstance:
     - target: {fileID: 7217095991834729284, guid: d649444a5f27dac4e9c47acef3abfcf2, type: 3}
       propertyPath: m_Name
       value: IgnoreLightRoof
-      objectReference: {fileID: 0}
-    - target: {fileID: 7217095991834729284, guid: d649444a5f27dac4e9c47acef3abfcf2, type: 3}
-      propertyPath: m_Layer
-      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7217095991834729284, guid: d649444a5f27dac4e9c47acef3abfcf2, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -2643,10 +2603,6 @@ PrefabInstance:
       value: IgnoreLightRoof
       objectReference: {fileID: 0}
     - target: {fileID: 7217095991834729284, guid: d649444a5f27dac4e9c47acef3abfcf2, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 7217095991834729284, guid: d649444a5f27dac4e9c47acef3abfcf2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -2720,26 +2676,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Corridor Light Hanging
       objectReference: {fileID: 0}
-    - target: {fileID: 47987720440193859, guid: 72f33444ba194ef4eaa7cd78e114812c, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 204883720298080214, guid: 72f33444ba194ef4eaa7cd78e114812c, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 599012593522635667, guid: 72f33444ba194ef4eaa7cd78e114812c, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 3537234337624219524, guid: 72f33444ba194ef4eaa7cd78e114812c, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5190887349464738890, guid: 72f33444ba194ef4eaa7cd78e114812c, type: 3}
-      propertyPath: m_Intensity
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 8200740889749337584, guid: 72f33444ba194ef4eaa7cd78e114812c, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -2784,10 +2720,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8613801690892753660, guid: 72f33444ba194ef4eaa7cd78e114812c, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72f33444ba194ef4eaa7cd78e114812c, type: 3}
 --- !u!4 &45800480370593475 stripped
@@ -2805,10 +2737,6 @@ PrefabInstance:
     - target: {fileID: 7217095991834729284, guid: d649444a5f27dac4e9c47acef3abfcf2, type: 3}
       propertyPath: m_Name
       value: IgnoreLightRoof
-      objectReference: {fileID: 0}
-    - target: {fileID: 7217095991834729284, guid: d649444a5f27dac4e9c47acef3abfcf2, type: 3}
-      propertyPath: m_Layer
-      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7217095991834729284, guid: d649444a5f27dac4e9c47acef3abfcf2, type: 3}
       propertyPath: m_StaticEditorFlags
