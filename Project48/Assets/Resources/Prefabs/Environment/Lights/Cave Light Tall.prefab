@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 412061578960827248}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Cave Light Tall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,12 +46,12 @@ GameObject:
   - component: {fileID: 2739208059779481515}
   - component: {fileID: 137193205159037793}
   - component: {fileID: 1294933436023701348}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Primitive Brazier (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &1273468261224542222
 Transform:
@@ -144,12 +144,12 @@ GameObject:
   - component: {fileID: 6727843016209021838}
   - component: {fileID: 3505968360979547765}
   - component: {fileID: 7938338884743075005}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &6460003538079412431
 Transform:
@@ -217,7 +217,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967167
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 1
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -865,12 +865,12 @@ GameObject:
   - component: {fileID: 3412672668703636986}
   - component: {fileID: 5213970286316668517}
   - component: {fileID: 1096609428616949766}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: LargeFlame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &3412672668703636986
 Transform:
@@ -978,7 +978,7 @@ GameObject:
   - component: {fileID: 9133582499761089940}
   - component: {fileID: 3717990109262712120}
   - component: {fileID: 5542793639976856195}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Trigger Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1502,6 +1502,7 @@ MonoBehaviour:
   fire: {fileID: 4237696903070911324}
   flickerRate: 60
   flickerAmplitude: 0.3
+  perlin: 0
 --- !u!1001 &2717409788342604189
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1579,15 +1580,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3058981558828516919, guid: 6f353a85e21c35a43977769930e0f683, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3058981558828516919, guid: 6f353a85e21c35a43977769930e0f683, type: 3}
       propertyPath: m_IsActive
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3058981558828516919, guid: 6f353a85e21c35a43977769930e0f683, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6f353a85e21c35a43977769930e0f683, type: 3}

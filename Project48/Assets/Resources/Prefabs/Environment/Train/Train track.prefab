@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 9016006505661988626}
   - component: {fileID: 3848676794114718295}
   - component: {fileID: 4014413847178774164}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Threshold (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -356,7 +356,7 @@ GameObject:
   - component: {fileID: 5795428220674610975}
   - component: {fileID: 3720423382742834092}
   - component: {fileID: 3830081001775360870}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Plane Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -456,7 +456,7 @@ GameObject:
   - component: {fileID: 4322847209238860194}
   - component: {fileID: 5295671515198096547}
   - component: {fileID: 2563678583688131655}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Threshold
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -798,7 +798,7 @@ GameObject:
   - component: {fileID: 9009773936780618106}
   - component: {fileID: 231138148609027178}
   - component: {fileID: 5104031496852656564}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: TrainAffectLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -875,7 +875,7 @@ GameObject:
   - component: {fileID: 1572690264784599921}
   - component: {fileID: 4515417644562401162}
   - component: {fileID: 251057571754341477}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Track
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1218,7 +1218,7 @@ GameObject:
   - component: {fileID: 2746389045286590558}
   - component: {fileID: 9035545872179427249}
   - component: {fileID: 5397532762285757235}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Shake and Sound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1477,7 +1477,7 @@ GameObject:
   - component: {fileID: 2529428957857540718}
   - component: {fileID: 660807119583127591}
   - component: {fileID: 763125752492576242}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Track (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

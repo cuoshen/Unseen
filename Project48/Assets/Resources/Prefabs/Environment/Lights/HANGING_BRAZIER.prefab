@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4758916377747356289}
   - component: {fileID: 6634911349806717239}
   - component: {fileID: 9091175249501248862}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Group50767
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4413358650095742697}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: HANGING_BRAZIER
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,7 +127,7 @@ GameObject:
   - component: {fileID: 2835946695295203123}
   - component: {fileID: 1104252877239739620}
   - component: {fileID: 6019613685545862823}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Group56101
   m_TagString: Untagged
   m_Icon: {fileID: 0}

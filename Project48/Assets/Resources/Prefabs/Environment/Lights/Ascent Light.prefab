@@ -9,12 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8941046858000915311}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Ascent Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &8941046858000915311
 Transform:
@@ -46,12 +46,12 @@ GameObject:
   - component: {fileID: 2434276993791012118}
   - component: {fileID: 1769931774890644897}
   - component: {fileID: 4391981836801988512}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &1664222204862955111
 Transform:
@@ -119,7 +119,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967167
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 1
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -767,12 +767,12 @@ GameObject:
   - component: {fileID: 2211196311672141450}
   - component: {fileID: 6005260960620308840}
   - component: {fileID: 2773438410001621673}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: LargeFlame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &2211196311672141450
 Transform:
@@ -880,7 +880,7 @@ GameObject:
   - component: {fileID: 4974326975007097779}
   - component: {fileID: 4870543956154380836}
   - component: {fileID: 5075124086173010322}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Trigger Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1481,15 +1481,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3058981558828516919, guid: 6f353a85e21c35a43977769930e0f683, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3058981558828516919, guid: 6f353a85e21c35a43977769930e0f683, type: 3}
       propertyPath: m_IsActive
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3058981558828516919, guid: 6f353a85e21c35a43977769930e0f683, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6f353a85e21c35a43977769930e0f683, type: 3}
@@ -1564,14 +1560,6 @@ PrefabInstance:
     - target: {fileID: 8031469965594115743, guid: 900a5e05fe951544797ec26e0ceece8e, type: 3}
       propertyPath: m_Name
       value: ColumnLight02
-      objectReference: {fileID: 0}
-    - target: {fileID: 8031469965594115743, guid: 900a5e05fe951544797ec26e0ceece8e, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 2147483647
-      objectReference: {fileID: 0}
-    - target: {fileID: 8391753194448559946, guid: 900a5e05fe951544797ec26e0ceece8e, type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 900a5e05fe951544797ec26e0ceece8e, type: 3}

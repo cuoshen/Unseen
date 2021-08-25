@@ -327,10 +327,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: IgnoreLightRoof
       objectReference: {fileID: 0}
-    - target: {fileID: 7217095991834729284, guid: d649444a5f27dac4e9c47acef3abfcf2, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
     - target: {fileID: 8304056354369720511, guid: d649444a5f27dac4e9c47acef3abfcf2, type: 3}
       propertyPath: m_RootOrder
       value: 0
