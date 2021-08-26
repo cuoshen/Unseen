@@ -166,18 +166,33 @@ public static class Algorithms
 	/// <summary>
 	/// Return true if outside of min separation.
 	/// </summary>
-	public static bool CheckMinSeparation(List<Vector3> positions, Vector3 newPosition, float minSeparation)
+	public static bool CheckMinSeparation(List<Vector2Int> positions, Vector2Int newPosition, float minSeparation)
     {
 		if (positions != null)
 		{
-			foreach (Vector3 pos in positions)
+			foreach (Vector2Int pos in positions)
 			{
-				if (Vector3.Distance(pos, newPosition) < minSeparation)
+				if (Vector2Int.Distance(pos, newPosition) < minSeparation)
 					return false;
 			}
 		}
 		return true;
 	}
+
+	public static bool CheckMinAstarSeparation(int[,] map, List<Vector2Int> positions, Vector2Int newPosition, float minSeparation)
+    {
+		if (positions != null)
+		{
+			bool[][] BAmap = Astar.ConvertToBoolArray(map);
+			foreach (Vector2Int pos in positions)
+			{
+				List<Vector2Int> path = new Astar(BAmap, newPosition, pos).Result;
+				if (path.Count < minSeparation)
+					return false;
+			}
+		}
+		return true;
+    }
 
 	public static List<DirectionalTile> GetNeighbours4(Vector2Int coord, Vector2Int mapSize)
     {
@@ -759,28 +774,7 @@ public static class Algorithms
 	}
 	#endregion
 
-	#region Columnar
-	public static int[,] Columnar(Vector2Int mapSize, float _2x2ColumnChance)
-	{
-		int[,] map = new int[mapSize.x, mapSize.y];
-
-		for (int i = 0; i < mapSize.x; i++)
-			for (int j = 0; j < mapSize.y; j++)
-			{
-				if (UnityEngine.Random.Range(0f, 1f) < _2x2ColumnChance)
-				{
-					map[i, j] = 2;
-				}
-				else
-				{
-					map[i, j] = 1;
-				}
-			}
-
-		return map;
-	}
-    #endregion
-
+	#region Single Passway
 	public static int[,] SinglePassway(Vector2Int mapSize, out Vector2Int startCoord, out Vector2Int endCoord, out List<DirectionalTile> passway, int minHalfSegmentLength, int maxHalfSegmentLength, int minTurnLimit, int maxTurnLimit)
 	{
 		int[,] map;
@@ -788,12 +782,6 @@ public static class Algorithms
 		do
 		{
 			map = new int[mapSize.x, mapSize.y];
-
-			for (int i = 0; i < mapSize.x; i++)
-			{
-				map[i, 0] = 0;
-				map[i, mapSize.y - 1] = 0;
-			}
 
 			for (int i = 0; i < mapSize.x; i++)
 				for (int j = 1; j < mapSize.y - 1; j++)
@@ -808,4 +796,18 @@ public static class Algorithms
 
 		return map;
 	}
+    #endregion
+
+    #region Border
+	public static int[,] Border(Vector2Int mapSize, int thickness)
+    {
+		int[,] map = new int[mapSize.x, mapSize.y];
+		
+		for (int i = thickness; i < mapSize.x - thickness; i++)
+			for (int j = thickness; j < mapSize.y - thickness; j++)
+				map[i, j] = 1;
+
+		return map;
+	}
+    #endregion
 }

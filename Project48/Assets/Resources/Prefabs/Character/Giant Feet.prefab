@@ -669,7 +669,7 @@ GameObject:
   - component: {fileID: 1999587291}
   - component: {fileID: 1999587299}
   m_Layer: 10
-  m_Name: Giant
+  m_Name: Giant Feet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
