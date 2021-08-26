@@ -461,7 +461,6 @@ MonoBehaviour:
   trainPrefab: {fileID: 8032203222258171006, guid: b3fa440ff8770f74c866df33f4b5d704, type: 3}
   trainChance: 0.4
   caveChance: 0.4
-  dollChance: 0
   ascentChance: 0.2
   minInsectSeparation: 5
   insectPrefab: {fileID: 4899903623646807888, guid: de055a5aa554a674aba38d318268a687, type: 3}
@@ -477,22 +476,6 @@ MonoBehaviour:
   maxVoidSize: 5
   voidChance: 0.6
   fenceDoorChance: 0.2
-  compWallPrefab: {fileID: 7599237671437475100, guid: 74e6de8e5b70c384ea5644d7429ceb19, type: 3}
-  compDoorPrefab: {fileID: 5258459713980368692, guid: b00e1cdb01cbd8946ab98ac205e8ec21, type: 3}
-  compLightPrefab: {fileID: 7621400432342485398, guid: 0ec480ffdad4b2c44b6dff7f2f77fba9, type: 3}
-  compAreaPrefab: {fileID: 4655188880575335747, guid: 39794e91b0dea7d4a88bab4f5ee8f273, type: 3}
-  minCompHalfLength: 3
-  maxCompHalfLength: 5
-  additionalUnlockChance: 0.02
-  dollFloorPrefab: {fileID: 0}
-  dollWallPrefab: {fileID: 0}
-  dollLightPrefab: {fileID: 0}
-  blizzardFloorPrefab: {fileID: 0}
-  blizzardWallPrefab: {fileID: 0}
-  blizzardLightPrefab: {fileID: 0}
-  ascentStairsPrefab: {fileID: 5042584254570564409, guid: eb18b3fbf43311241a630525d3951ef3, type: 3}
-  ascentCornerPrefab: {fileID: 9049733977226089457, guid: 023c6259d9ae12e429031057cf7968f3, type: 3}
-  ascentLightPrefab: {fileID: 8941046858000915311, guid: ea083ea25debd4946b77692273923813, type: 3}
   caveFloorPrefab: {fileID: 4078646528923912789, guid: c58e1bdff9a3d2847a06c0dfedaae780, type: 3}
   caveWallPrefab: {fileID: 4433460659094003551, guid: b67c2ac47f9f96847926d01ed4d792d2, type: 3}
   caveRoofMeshPrefab: {fileID: 2443116424865806980, guid: 0a8df23ccf200814ab8f1108bb4ebc88, type: 3}
@@ -501,9 +484,16 @@ MonoBehaviour:
   caveLightPrefab: {fileID: 3783455613422746024, guid: 389c471d41cc26e448f0cc2197927276, type: 3}
   caveLightTallPrefab: {fileID: 412061578960827248, guid: 8a3a40900a21f4b46a90a478b04e5eb8, type: 3}
   minCaveLightSeparation: 7
-  _1x1ColPrefab: {fileID: 979798171851015552, guid: c9545e546b427e548b5df0f0e7c9d61a, type: 3}
-  _2x2ColPrefab: {fileID: 4063682100341033637, guid: 7aee28ec8ea5eb2458dd6c9cc8a1ebf4, type: 3}
-  _2x2ColumnChance: 0.25
+  compWallPrefab: {fileID: 7599237671437475100, guid: 74e6de8e5b70c384ea5644d7429ceb19, type: 3}
+  compDoorPrefab: {fileID: 5258459713980368692, guid: b00e1cdb01cbd8946ab98ac205e8ec21, type: 3}
+  compLightPrefab: {fileID: 7621400432342485398, guid: 0ec480ffdad4b2c44b6dff7f2f77fba9, type: 3}
+  compAreaPrefab: {fileID: 4655188880575335747, guid: 39794e91b0dea7d4a88bab4f5ee8f273, type: 3}
+  minCompHalfLength: 3
+  maxCompHalfLength: 5
+  additionalUnlockChance: 0.02
+  ascentStairsPrefab: {fileID: 5042584254570564409, guid: eb18b3fbf43311241a630525d3951ef3, type: 3}
+  ascentCornerPrefab: {fileID: 9049733977226089457, guid: 023c6259d9ae12e429031057cf7968f3, type: 3}
+  ascentLightPrefab: {fileID: 8941046858000915311, guid: ea083ea25debd4946b77692273923813, type: 3}
 --- !u!4 &2068360654
 Transform:
   m_ObjectHideFlags: 0
