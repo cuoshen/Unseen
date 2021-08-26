@@ -166,18 +166,33 @@ public static class Algorithms
 	/// <summary>
 	/// Return true if outside of min separation.
 	/// </summary>
-	public static bool CheckMinSeparation(List<Vector3> positions, Vector3 newPosition, float minSeparation)
+	public static bool CheckMinSeparation(List<Vector2Int> positions, Vector2Int newPosition, float minSeparation)
     {
 		if (positions != null)
 		{
-			foreach (Vector3 pos in positions)
+			foreach (Vector2Int pos in positions)
 			{
-				if (Vector3.Distance(pos, newPosition) < minSeparation)
+				if (Vector2Int.Distance(pos, newPosition) < minSeparation)
 					return false;
 			}
 		}
 		return true;
 	}
+
+	public static bool CheckMinAstarSeparation(int[,] map, List<Vector2Int> positions, Vector2Int newPosition, float minSeparation)
+    {
+		if (positions != null)
+		{
+			bool[][] BAmap = Astar.ConvertToBoolArray(map);
+			foreach (Vector2Int pos in positions)
+			{
+				List<Vector2Int> path = new Astar(BAmap, newPosition, pos).Result;
+				if (path.Count < minSeparation)
+					return false;
+			}
+		}
+		return true;
+    }
 
 	public static List<DirectionalTile> GetNeighbours4(Vector2Int coord, Vector2Int mapSize)
     {

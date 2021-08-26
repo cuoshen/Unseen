@@ -462,7 +462,7 @@ MonoBehaviour:
   trainChance: 0.4
   caveChance: 0.4
   dollChance: 0
-  ascentChance: 0
+  ascentChance: 0.2
   minInsectSeparation: 5
   insectPrefab: {fileID: 4899903623646807888, guid: de055a5aa554a674aba38d318268a687, type: 3}
   minGiantHalfSeparation: 7
@@ -500,7 +500,7 @@ MonoBehaviour:
   caveDummyPrefab: {fileID: 5153515109984280639, guid: ef57379794630d54e9e6672e45600bac, type: 3}
   caveLightPrefab: {fileID: 3783455613422746024, guid: 389c471d41cc26e448f0cc2197927276, type: 3}
   caveLightTallPrefab: {fileID: 412061578960827248, guid: 8a3a40900a21f4b46a90a478b04e5eb8, type: 3}
-  minCaveLightSeparation: 4
+  minCaveLightSeparation: 7
   _1x1ColPrefab: {fileID: 979798171851015552, guid: c9545e546b427e548b5df0f0e7c9d61a, type: 3}
   _2x2ColPrefab: {fileID: 4063682100341033637, guid: 7aee28ec8ea5eb2458dd6c9cc8a1ebf4, type: 3}
   _2x2ColumnChance: 0.25
