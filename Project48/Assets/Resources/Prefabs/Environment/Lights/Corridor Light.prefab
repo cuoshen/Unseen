@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 4646645695054956689}
   - component: {fileID: 3537234337624219524}
   m_Layer: 0
-  m_Name: Spot Light
+  m_Name: Trigger Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -58,14 +58,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 204883720298080214}
-  m_LocalRotation: {x: 0.43382943, y: 0.5583834, z: -0.43382943, w: 0.5583834}
+  m_LocalRotation: {x: 0.43387815, y: 0.55834556, z: -0.43387815, w: 0.55834556}
   m_LocalPosition: {x: 0.25, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6454590783475420356}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 75.69, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 75.7, y: 90, z: 0}
 --- !u!108 &5190887349464738890
 Light:
   m_ObjectHideFlags: 0
@@ -77,11 +77,11 @@ Light:
   serializedVersion: 10
   m_Type: 0
   m_Shape: 0
-  m_Color: {r: 0.78431374, g: 0.7176471, b: 0.5568628, a: 0}
-  m_Intensity: 0.2
+  m_Color: {r: 0.93333334, g: 0.8980392, b: 0.80784315, a: 0}
+  m_Intensity: 0.3
   m_Range: 3
-  m_SpotAngle: 179
-  m_InnerSpotAngle: 100
+  m_SpotAngle: 100
+  m_InnerSpotAngle: 0
   m_CookieSize: 10
   m_Shadows:
     m_Type: 2
@@ -123,7 +123,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 1.3217e-41, y: 6e-44, z: 0, w: NaN}
+  m_BoundingSphereOverride: {x: 0, y: 3.4e-44, z: 0, w: 1e-45}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 1
@@ -231,7 +231,7 @@ MonoBehaviour:
     m_PreInfinity: 3
     m_PostInfinity: 3
     m_RotationOrder: 4
-  on_curve_enemy:
+  flicker_curve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -513,7 +513,209 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  off_curve_enemy:
+  lampLight: {fileID: 5190887349464738890}
+  emission_material_transform: {fileID: 6454590783475420356}
+  emission_material_index: 1
+--- !u!1 &1033243233663414987
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1729041929037407312}
+  - component: {fileID: 495419626577837243}
+  - component: {fileID: 7611367995197443805}
+  - component: {fileID: 4728470755478263191}
+  m_Layer: 0
+  m_Name: Spot Light On Wall
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &1729041929037407312
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1033243233663414987}
+  m_LocalRotation: {x: 0.45072678, y: 0.5448352, z: -0.45072678, w: 0.5448352}
+  m_LocalPosition: {x: 0.25, y: 0, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6454590783475420356}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 79.2, y: 90, z: 0}
+--- !u!108 &495419626577837243
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1033243233663414987}
+  m_Enabled: 1
+  serializedVersion: 10
+  m_Type: 0
+  m_Shape: 0
+  m_Color: {r: 0.9339623, g: 0.8969461, b: 0.8076718, a: 0}
+  m_Intensity: 0.1
+  m_Range: 1.5
+  m_SpotAngle: 179
+  m_InnerSpotAngle: 100
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 2
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.02
+    m_NormalBias: 0.1
+    m_NearPlane: 0.1
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 1
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 64
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 1
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 0
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 3.4e-44, z: 0, w: 1e-45}
+  m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
+  m_ShadowRadius: 1
+  m_ShadowAngle: 0
+--- !u!114 &7611367995197443805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1033243233663414987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 1
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 0
+  m_LightLayerMask: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+--- !u!114 &4728470755478263191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1033243233663414987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5995dc45925deea44b186a0db2df2a03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectPlayerAcrossWall: 0
+  detectPlayerRange: 3
+  on_curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.5
+      inSlope: -14.764588
+      outSlope: -14.764588
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.18604118
+    - serializedVersion: 3
+      time: 0.04860626
+      value: 0.60271454
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.05
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.13987252
+      value: 0.73990846
+      inSlope: 1.1558
+      outSlope: 1.1558
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.86751413
+      outWeight: 0.4531274
+    - serializedVersion: 3
+      time: 0.20274112
+      value: -0.001953125
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.27395022
+      value: 1
+      inSlope: -0.0193691
+      outSlope: -0.0193691
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.25927845
+    - serializedVersion: 3
+      time: 0.99852294
+      value: 0.99999666
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 3
+    m_PostInfinity: 3
+    m_RotationOrder: 4
+  flicker_curve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -652,8 +854,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.50121444
-      value: 0.39938897
+      time: 0.50332016
+      value: 0.69208306
       inSlope: -0.18117553
       outSlope: -0.18117553
       tangentMode: 0
@@ -661,8 +863,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.54332054
-      value: 0.06377575
+      time: 0.5285195
+      value: 0.44307873
       inSlope: -0.42887917
       outSlope: -0.42887917
       tangentMode: 0
@@ -671,7 +873,7 @@ MonoBehaviour:
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 0.5680715
-      value: 0.30369318
+      value: 0.5306829
       inSlope: -0.5304317
       outSlope: -0.5304317
       tangentMode: 0
@@ -688,8 +890,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.6488639
-      value: 0.35099643
+      time: 0.64462197
+      value: 0.45850986
       inSlope: -0.4012029
       outSlope: -0.4012029
       tangentMode: 0
@@ -697,8 +899,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.72294974
-      value: 0.03819561
+      time: 0.69966483
+      value: 0.16661358
       inSlope: -0.54887885
       outSlope: -0.54887885
       tangentMode: 0
@@ -706,8 +908,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.7630873
-      value: 0.22032225
+      time: 0.7355604
+      value: 0.58470213
       inSlope: 0.61127794
       outSlope: 0.61127794
       tangentMode: 0
@@ -715,8 +917,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.7898339
-      value: 0.09335664
+      time: 0.7644433
+      value: 0.33227876
       inSlope: 0.016088704
       outSlope: 0.016088704
       tangentMode: 0
@@ -724,8 +926,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.835406
-      value: 0.14446151
+      time: 0.82695264
+      value: 0.57753646
       inSlope: 0.3606923
       outSlope: 0.3606923
       tangentMode: 0
@@ -733,8 +935,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.87229764
-      value: 0.040280253
+      time: 0.8574966
+      value: 0.3120698
       inSlope: -1.4195898
       outSlope: -1.4195898
       tangentMode: 0
@@ -742,8 +944,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.92743105
-      value: 0.07902157
+      time: 0.91687196
+      value: 0.68828976
       inSlope: 3.145419
       outSlope: 3.145419
       tangentMode: 0
@@ -751,8 +953,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1.0002124
-      value: -0.0012858063
+      time: 0.94421387
+      value: 0.5
       inSlope: 2
       outSlope: 2
       tangentMode: 0
@@ -762,9 +964,40 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  lampLight: {fileID: 5190887349464738890}
-  emission_material_transform: {fileID: 6454590783475420356}
-  emission_material_index: 1
+  off_curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.9
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  lampLight: {fileID: 495419626577837243}
 --- !u!1 &3746415368714623677
 GameObject:
   m_ObjectHideFlags: 0
@@ -796,6 +1029,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4969197420937671742}
+  - {fileID: 1729041929037407312}
   m_Father: {fileID: 8200740889749337584}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
