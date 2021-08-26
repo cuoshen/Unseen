@@ -462,10 +462,11 @@ MonoBehaviour:
   trainChance: 0.4
   caveChance: 0.4
   ascentChance: 0.2
+  giantHoleChance: 1
   minInsectSeparation: 5
   insectPrefab: {fileID: 4899903623646807888, guid: de055a5aa554a674aba38d318268a687, type: 3}
-  minGiantHalfSeparation: 7
-  giantPrefab: {fileID: 2428747410710552272, guid: dcf91c45a10b53d409c58b21c9e59458, type: 3}
+  minGiantFeetHalfSeparation: 7
+  giantFeetPrefab: {fileID: 2428747410710552272, guid: dcf91c45a10b53d409c58b21c9e59458, type: 3}
   corridorFloorPrefab: {fileID: 1956282064550222334, guid: 3394a408753d7084fa3a5f6c2f82ed14, type: 3}
   corridorWallPrefab: {fileID: 8587853897269320152, guid: 7e23e3dc6062f7a48842cef9783005cb, type: 3}
   corridorFenceDoorPrefab: {fileID: 8587853897269320152, guid: 1ced7e8eca67a2a4b9e1f07cdbad1375, type: 3}
@@ -494,6 +495,10 @@ MonoBehaviour:
   ascentStairsPrefab: {fileID: 5042584254570564409, guid: eb18b3fbf43311241a630525d3951ef3, type: 3}
   ascentCornerPrefab: {fileID: 9049733977226089457, guid: 023c6259d9ae12e429031057cf7968f3, type: 3}
   ascentLightPrefab: {fileID: 8941046858000915311, guid: ea083ea25debd4946b77692273923813, type: 3}
+  giantHoleFloorPrefab: {fileID: 1956282064550222334, guid: 3394a408753d7084fa3a5f6c2f82ed14, type: 3}
+  giantHoleWallPrefab: {fileID: 4433460659094003551, guid: 1e9cccb50f6b68940bae157de95feb7e, type: 3}
+  giantHoleLightPrefab: {fileID: 8200740889749337584, guid: ddbdabf1973cbae4aa583d1d54be3e80, type: 3}
+  giantHoleFencePrefab: {fileID: 6712452873545065672, guid: 207cbd2415291844dadef488d718a61c, type: 3}
 --- !u!4 &2068360654
 Transform:
   m_ObjectHideFlags: 0

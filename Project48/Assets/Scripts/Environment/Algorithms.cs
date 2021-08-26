@@ -784,12 +784,6 @@ public static class Algorithms
 			map = new int[mapSize.x, mapSize.y];
 
 			for (int i = 0; i < mapSize.x; i++)
-			{
-				map[i, 0] = 0;
-				map[i, mapSize.y - 1] = 0;
-			}
-
-			for (int i = 0; i < mapSize.x; i++)
 				for (int j = 1; j < mapSize.y - 1; j++)
 					map[i, j] = 1;
 
@@ -799,6 +793,19 @@ public static class Algorithms
 
 		startCoord = passway[0].Position + new Vector2Int(0, -1);
 		endCoord = passway.Last().Position;
+
+		return map;
+	}
+    #endregion
+
+    #region Border
+	public static int[,] Border(Vector2Int mapSize, int thickness)
+    {
+		int[,] map = new int[mapSize.x, mapSize.y];
+		
+		for (int i = thickness; i < mapSize.x - thickness; i++)
+			for (int j = thickness; j < mapSize.y - thickness; j++)
+				map[i, j] = 1;
 
 		return map;
 	}

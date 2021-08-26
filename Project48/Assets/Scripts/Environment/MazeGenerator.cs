@@ -51,6 +51,8 @@ public class MazeGenerator : MonoBehaviour
     float caveChance;
     [SerializeField]
     float ascentChance;
+    [SerializeField]
+    float giantHoleChance;
     #endregion
     #region Enemy Parameters
     [Header("Enemy")]
@@ -59,9 +61,9 @@ public class MazeGenerator : MonoBehaviour
     [SerializeField]
     Transform insectPrefab;
     [SerializeField]
-    int minGiantHalfSeparation;
+    int minGiantFeetHalfSeparation;
     [SerializeField]
-    Transform giantPrefab;
+    Transform giantFeetPrefab;
     #endregion
     #region Corridor Generation Parameters
     [Header("Corridor Generation")]
@@ -136,6 +138,18 @@ public class MazeGenerator : MonoBehaviour
     [SerializeField]
     Transform ascentLightPrefab;
     #endregion
+    #region Giant Hole Generation Parameters
+    [Header("Giant Hole Generation")]
+    [SerializeField]
+    Transform giantHoleFloorPrefab;
+    [SerializeField]
+    Transform giantHoleWallPrefab;
+    [SerializeField]
+    Transform giantHoleLightPrefab;
+    [SerializeField]
+    Transform giantHoleFencePrefab;
+
+    #endregion
 
     void Awake()
     {
@@ -195,7 +209,9 @@ public class MazeGenerator : MonoBehaviour
 
         for (int i = 0; i < RoomCount(); i++)
         {
-            if (UnityEngine.Random.Range(0f, 1f) < ascentChance)
+            if (UnityEngine.Random.Range(0f, 1f) < giantHoleChance)
+                GenerateGiantHole(CaveSize() / 2);
+            else if (UnityEngine.Random.Range(0f, 1f) < ascentChance)
                 GenerateAscent(AscentSize());
             else if (UnityEngine.Random.Range(0f, 1f) < caveChance)
                 GenerateCave(CaveSize());
@@ -581,7 +597,7 @@ public class MazeGenerator : MonoBehaviour
 
         // Generate giant things randomly if there exists an empty enough coord space
         List<Vector2Int> giantCoords = new List<Vector2Int>();
-        int minGiantSeparation = minGiantHalfSeparation * 2 + 1;
+        int minGiantSeparation = minGiantFeetHalfSeparation * 2 + 1;
         for (int k = 0; k < 1000; k++)
         {
             int x = UnityEngine.Random.Range(0, mapSize.x - minGiantSeparation);
@@ -595,14 +611,14 @@ public class MazeGenerator : MonoBehaviour
                         emptyTileCount++;
                 }
 
-            Vector2Int newGiantCoord = new Vector2Int(x + minGiantHalfSeparation, y + minGiantHalfSeparation);
+            Vector2Int newGiantCoord = new Vector2Int(x + minGiantFeetHalfSeparation, y + minGiantFeetHalfSeparation);
             if (emptyTileCount >= 150 && map[newGiantCoord.x, newGiantCoord.y] == 0)
             {
                 Vector3 position = new Vector3(-mapSize.x / 2 + newGiantCoord.x + 0.5f, 0, -mapSize.y / 2 + newGiantCoord.y + 0.5f) * 0.5f + new Vector3(-0.5f, 0, -0.5f);
                 // Generate giant things
                 if (CheckMinSeparation(giantCoords, newGiantCoord, minGiantSeparation))
                 {
-                    Transform newGiant = Instantiate(giantPrefab, mapTransform);
+                    Transform newGiant = Instantiate(giantFeetPrefab, mapTransform);
                     newGiant.localPosition = position;
                     giantCoords.Add(newGiantCoord);
                 }
@@ -741,6 +757,51 @@ public class MazeGenerator : MonoBehaviour
         lastEndPos += new Vector3(0, elevation, 0);
     }
 
+    void GenerateGiantHole(Vector2Int mapSize)
+    {
+        int[,] map = Border(mapSize, 1);
+
+        Transform mapTransform = GenerateBasic(null, giantHoleWallPrefab, AudioReverbPreset.Cave, mapSize, out Vector2Int startCoord, out Vector2Int endCoord, start => true, end => true, 2);
+
+        for (int i = 0; i < mapSize.x; i++)
+            for (int j = 0; j < mapSize.y; j++)
+            {
+                Vector2Int coord = new Vector2Int(i, j);
+                Vector3 position = new Vector3(-mapSize.x / 2 + i, 0, -mapSize.y / 2 + j);
+
+                if (map[i, j] == 0)
+                {
+                    // Generate floors
+                    Transform newFloor = Instantiate(giantHoleFloorPrefab, mapTransform);
+                    newFloor.localPosition = position;
+
+                }
+            }
+
+        List<Region> impassableRegions = GetRegions(1, map);
+        List<Vector2Int> lightCoords = new List<Vector2Int>();
+
+        foreach (DirectionalTile tile in impassableRegions[0].Outline)
+        {
+            Vector3 newPos = new Vector3(-mapSize.x / 2 + tile.Position.x, 0, -mapSize.y / 2 + tile.Position.y)
+                + Coord2PosXZ(Offset4[GetOpposite(tile.Direction)]) * 0.5f;
+            Vector3 newAngle = Angle4[GetOpposite(tile.Direction)];
+
+            // Make Fence
+            Transform newFence = Instantiate(giantHoleFencePrefab, mapTransform);
+            newFence.localPosition = newPos;
+            newFence.localEulerAngles = newAngle;
+
+            if (CheckMinSeparation(lightCoords, tile.Position, minCorridorLightSeparation) && tile.Position != startCoord && tile.Position != endCoord)
+            {
+                // Make Light
+                Transform newLight = Instantiate(giantHoleLightPrefab, mapTransform);
+                newLight.localPosition = newPos - Coord2PosXZ(Offset4[GetOpposite(tile.Direction)]);
+                newLight.localEulerAngles = Angle4[tile.Direction];
+                lightCoords.Add(tile.Position);
+            }
+        }
+    }
     #endregion
 
     #region Misc Generation
