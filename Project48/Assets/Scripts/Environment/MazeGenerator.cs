@@ -255,10 +255,8 @@ public class MazeGenerator : MonoBehaviour
         // Generate empty parent object
         Transform mapTransform = Instantiate(roomPrefab, transform);
         mapTransform.localPosition = new Vector3(mapSize.x / 2 - startCoord.x, 0, mapSize.y / 2 - startCoord.y) + lastEndPos;
-        AudioReverbZone reverb = mapTransform.GetComponent<AudioReverbZone>();
-        reverb.minDistance = Mathf.Min(mapSize.x / 2, mapSize.y / 2);
-        reverb.maxDistance = Mathf.Max(mapSize.x / 2, mapSize.y / 2);
-        reverb.reverbPreset = reverbPreset;
+        mapTransform.GetComponent<Room>().reverbPreset = reverbPreset;
+        mapTransform.GetComponent<BoxCollider>().size = new Vector3(mapSize.x, 1, mapSize.y);
 
         // Generate floor
         if (floorprefab)
