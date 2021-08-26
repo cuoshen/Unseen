@@ -774,28 +774,7 @@ public static class Algorithms
 	}
 	#endregion
 
-	#region Columnar
-	public static int[,] Columnar(Vector2Int mapSize, float _2x2ColumnChance)
-	{
-		int[,] map = new int[mapSize.x, mapSize.y];
-
-		for (int i = 0; i < mapSize.x; i++)
-			for (int j = 0; j < mapSize.y; j++)
-			{
-				if (UnityEngine.Random.Range(0f, 1f) < _2x2ColumnChance)
-				{
-					map[i, j] = 2;
-				}
-				else
-				{
-					map[i, j] = 1;
-				}
-			}
-
-		return map;
-	}
-    #endregion
-
+	#region Single Passway
 	public static int[,] SinglePassway(Vector2Int mapSize, out Vector2Int startCoord, out Vector2Int endCoord, out List<DirectionalTile> passway, int minHalfSegmentLength, int maxHalfSegmentLength, int minTurnLimit, int maxTurnLimit)
 	{
 		int[,] map;
@@ -823,4 +802,5 @@ public static class Algorithms
 
 		return map;
 	}
+    #endregion
 }
