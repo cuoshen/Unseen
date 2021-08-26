@@ -10,7 +10,7 @@ public class TriggerLight : MonoBehaviour
     protected float detectPlayerRange;
 
     [SerializeField]
-    protected AnimationCurve on_curve, on_curve_enemy, off_curve, off_curve_enemy;
+    protected AnimationCurve on_curve, flicker_curve, off_curve;
 
     [SerializeField]
     protected Light lampLight;
@@ -31,9 +31,8 @@ public class TriggerLight : MonoBehaviour
     protected void Start()
     {
         on_curve.postWrapMode = WrapMode.Clamp;
-        on_curve_enemy.postWrapMode = WrapMode.Clamp;
+        flicker_curve.postWrapMode = WrapMode.Clamp;
         off_curve.postWrapMode = WrapMode.Clamp;
-        off_curve_enemy.postWrapMode = WrapMode.Clamp;
 
         maxIntensity = lampLight.intensity;
         time_elapsed = 2;
@@ -56,33 +55,19 @@ public class TriggerLight : MonoBehaviour
                 time_elapsed += Time.deltaTime;
 
                 // Control light acording to triggered condition
-                AnimationCurve curve;
                 if (is_on)
                 {
-                    curve = on_curve;
-                    if (is_flicker)
-                    {
-                        curve = on_curve_enemy;
-                        if (time_elapsed >= 1.0f)
-                        {
-                            time_elapsed = 0;
-                        }
-                    }
-
-                    currentCurveValue = curve.Evaluate(time_elapsed);
+                    currentCurveValue = on_curve.Evaluate(time_elapsed);
                     lampLight.intensity = currentCurveValue * (maxIntensity - onSwitchStateIntensity) + onSwitchStateIntensity;
                 }
                 else
                 {
-                    curve = off_curve;
-                    if (is_flicker)
-                    {
-                        curve = off_curve_enemy;
-                    }
-
-                    currentCurveValue = curve.Evaluate(time_elapsed);
+                    currentCurveValue = off_curve.Evaluate(time_elapsed);
                     lampLight.intensity = currentCurveValue * onSwitchStateIntensity;
                 }
+
+                if (is_flicker)
+                    lampLight.intensity *= flicker_curve.Evaluate(time_elapsed % 1);
             }
             else
             {
