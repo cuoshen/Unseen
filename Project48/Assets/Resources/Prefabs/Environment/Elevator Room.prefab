@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 155128708602126552}
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 1.5, y: 0.5, z: 1.5}
+  m_LocalPosition: {x: 1.5, y: 0.5, z: 1.45}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1162,7 +1162,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5706657677731109938}
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 2.45, y: 0.5, z: 0}
+  m_LocalPosition: {x: 2.45, y: 0.5, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1507,7 +1507,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6325783595474915145}
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: -1.5, y: 0.5, z: 1.5}
+  m_LocalPosition: {x: -1.5, y: 0.5, z: 1.45}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2727,6 +2727,22 @@ PrefabInstance:
     - target: {fileID: 47987720440193859, guid: 72f33444ba194ef4eaa7cd78e114812c, type: 3}
       propertyPath: m_Name
       value: Corridor Light Hanging
+      objectReference: {fileID: 0}
+    - target: {fileID: 5190887349464738890, guid: 72f33444ba194ef4eaa7cd78e114812c, type: 3}
+      propertyPath: m_BoundingSphereOverride.w
+      value: 1.6023932e+14
+      objectReference: {fileID: 0}
+    - target: {fileID: 5190887349464738890, guid: 72f33444ba194ef4eaa7cd78e114812c, type: 3}
+      propertyPath: m_BoundingSphereOverride.x
+      value: 1.05e-43
+      objectReference: {fileID: 0}
+    - target: {fileID: 5190887349464738890, guid: 72f33444ba194ef4eaa7cd78e114812c, type: 3}
+      propertyPath: m_BoundingSphereOverride.y
+      value: 1.2927175e+32
+      objectReference: {fileID: 0}
+    - target: {fileID: 5190887349464738890, guid: 72f33444ba194ef4eaa7cd78e114812c, type: 3}
+      propertyPath: m_BoundingSphereOverride.z
+      value: 920755.25
       objectReference: {fileID: 0}
     - target: {fileID: 8200740889749337584, guid: 72f33444ba194ef4eaa7cd78e114812c, type: 3}
       propertyPath: m_RootOrder
