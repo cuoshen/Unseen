@@ -104,33 +104,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 }
             ]
-        },
-        {
-            ""name"": ""UI Controls"",
-            ""id"": ""0ed784f2-b1a4-4804-b1ba-e17bb9267838"",
-            ""actions"": [
-                {
-                    ""name"": ""Escape"",
-                    ""type"": ""Button"",
-                    ""id"": ""c28f0bbb-32aa-402f-ad69-fb68448c8bd7"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""6380ec14-f941-4561-b0f5-c311dc1e9b64"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""Escape"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
         }
     ],
     ""controlSchemes"": [
@@ -161,9 +134,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         // Player Controls
         m_PlayerControls = asset.FindActionMap("Player Controls", throwIfNotFound: true);
         m_PlayerControls_Move = m_PlayerControls.FindAction("Move", throwIfNotFound: true);
-        // UI Controls
-        m_UIControls = asset.FindActionMap("UI Controls", throwIfNotFound: true);
-        m_UIControls_Escape = m_UIControls.FindAction("Escape", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -252,39 +222,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         }
     }
     public PlayerControlsActions @PlayerControls => new PlayerControlsActions(this);
-
-    // UI Controls
-    private readonly InputActionMap m_UIControls;
-    private IUIControlsActions m_UIControlsActionsCallbackInterface;
-    private readonly InputAction m_UIControls_Escape;
-    public struct UIControlsActions
-    {
-        private @PlayerInput m_Wrapper;
-        public UIControlsActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Escape => m_Wrapper.m_UIControls_Escape;
-        public InputActionMap Get() { return m_Wrapper.m_UIControls; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(UIControlsActions set) { return set.Get(); }
-        public void SetCallbacks(IUIControlsActions instance)
-        {
-            if (m_Wrapper.m_UIControlsActionsCallbackInterface != null)
-            {
-                @Escape.started -= m_Wrapper.m_UIControlsActionsCallbackInterface.OnEscape;
-                @Escape.performed -= m_Wrapper.m_UIControlsActionsCallbackInterface.OnEscape;
-                @Escape.canceled -= m_Wrapper.m_UIControlsActionsCallbackInterface.OnEscape;
-            }
-            m_Wrapper.m_UIControlsActionsCallbackInterface = instance;
-            if (instance != null)
-            {
-                @Escape.started += instance.OnEscape;
-                @Escape.performed += instance.OnEscape;
-                @Escape.canceled += instance.OnEscape;
-            }
-        }
-    }
-    public UIControlsActions @UIControls => new UIControlsActions(this);
     private int m_KeyboardSchemeIndex = -1;
     public InputControlScheme KeyboardScheme
     {
@@ -306,9 +243,5 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     public interface IPlayerControlsActions
     {
         void OnMove(InputAction.CallbackContext context);
-    }
-    public interface IUIControlsActions
-    {
-        void OnEscape(InputAction.CallbackContext context);
     }
 }
