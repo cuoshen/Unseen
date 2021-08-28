@@ -26,6 +26,7 @@ public class MazeGenerator : MonoBehaviour
     // Level 6 with seed 88 with caveChance and dollChance both 0 for a Compartments right at the start
     public int seed;
     public bool useSeed;
+    public LevelData levelCounter;
     int level;
     MeshGenerator meshGenerator;
     Vector3 lastEndPos;
@@ -167,7 +168,7 @@ public class MazeGenerator : MonoBehaviour
             UnityEngine.Random.InitState(seed);
 
         meshGenerator = GetComponent<MeshGenerator>();
-        NextLevel();
+        GenerateLevel();
     }
 
     #region Parameter Growth Functions
@@ -181,6 +182,12 @@ public class MazeGenerator : MonoBehaviour
         return new Vector2Int(UnityEngine.Random.Range(4 + Mathf.CeilToInt(level / 2f), 6 + Mathf.CeilToInt(level / 1.5f)), UnityEngine.Random.Range(4 + Mathf.CeilToInt(level / 2f), 6 + Mathf.CeilToInt(level / 1.5f)));
     }
 
+    Vector2Int CaveSize()
+    {
+        // Parity causes grid offset issues
+        return new Vector2Int(UnityEngine.Random.Range(7, 10), UnityEngine.Random.Range(7, 12)) * 4;
+    }
+
     int CompartmentsAttempts(Vector2Int mazeSize)
     {
         return UnityEngine.Random.Range(Math.Min(mazeSize.x, mazeSize.y), Math.Max(mazeSize.x, mazeSize.y)) / 3 - 2;
@@ -190,17 +197,19 @@ public class MazeGenerator : MonoBehaviour
     {
         return new Vector2Int(UnityEngine.Random.Range(4 + Mathf.CeilToInt(level / 2f), 6 + Mathf.CeilToInt(level / 1.5f)), UnityEngine.Random.Range(4 + Mathf.CeilToInt(level / 2f), 6 + Mathf.CeilToInt(level / 1.5f)));
     }
-
-    Vector2Int CaveSize()
-    {
-        // Parity causes grid offset issues
-        return new Vector2Int(UnityEngine.Random.Range(7, 10), UnityEngine.Random.Range(7, 12)) * 4;
-    }
     #endregion
 
     #region Level Generation
     void GenerateLevel()
     {
+        // Clear Level
+        if (transform.childCount != 0)
+        {
+            foreach (Transform child in transform)
+                Destroy(child.gameObject);
+        }
+
+        level = levelCounter.Level;
         lastEndPos = new Vector3(0, 0, 0);
 
         Transform start = Instantiate(startPrefab, transform);
@@ -210,7 +219,7 @@ public class MazeGenerator : MonoBehaviour
         for (int i = 0; i < RoomCount(); i++)
         {
             if (UnityEngine.Random.Range(0f, 1f) < giantHoleChance)
-                GenerateGiantHole(CaveSize() / 2);
+                GenerateGiantHole(CaveSize() / 4);
             else if (UnityEngine.Random.Range(0f, 1f) < ascentChance)
                 GenerateAscent(AscentSize());
             else if (UnityEngine.Random.Range(0f, 1f) < caveChance)
@@ -225,22 +234,6 @@ public class MazeGenerator : MonoBehaviour
         end.localPosition = lastEndPos;
     }
 
-    public void ClearLevel()
-    {
-        if (transform.childCount != 0)
-        {
-            foreach (Transform child in transform)
-                Destroy(child.gameObject);
-        }
-    }
-
-    public void NextLevel()
-    {
-        Debug.Log("Next level");
-        level = LevelCounter.Instance.IncrementLevel();
-        ClearLevel();
-        GenerateLevel();
-    }
     #endregion
 
     #region Individual Maze Generation
