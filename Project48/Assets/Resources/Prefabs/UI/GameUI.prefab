@@ -868,7 +868,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameplayIngredients.Actions.ToggleGameObjectAction,
+        m_TargetAssemblyTypeName: GameplayIngredients.Actions.SetTimeScaleAction,
           GameplayIngredients
         m_MethodName: Execute
         m_Mode: 2
