@@ -510,7 +510,7 @@ MonoBehaviour:
   trainChance: 0.4
   caveChance: 0.4
   ascentChance: 0.2
-  giantHoleChance: 1
+  giantHoleChance: 0
   minInsectSeparation: 5
   insectPrefab: {fileID: 4899903623646807888, guid: de055a5aa554a674aba38d318268a687, type: 3}
   minGiantFeetHalfSeparation: 7
@@ -521,6 +521,7 @@ MonoBehaviour:
   corridorLightPrefab: {fileID: 8200740889749337584, guid: 518742c4e3450464492a4fa6c8f6a8c1, type: 3}
   voidFencePrefab: {fileID: 6712452873545065672, guid: 207cbd2415291844dadef488d718a61c, type: 3}
   voidLightPrefab: {fileID: 7285017026454675818, guid: 947a8c0b200a4ef459a521aafd5746a2, type: 3}
+  crossRoadPrefab: {fileID: 8587853897269320152, guid: 24a4af331c1540f40ae140b6bb4d69a2, type: 3}
   minCorridorLightSeparation: 2
   maxVoidSize: 5
   voidChance: 0.6
