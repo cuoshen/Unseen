@@ -220,6 +220,19 @@ public static class Algorithms
 			}
 		return matchedBottomLeft;
 	}
+
+	public static int[,] StretchMap(int[,] oldMap, int stretchAxis, int stretchPosition, int stretchLength)
+	{
+		Vector2Int oldMapSize = new Vector2Int(oldMap.GetLength(0), oldMap.GetLength(1));
+		Vector2Int newMapSize;
+		if (stretchAxis == 0)
+			newMapSize = new Vector2Int(oldMap.GetLength(0) + stretchLength, oldMap.GetLength(1));
+		else
+			newMapSize = new Vector2Int(oldMap.GetLength(0), oldMap.GetLength(1) + stretchLength);
+		int[,] newMap = new int[newMapSize.x, newMapSize.y];
+
+		return newMap;
+	}
 	#endregion
 
 	#region Perlin Noise
