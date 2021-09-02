@@ -81,6 +81,8 @@ public class MazeGenerator : MonoBehaviour
     [SerializeField]
     Transform voidLightPrefab;
     [SerializeField]
+    Transform crossRoadPrefab;
+    [SerializeField]
     int minCorridorLightSeparation;
     [SerializeField]
     int maxVoidSize;
@@ -151,6 +153,10 @@ public class MazeGenerator : MonoBehaviour
     Transform giantHoleFencePrefab;
 
     #endregion
+
+    readonly int[,] crossRoadFilter = new int[,] { { 1, 0, 1 }, { 0, 0, 0 }, { 1, 0, 1 }};
+    readonly int[,] insectPitHFilter = new int[,] { { 1, 1, 1 }, { 0, 0, 0 }, { 1, 1, 1 } };
+    readonly int[,] insectPitVFilter = new int[,] { { 1, 0, 1 }, { 1, 0, 1 }, { 1, 0, 1 } };
 
     void Awake()
     {
@@ -349,6 +355,22 @@ public class MazeGenerator : MonoBehaviour
         Vector2Int mapSize = new Vector2Int(map.GetLength(0), map.GetLength(1));
         Transform mapTransform = GenerateBasic(null, null, AudioReverbPreset.Hallway, mapSize, out Vector2Int startCoord, out Vector2Int endCoord, start => start.x % 2 == 1, end => end.x % 2 == 1, 2);
 
+        // Generate constructs
+        List<Vector2Int> crossRoadBottomLefts = MatchFilter(map, crossRoadFilter);
+        Vector2Int filterSize = new Vector2Int(crossRoadFilter.GetLength(0), crossRoadFilter.GetLength(1));
+        foreach (Vector2Int bottomLeft in crossRoadBottomLefts)
+        {
+            Vector3 newPos = new Vector3(-mapSize.x / 2 + bottomLeft.x + (float)filterSize.x / 2 - 0.5f, 0, -mapSize.y / 2 + bottomLeft.y + (float)filterSize.y / 2 - 0.5f);
+            Transform newCrossRoad = Instantiate(crossRoadPrefab, mapTransform);
+            newCrossRoad.localPosition = newPos;
+            for (int x = 0; x < filterSize.x; x++)
+                for (int y = 0; y < filterSize.y; y++)
+                {
+                    if (map[bottomLeft.x + x, bottomLeft.y + y] == 1)
+                        map[bottomLeft.x + x, bottomLeft.y + y] = 3;
+                }
+        }
+
         // Generate void
         List<Region> impassableRegions = GetRegions(1, map);
 
@@ -387,7 +409,7 @@ public class MazeGenerator : MonoBehaviour
                 Vector2Int coord = new Vector2Int(i, j);
                 Vector3 position = new Vector3(-mapSize.x / 2 + i, 0, -mapSize.y / 2 + j);
 
-                if (map[i, j] != 2)
+                if (map[i, j] == 0 | map[i, j] == 1)
                 {
                     // Generate floors
                     Transform newFloor = Instantiate(corridorFloorPrefab, mapTransform);
@@ -429,9 +451,12 @@ public class MazeGenerator : MonoBehaviour
                             newLight = Instantiate(corridorLightPrefab, mapTransform);
                         else if (wallTypeList[randIndex] == 2)
                             newLight = Instantiate(voidLightPrefab, mapTransform);
-                        newLight.localPosition = wallPosList[randIndex];
-                        newLight.localEulerAngles = wallAngleList[randIndex];
-                        lightCoords.Add(coord);
+                        if (newLight != null)
+                        {
+                            newLight.localPosition = wallPosList[randIndex];
+                            newLight.localEulerAngles = wallAngleList[randIndex];
+                            lightCoords.Add(coord);
+                        }
                     }
 
                     //Generate insect things, but not too close to other insect things, or on the critical path, or on lights, or on the outline of rooms

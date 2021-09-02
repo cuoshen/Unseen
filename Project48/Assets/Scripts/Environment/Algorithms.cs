@@ -199,6 +199,27 @@ public static class Algorithms
 		return Offset4.Select(d => new DirectionalTile( new Vector2Int(coord.x + d.Value.x, coord.y + d.Value.y), d.Key))
 		.Where(d => CheckInMapRange(d.Position, mapSize)).ToList();
 	}
+
+	public static List<Vector2Int> MatchFilter(int[,] map, int[,] filter)
+    {
+		Vector2Int mapSize = new Vector2Int(map.GetLength(0), map.GetLength(1));
+		Vector2Int filterSize = new Vector2Int(filter.GetLength(0), filter.GetLength(1));
+		List<Vector2Int> matchedBottomLeft = new List<Vector2Int>();
+		for (int i = 0; i < mapSize.x - filterSize.x; i++)
+			for (int j = 0; j < mapSize.y - filterSize.y; j++)
+            {
+				bool matched = true;
+				for (int x = 0; x < filterSize.x; x++)
+					for (int y = 0; y < filterSize.y; y++)
+					{
+						if (map[i + x, j + y] != filter[x, y])
+							matched = false;
+					}
+				if (matched)
+					matchedBottomLeft.Add(new Vector2Int(i, j));
+			}
+		return matchedBottomLeft;
+	}
 	#endregion
 
 	#region Perlin Noise

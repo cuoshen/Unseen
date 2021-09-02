@@ -99,7 +99,7 @@ public class TriggerLight : MonoBehaviour
             (detectPlayerAcrossWall || !Physics.Linecast(transform.position, player.transform.position, out _, maze_layer)))
             is_player = true;
 
-        Collider[] allKiwiCollidersInRange = Physics.OverlapSphere(transform.position, insectThingVisionRange, insect_layer);
+        Collider[] allKiwiCollidersInRange = Physics.OverlapCapsule(transform.position + new Vector3(0, 5, 0), transform.position + new Vector3(0, -5, 0), insectThingVisionRange, insect_layer);
         foreach (Collider collider in allKiwiCollidersInRange)
             if (!Physics.Linecast(transform.position, collider.transform.position, out _, maze_layer))
                 is_enemy = true;
