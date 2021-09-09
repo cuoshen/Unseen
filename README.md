@@ -1,2 +1,2 @@
-# 48
-Ludum Dare 48 project
+# Unseeen
+Once a Ludum Dare 48 project.
